@@ -1,37 +1,23 @@
-SRCS		= main.c
+SRCS = main.c
 
-HEADERS		= struct.h
+NAME = minishell
+
+CC = gcc
 
 OBJS		= ${SRCS:.c=.o}
 
-NAME		= minishell
+CFLAGS	= -Wall -Werror -Wextra
 
-# LIBFT_DIR	= libft/
-
-# LIBFT		= libft.a
-
-# INCLUDES	= -I${LIBFT_DIR}
-
-CC			= gcc
-
-RM			= rm -f
-
-CFLAGS		= -g -Wall -Wextra -Werror
-
-%.o:		%.c ${HEADERS}
-			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+%.o:	%.c
+		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 all:		${NAME}
 
 ${NAME}:	${CC} ${CFLAGS} ${OBJS} -lreadline -L/Users/bcherie/.brew/Cellar/readline/8.1/lib/ -I/Users/bcherie/.brew/Cellar/readline/8.1/include -lft -o ${NAME}
 
 clean:
-			${RM} ${OBJS}
+		rm -f *.o
+fclean: clean
+		rm -f $(NAME)
 
-fclean:		clean
-			${RM} ${NAME}
-
-
-re:			fclean all
-
-.PHONY:		all clean fclean re
+re: fclean all

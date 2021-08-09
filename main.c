@@ -8,5 +8,6 @@ int main (int argc, char **argv, char **env)
 	{
 		mass.buf = redline("Minishell: ");
 	}
+	printf("Allright\n");
 	return (0);
 }
