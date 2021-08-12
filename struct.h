@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "Libft/libft.h"
+#include "libft/libft.h"
 
 typedef struct		s_all
 {
@@ -9,6 +9,6 @@ typedef struct		s_all
 
 }				t_all;
 
-void ft_split_commands(t_all mass);
+int ft_split_commands(t_all mass);
 
 #endif
