@@ -6,10 +6,11 @@
 int main (int argc, char **argv, char **env)
 {
 	t_all mass;
+	mass.buf = NULL;
 	//init(mass);
 	while (1)
 	{
-		mass.buf = redline("Minishell: ");
+		mass.buf = readline("Minishell: ");
 	}
 	printf("Allright\n");
 	return (0);
