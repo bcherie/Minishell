@@ -4,12 +4,29 @@
 #include <unistd.h>
 #include "struct.h"
 
+char *path;
+
 void ft_pwd(char *str)
 {
-	char *path;
+	//char *path;
 	//прописать с getcwd(), так как getwd() запрещена
 	path = getcwd(str, 1000);
 	printf("%s\n", path);
+}
+
+void ft_cd(char *str)
+{
+	//chdir - сменить текущий каталог
+	//Возвращается  0  в случае  успеха  и -1 в противном случае с установлением errno.
+	int res;
+
+	ft_pwd(str);
+	res = chdir(path);
+	printf("res: %d\n", res);
+	if(res != 0)
+		printf("Не могу перейти к каталогу %s\n", path);
+	else
+		printf("%s\n", path);
 }
 
 int ft_split_commands(t_all mass)
@@ -51,6 +68,7 @@ int ft_split_commands(t_all mass)
 		if (ft_strncmp(mass.buf, "cd", 2) == 0)
 		{
 			str = ft_substr(mass.buf, 2, ft_strlen(mass.buf));
+			//printf("cd: %s\n", str);
 			ft_cd(str);
 		}
 	// 	i++;
@@ -72,7 +90,7 @@ int main (void)
 		if (ft_strlen(mass.buf) > 0)
 			add_history(mass.buf);
 		ft_split_commands(mass);
-		free(mass.buf);
+		//free(mass.buf);
 	}
 	return (0);
 }
