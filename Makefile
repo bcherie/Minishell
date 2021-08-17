@@ -1,23 +1,34 @@
-SRCS = main.c
-
 NAME = minishell
 
+SRCS =	main.c
+
+OBJS = $(SRCS:.c=.o)
+
 CC = gcc
+RM = rm -rf
 
-OBJS		= ${SRCS:.c=.o}
+CFLAGS = -Wall -Wextra -Werror -g
 
-CFLAGS	= -Wall -Werror -Wextra
+all:		$(NAME)
 
-%.o:	%.c
-		${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+%.o: %.c
+			@$(CC) $(CFLAGS) -c -I./libft/ $< -o $(<:.c=.o)
 
-all:		${NAME}
+$(NAME):	$(OBJS)
+			@make -C libft
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -L/Users/bcherie/.brew/Cellar/readline/8.1/lib/ -I/Users/jkeitha/.brew/Cellar/readline/8.1/include -lreadline
 
-${NAME}:	${CC} ${CFLAGS} ${OBJS} -lreadline -L/Users/bcherie/.brew/Cellar/readline/8.1/lib/ -I/Users/bcherie/.brew/Cellar/readline/8.1/include -lft -o ${NAME}
+run:		$(NAME)
+			@./$(NAME)
 
 clean:
-		rm -f *.o
-fclean: clean
-		rm -f $(NAME)
+			@$(RM) $(OBJS)
+			@make clean -C libft
 
-re: fclean all
+fclean:		clean
+			@$(RM) $(NAME)
+			@make fclean -C libft
+
+re:			fclean all
+
+.PHONY: 	all run clean fclean re

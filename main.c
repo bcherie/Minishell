@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "struct.h"
+
 
 char *path;
 
@@ -20,13 +22,16 @@ void ft_cd(char *str)
 	//Возвращается  0  в случае  успеха  и -1 в противном случае с установлением errno.
 	int res;
 
-	ft_pwd(str);
-	res = chdir(path);
+	char *path_s;
+	//ft_pwd(str);
+	// printf("cd_str: %s\n", str);
+	path_s = ft_strjoin ("/Users/bcherie/Desktop/Minishell/", str);
+	res = chdir(path_s);
 	printf("res: %d\n", res);
 	if(res != 0)
-		printf("Не могу перейти к каталогу %s\n", path);
+		printf("Не могу перейти к каталогу %s\n", path_s);
 	else
-		printf("%s\n", path);
+		printf("%s\n", path_s);
 }
 
 int ft_split_commands(t_all mass)
@@ -52,6 +57,7 @@ int ft_split_commands(t_all mass)
 	// {
 	// 	if (str[i] == ' ')
 	// 		i++;
+
 		if(ft_strncmp(mass.buf, "echo", 4) == 0)
 		{
 			str = ft_substr(mass.buf, 4, ft_strlen(mass.buf));
@@ -68,7 +74,7 @@ int ft_split_commands(t_all mass)
 		if (ft_strncmp(mass.buf, "cd", 2) == 0)
 		{
 			str = ft_substr(mass.buf, 2, ft_strlen(mass.buf));
-			//printf("cd: %s\n", str);
+			// printf("cd_str: %s\n", str);
 			ft_cd(str);
 		}
 	// 	i++;
