@@ -8,7 +8,7 @@ void ft_pwd(char *str)
 {
 	char *path;
 	//прописать с getcwd(), так как getwd() запрещена
-	path = getwd(str);
+	path = getcwd(str, 1000);
 	printf("%s\n", path);
 }
 
@@ -31,24 +31,30 @@ int ft_split_commands(t_all mass)
 	// 	//str = "echo";
 	// }
 	// printf("tmp: %s\n", tmp);
-	if (ft_strnstr(mass.buf, "echo ", ft_strlen(mass.buf)))
-	{
-		str = ft_substr(mass.buf, 5, ft_strlen(mass.buf));
-		printf("subsrt: %s\n", str);
-		// work_echo();
-	}
-	//тут не будет аргументов, нужно нафиг убрать стрнстр и сабстр
-	if (ft_strnstr(mass.buf, "pwd", ft_strlen(mass.buf)))
-	{
-		str = ft_substr(mass.buf, 3, ft_strlen(mass.buf));
-		ft_pwd(str);
-	}
-		//printf("pwd: %s\n", str);
-	if (ft_strnstr(mass.buf, "cd", ft_strlen(mass.buf)))
-	{
-		str = ft_substr(mass.buf, 2, ft_strlen(mass.buf));
-		ft_pwd(str);
-	}
+	// while (str[i] != '\0')
+	// {
+	// 	if (str[i] == ' ')
+	// 		i++;
+		if(ft_strncmp(mass.buf, "echo", 4) == 0)
+		{
+			str = ft_substr(mass.buf, 4, ft_strlen(mass.buf));
+			printf("subsrt: %s\n", str);
+			// work_echo();
+		}
+		//тут не будет аргументов, нужно нафиг убрать стрнстр и сабстр
+		if (ft_strncmp(mass.buf, "pwd", 3) == 0)
+		{
+			str = ft_substr(mass.buf, 3, ft_strlen(mass.buf));
+			ft_pwd(str);
+		}
+			//printf("pwd: %s\n", str);
+		if (ft_strncmp(mass.buf, "cd", 2) == 0)
+		{
+			str = ft_substr(mass.buf, 2, ft_strlen(mass.buf));
+			ft_cd(str);
+		}
+	// 	i++;
+	// }
 
 	return (0);
 }
