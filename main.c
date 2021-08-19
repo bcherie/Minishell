@@ -55,8 +55,14 @@ int ft_split_commands(t_all mass)
 			i++;
 		}
 		len = ft_strlen(mass.buf) - spaces;
-		str = ft_substr(mass.buf, 5, len);
-		printf("%s\n", str);
+		// printf("%c\n", mass.buf[4]);
+		if(mass.buf[4] == ' ')
+		{
+			str = ft_substr(mass.buf, 5, len);
+			printf("%s\n", str);
+		}
+		else
+			printf("command not found\n");
 	}
 	//тут не будет аргументов, нужно нафиг убрать стрнстр и сабстр
 	if (ft_strncmp(mass.buf, "pwd", 3) == 0)
