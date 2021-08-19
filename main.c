@@ -61,10 +61,13 @@ int ft_split_commands(t_all mass)
 	//тут не будет аргументов, нужно нафиг убрать стрнстр и сабстр
 	if (ft_strncmp(mass.buf, "pwd", 3) == 0)
 	{
-		str = ft_substr(mass.buf, 3, ft_strlen(mass.buf));
-		ft_pwd();
-		// path = getcwd(buffer, sizeof(buffer));
-		// printf("%s\n", path);
+		// str = ft_strdup(mass.buf);
+		// printf("%s\n", mass.buf);
+		// printf("%c\n", mass.buf[3]);
+		if (mass.buf[3] == ' ' || mass.buf[3] == '\0')
+			ft_pwd();
+		else
+			printf("command not found\n");
 	}
 		//printf("pwd: %s\n", str);
 	if (ft_strncmp(mass.buf, "cd", 2) == 0)
