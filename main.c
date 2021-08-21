@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "struct.h"
 
 
@@ -15,7 +10,7 @@ void ft_pwd(void)
 	printf("%s\n", path);
 }
 
-void ft_cd(char *str)
+void ft_cd(t_all mass)
 {
 	//chdir - сменить текущий каталог
 	//Возвращается  0  в случае  успеха  и -1 в противном случае с установлением errno.
@@ -26,7 +21,7 @@ void ft_cd(char *str)
 	ft_pwd();
 	// printf("cd_str: %s\n", str);
 	//path_s = ft_strjoin (path, str);
-	res = chdir(str);
+	res = chdir(mass.tmp[1]);
 	printf("res: %d\n", res);
 	if(res != 0)
 		printf("Не могу перейти к каталогу\n");
@@ -36,86 +31,57 @@ void ft_cd(char *str)
 
 int ft_split_commands(t_all mass)
 {
-	char *str = NULL;
-	// char *tmp = NULL;
-	// // // char *str_sym;
-	// // // str_sym = ">, >>";
-	// // // char q = 34;
 	int i = 0;
-	int spaces = 0;
-	int len = 0;
-	// char *buffer = NULL;
 	char *home;
-	//echo     4444 - kill spaces
-	if(ft_strncmp(mass.buf, "echo", 4) == 0)
+	int j = 0;
+
+	j = words_count(mass.buf, ' ');
+	mass.tmp = ft_split(mass.buf, ' ');
+	printf("tmp0:%s\n", mass.tmp[0]);
+	if(ft_strncmp(mass.tmp[0], "echo", 4) == 0)
 	{
-		// while (mass.buf[i])
-		// {
-		// 	if(mass.buf[i] == ' ')
-		// 		spaces++;
-		// 	i++;
-		// }
-		// len = ft_strlen(mass.buf) - spaces;
-		// printf("%c\n", mass.buf[4]);
-		if (ft_strlen(mass.buf) == 4)
+		if(j == 1)
 		{
-			str = ft_substr(mass.buf, 5, ft_strlen(mass.buf));
-			printf("%s\n", str);
+			if (ft_strlen(mass.tmp[0]) == 4)
+				printf("\n");
+			else
+				printf("command not found\n");
 		}
-		else if(mass.buf[4] == ' ')
+		else if(j > 1)
 		{
-			while (mass.buf[i])
+			j = j - 1;
+			printf("j: %d\n", j);
+			while (mass.tmp[i + 1])
 			{
-				if(mass.buf[i] == ' ')
-					spaces++;
+				printf("%s ", mass.tmp[i + 1]);
 				i++;
 			}
-			// if (mass.buf[i] == ' ' && mass.buf[i] + 1 == ' ')
-
-			printf("spaces: %d\n", spaces);
-			str = ft_substr(mass.buf, 5, ft_strlen(mass.buf));
-			printf("%s\n", str);
+			//write(1, "\n", 1);
+			printf("\n");
 		}
-		else
-			printf("command not found\n");
 	}
-	//тут не будет аргументов, нужно нафиг убрать стрнстр и сабстр
-	if (ft_strncmp(mass.buf, "pwd", 3) == 0)
+	if (ft_strncmp(mass.tmp[0], "pwd", 3) == 0)
 	{
-		// str = ft_strdup(mass.buf);
-		// printf("%s\n", mass.buf);
-		// printf("%c\n", mass.buf[3]);
-		if (mass.buf[3] == ' ' || mass.buf[3] == '\0')
+		if (ft_strlen(mass.tmp[0]) == 3)
 			ft_pwd();
 		else
 			printf("command not found\n");
 	}
-		//printf("pwd: %s\n", str);
-	if (ft_strncmp(mass.buf, "cd", 2) == 0)
+	if (ft_strncmp(mass.tmp[0], "cd", 2) == 0)
 	{
-		while (mass.buf[i])
+		if(j == 1)
 		{
-			if(mass.buf[i] == ' ')
-				spaces++;
-			i++;
+			if(ft_strlen(mass.tmp[0]) == 2)
+			{
+				home = getenv("HOME");
+				chdir(home);
+			}
 		}
-		if(ft_strlen(mass.buf) == 2)
-		{
-			home = getenv("HOME");
-			chdir(home);
-		}
+		else if (j == 2)
+			ft_cd(mass);
 		else
-		{
-			printf("sp: %d\n", spaces);
-			len = ft_strlen(mass.buf) - spaces;
-			str = ft_substr(mass.buf, 3, len);
-			printf("cd_str:%s\n", str);
-			ft_cd(str);
-		}
+			printf("No such file or directory\n");
 	}
-	// 	i++;
-	// }
-
 	return (0);
 }
 
