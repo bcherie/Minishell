@@ -16,5 +16,8 @@ typedef struct		s_all
 }				t_all;
 
 size_t	words_count(char const *s, char sp);
+void  ft_echo(t_all mass, int j);
+void ft_pwd(void);
+void ft_cd(t_all mass, int j);
 
 #endif
