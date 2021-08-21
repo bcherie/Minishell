@@ -22,16 +22,16 @@ void ft_cd(char *str)
 	// просто cd - переходит на уровень учетки
 	int res;
 
-	char *path_s;
+	//char *path_s;
 	ft_pwd();
 	// printf("cd_str: %s\n", str);
-	path_s = ft_strjoin (path, str);
-	res = chdir(path_s);
+	//path_s = ft_strjoin (path, str);
+	res = chdir(str);
 	printf("res: %d\n", res);
 	if(res != 0)
-		printf("Не могу перейти к каталогу %s\n", path_s);
-	else
-		printf("%s\n", path_s);
+		printf("Не могу перейти к каталогу\n");
+	// else
+	// 	printf("%s\n", path_s);
 }
 
 int ft_split_commands(t_all mass)
@@ -46,19 +46,34 @@ int ft_split_commands(t_all mass)
 	int len = 0;
 	// char *buffer = NULL;
 	char *home;
+	//echo     4444 - kill spaces
 	if(ft_strncmp(mass.buf, "echo", 4) == 0)
 	{
-		while (mass.buf[i])
-		{
-			if(mass.buf[i] == ' ')
-				spaces++;
-			i++;
-		}
-		len = ft_strlen(mass.buf) - spaces;
+		// while (mass.buf[i])
+		// {
+		// 	if(mass.buf[i] == ' ')
+		// 		spaces++;
+		// 	i++;
+		// }
+		// len = ft_strlen(mass.buf) - spaces;
 		// printf("%c\n", mass.buf[4]);
-		if(mass.buf[4] == ' ')
+		if (ft_strlen(mass.buf) == 4)
 		{
-			str = ft_substr(mass.buf, 5, len);
+			str = ft_substr(mass.buf, 5, ft_strlen(mass.buf));
+			printf("%s\n", str);
+		}
+		else if(mass.buf[4] == ' ')
+		{
+			while (mass.buf[i])
+			{
+				if(mass.buf[i] == ' ')
+					spaces++;
+				i++;
+			}
+			// if (mass.buf[i] == ' ' && mass.buf[i] + 1 == ' ')
+
+			printf("spaces: %d\n", spaces);
+			str = ft_substr(mass.buf, 5, ft_strlen(mass.buf));
 			printf("%s\n", str);
 		}
 		else
@@ -94,7 +109,6 @@ int ft_split_commands(t_all mass)
 			printf("sp: %d\n", spaces);
 			len = ft_strlen(mass.buf) - spaces;
 			str = ft_substr(mass.buf, 3, len);
-			str = ft_strjoin("/", str);
 			printf("cd_str:%s\n", str);
 			ft_cd(str);
 		}
