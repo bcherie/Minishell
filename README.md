@@ -17,3 +17,5 @@ git push origin master
 git push origin <название ветки>
 
 Подробнее смотри статью: https://webdevkin.ru/courses/git/git-branch
+
+TODO: new branch
