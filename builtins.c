@@ -1,8 +1,20 @@
 #include "struct.h"
 
+void echo_n(t_all mass, int j, int i)
+{
+	j = j - 2;
+	printf("j: %d\n", j);
+	while (mass.tmp[i + 2])
+	{
+		printf("%s ", mass.tmp[i + 2]);
+		i++;
+	}
+}
+
 void	ft_echo(t_all mass, int j)
 {
 	int i;
+	//прописать тут флаг -n
 
 	i = 0;
 	if(j == 1)
@@ -14,14 +26,19 @@ void	ft_echo(t_all mass, int j)
 	}
 	else if(j > 1)
 	{
-		j = j - 1;
-		printf("j: %d\n", j);
-		while (mass.tmp[i + 1])
+		if (!(ft_strnstr(mass.tmp[1], "-n", ft_strlen(mass.tmp[1]))))
 		{
-			printf("%s ", mass.tmp[i + 1]);
-			i++;
+			j = j - 1;
+			printf("j: %d\n", j);
+			while (mass.tmp[i + 1])
+			{
+				printf("%s ", mass.tmp[i + 1]);
+				i++;
+			}
+			printf("\n");
 		}
-		printf("\n");
+		else
+			echo_n(mass, j , i);
 	}
 }
 

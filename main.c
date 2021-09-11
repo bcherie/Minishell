@@ -20,6 +20,7 @@ int ft_split_commands(t_all mass)
 	}
 	if (ft_strncmp(mass.tmp[0], "cd", 2) == 0)
 		ft_cd(mass, j);
+		
 	return (0);
 }
 
