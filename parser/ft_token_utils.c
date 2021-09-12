@@ -27,19 +27,28 @@ t_tokens *ft_token_create(void)
 	return (token);
 }
 
-t_tokens *ft_token_add(t_tokens *head, t_tokens *new)
+t_tokens *ft_token_add(t_all *mass)
 {
-	int			index;
 	t_tokens	*tmp;
+	t_tokens	*new;
 
-	index = 0;
 	tmp = NULL;
-	tmp = head;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new;
-	new->prev = tmp;
-	tmp->next->index = tmp->index + 1;
+	new = ft_token_create();
+	if(mass->tokens == NULL)
+	{
+		mass->tokens = new;
+		mass->tokens->index = 0;
+	}
+	else
+	{
+		tmp = mass->tokens;
+		while (tmp->next != NULL)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+		new->index = tmp->index + 1;
+	}
+	return (new);
 }
 
 void	ft_token_clean(t_tokens *head)
@@ -47,7 +56,7 @@ void	ft_token_clean(t_tokens *head)
 	t_tokens *tmp;
 
 	if (head == NULL)
-		return (NULL);
+		return ;
 	tmp = head;
 	while (tmp->next != NULL)
 	{

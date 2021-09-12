@@ -29,10 +29,10 @@ void	ft_echo(t_all mass, int j)
 		if (!(ft_strnstr(mass.tmp[1], "-n", ft_strlen(mass.tmp[1]))))
 		{
 			j = j - 1;
-			printf("j: %d\n", j);
+			//printf("j: %d\n", j);
 			while (mass.tmp[i + 1])
 			{
-				printf("%s ", mass.tmp[i + 1]);
+				//printf("%s ", mass.tmp[i + 1]);
 				i++;
 			}
 			printf("\n");
@@ -41,6 +41,14 @@ void	ft_echo(t_all mass, int j)
 			echo_n(mass, j , i);
 	}
 }
+// void	ft_echo(t_all *mass)
+// {
+// 	int i;
+// 	//прописать тут флаг -n
+
+// 	i = 0;
+// 	mass->tockens.type
+// }
 
 void ft_pwd(void)
 {
