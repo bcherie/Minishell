@@ -1,5 +1,5 @@
 NAME = minishell
-D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, parser))
+D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, parser token_decompose token_utils token_utils2))
 SRCS =	main.c parser.c builtins.c $(D_PARSE)
 
 OBJS = $(SRCS:.c=.o)

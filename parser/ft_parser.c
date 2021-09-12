@@ -1,4 +1,5 @@
 #include "../minishell.h"
+
 static void ft_print_substr(t_all *mass)
 {
 	int i;
@@ -93,4 +94,5 @@ void	ft_parser(t_all *mass)
 	if (ft_pars_quotes(mass->buf, mass) == -1)
 		exit(-1);
 	ft_print_substr(mass);
+	
 }
