@@ -10,8 +10,10 @@
 
 typedef struct		s_all
 {
-	char *buf;
-	char **tmp;
+	char	*buf;
+	char	**tmp;
+	int		*substr_inds;
+	int		count_sym;
 
 }				t_all;
 
@@ -19,11 +21,8 @@ typedef struct		s_protos
 {
 	char c;
 	struct s_protos *next_node;
-	//char car**leaf;
+	//char car**leaf;ё	
 	int leaf_n;
-
-
-
 }					t_protos;
 
 
@@ -32,5 +31,7 @@ void  ft_echo(t_all mass, int j);
 void ft_pwd(void);
 void ft_cd(t_all mass, int j);
 void echo_n(t_all mass, int j, int i);
+
+void	ft_parser(t_all *mass);
 
 #endif

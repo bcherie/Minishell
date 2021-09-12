@@ -1,9 +1,9 @@
-#include "struct.h"
+#include "minishell.h"
 
 void echo_n(t_all mass, int j, int i)
 {
 	j = j - 2;
-	printf("j: %d\n", j);
+	//printf("j: %d\n", j);
 	while (mass.tmp[i + 2])
 	{
 		printf("%s ", mass.tmp[i + 2]);

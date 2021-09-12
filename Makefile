@@ -1,6 +1,6 @@
 NAME = minishell
-
-SRCS =	main.c parser.c builtins.c
+D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, parser))
+SRCS =	main.c parser.c builtins.c $(D_PARSE)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -16,7 +16,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@make -C libft
-			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -L/Users/bcherie/.brew/Cellar/readline/8.1/lib/ -I/Users/jkeitha/.brew/Cellar/readline/8.1/include -lreadline
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -L/Users/droro/.brew/Cellar/readline/8.1/lib/ -I/Users/droro/.brew/Cellar/readline/8.1/include -lreadline
 
 run:		$(NAME)
 			@./$(NAME)

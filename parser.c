@@ -7,7 +7,7 @@
 // текст, слитный с командой - ршибка
 
 
-#include "struct.h"
+#include "minishell.h"
 
 
 size_t	words_count(char const *s, char sp)
@@ -25,10 +25,3 @@ size_t	words_count(char const *s, char sp)
 	}
 	return (words);
 }
-
-// void parser(t_all mass)
-// {
-
-
-
-// }
