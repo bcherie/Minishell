@@ -186,7 +186,9 @@ int	ft_token_decompose(t_all *mass)
 				u.n_st  = ft_spacekill(mass->buf, u.n_st, u.end);
 				if (fpf_strchr("<>|", mass->buf[u.n_st]))
 				{
+					//
 					ft_checkkeysym(mass->buf, &u);
+					//
 					if (u.i_count <= 0)
 					{
 						//значит пайп или редирект невалиден
@@ -211,6 +213,7 @@ int	ft_token_decompose(t_all *mass)
 						u.c_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
 						mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.c_end - u.n_st + 1);
 						tmp_token->container = mass->tmp[1];
+						tmp_token->type = 'c';
 						u.flag_find_command = 0;
 						u.n_st = u.c_end + 1;
 					}
@@ -221,6 +224,7 @@ int	ft_token_decompose(t_all *mass)
 							tmp_token = ft_token_add(mass);
 							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
 							tmp_token->container = mass->tmp[1];
+							tmp_token->type = 'a';
 							u.flag_token_join = 1;
 						}
 						else
@@ -268,12 +272,11 @@ int	ft_token_decompose(t_all *mass)
 		printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
 		tmp2 = tmp2->next;
 	}
-	//	pipe
-	//	redirect
+	// cleaner
+	// start from ""
+	// one sym after ' " - ('d)
 	//	flag / tilda
 	// 	dollar
-	//	space
-	// 	words
 	return (0);
 }
 
