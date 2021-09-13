@@ -28,14 +28,14 @@ int main (void)
 	t_all mass;
 	mass.buf = NULL;
 
-	while (1)
-	{
-		mass.buf = readline("Minishell: ");
-		//mass.buf = "sdfsdf \" ss\"";
+	// while (1)
+	// {
+		//mass.buf = readline("Minishell: ");
+		mass.buf = "echo\" \"X";
 		if (ft_strlen(mass.buf) > 0)
 			add_history(mass.buf);
 		ft_parser(&mass);
 		// ft_split_commands(mass);
-	}
+	// }
 	return (0);
 }
