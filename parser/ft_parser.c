@@ -1,19 +1,19 @@
 #include "../minishell.h"
 
-static void ft_print_substr(t_all *mass)
-{
-	int i;
+// static void ft_print_substr(t_all *mass)
+// {
+// 	// int i;
 
-	i = 2;
-	write(1, &mass->buf[mass->sub_indx[0]], mass->sub_indx[1] - mass->sub_indx[0] + 1);
-	write(1,"\n", 1);
-	while(mass->sub_indx[i] != 0)
-	{
-		write(1, &mass->buf[mass->sub_indx[i]], mass->sub_indx[i + 1] - mass->sub_indx[i] + 1);
-		i = i + 2;
-		write(1,"\n", 1);
-	}
-}
+// 	// i = 2;
+// 	// write(1, &mass->buf[mass->sub_indx[0]], mass->sub_indx[1] - mass->sub_indx[0] + 1);
+// 	// write(1,"\n", 1);
+// 	// while(mass->sub_indx[i] != 0)
+// 	// {
+// 	// 	write(1, &mass->buf[mass->sub_indx[i]], mass->sub_indx[i + 1] - mass->sub_indx[i] + 1);
+// 	// 	i = i + 2;
+// 	// 	write(1,"\n", 1);
+// 	// }
+// }
 
 static void	ft_subsr_index_dec(char sym, int ind, int *i_substr, t_all *mass)
 {
@@ -93,6 +93,6 @@ void	ft_parser(t_all *mass)
 	ft_bzero(mass->sub_indx, mass->count_sym);
 	if (ft_pars_quotes(mass->buf, mass) == -1)
 		exit(-1);
-	ft_print_substr(mass);
+	//ft_print_substr(mass);
 	ft_token_decompose(mass);
 }

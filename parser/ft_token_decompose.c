@@ -70,10 +70,12 @@ int ft_checkkeysym(char *buf, t_utils *u)
 		i++;
 	}
 	if ((sym == '<' || sym == '>') && counter > 2)
-		return (0);
-	if (sym == '|' && counter != 1)
-		return (0);
-	u->i_count = counter;
+		u->i_count = 0;
+	else if (sym == '|' && counter != 1)
+		u->i_count = 0;
+	else
+		u->i_count = counter;
+	u->i_keyshift = i;
 	return (i);
 }
 
@@ -177,15 +179,15 @@ int	ft_token_decompose(t_all *mass)
 		u.n_st = u.st;
 		u.n_end = u.end;
 		ret = ft_pretoken_check(mass->buf, u.st, u.end);
-		while (u.n_st <= u.end)
+		while (u.n_st < u.end)
 		{
 			if (ret == 2)
 			{
-				u.n_st  = ft_spacekill(mass->buf, u.st, u.end);
+				u.n_st  = ft_spacekill(mass->buf, u.n_st, u.end);
 				if (fpf_strchr("<>|", mass->buf[u.n_st]))
 				{
 					ft_checkkeysym(mass->buf, &u);
-					if (u.i_keyshift <= 0)
+					if (u.i_count <= 0)
 					{
 						//значит пайп или редирект невалиден
 						//или значения были ложными, короче что-то пошло не так
@@ -217,15 +219,15 @@ int	ft_token_decompose(t_all *mass)
 						if (u.flag_token_join == 0)
 						{
 							tmp_token = ft_token_add(mass);
-							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.c_end - u.n_st + 1);
+							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
 							tmp_token->container = mass->tmp[1];
 							u.flag_token_join = 1;
 						}
 						else
 						{
 							mass->tmp[2] = mass->tmp[1];
-							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.c_end - u.n_st + 1);
-							tmp_token->container = ft_strjoin(mass->tmp[1], tmp_token->container);
+							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
+							tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
 							free(mass->tmp[1]);
 							free(mass->tmp[2]);
 						}
@@ -237,18 +239,35 @@ int	ft_token_decompose(t_all *mass)
 			{
 				u.n_st++;
 				u.n_end--;
-				mass->tmp[2] = mass->tmp[1];
-				mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.c_end - u.n_st + 1);
-				tmp_token->container = ft_strjoin(mass->tmp[1], tmp_token->container);
-				free(mass->tmp[1]);
-				free(mass->tmp[2]);
+				if (u.flag_token_join == 0)
+				{
+					tmp_token = ft_token_add(mass);
+					mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
+					tmp_token->container = mass->tmp[1];
+					u.flag_token_join = 1;
+				}
+				else
+				{
+					mass->tmp[2] = mass->tmp[1];
+					mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
+					tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
+					free(mass->tmp[1]);
+					free(mass->tmp[2]);
+				}
+				u.n_st = u.n_end + 2;
 			}
 		}
 		i = i + 2;
 		u.iter++;
 	}
-	
-	printf("\nDecomposed_tmp: %s\n", tmp_token->container);
+	t_tokens *tmp2;
+
+	tmp2 = mass->tokens;
+	while (tmp2 != NULL)
+	{
+		printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
+		tmp2 = tmp2->next;
+	}
 	//	pipe
 	//	redirect
 	//	flag / tilda
