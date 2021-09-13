@@ -9,6 +9,7 @@
 //R - redirect - right >>
 //l - redirect - left <
 //L - redirect - left <<
+//x - blank
 
 t_tokens *ft_token_create(void)
 {
@@ -20,10 +21,8 @@ t_tokens *ft_token_create(void)
 		return (NULL);
 	token->next = NULL;
 	token->prev = NULL;
-	token->type = 't';
+	token->type = 'x';
 	token->index = 0;
-	token->range = 0;
-	token->direction = 'r';
 	return (token);
 }
 

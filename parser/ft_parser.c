@@ -5,11 +5,11 @@ static void ft_print_substr(t_all *mass)
 	int i;
 
 	i = 2;
-	write(1, &mass->buf[mass->substr_inds[0]], mass->substr_inds[1] - mass->substr_inds[0] + 1);
+	write(1, &mass->buf[mass->sub_indx[0]], mass->sub_indx[1] - mass->sub_indx[0] + 1);
 	write(1,"\n", 1);
-	while(mass->substr_inds[i] != 0)
+	while(mass->sub_indx[i] != 0)
 	{
-		write(1, &mass->buf[mass->substr_inds[i]], mass->substr_inds[i + 1] - mass->substr_inds[i] + 1);
+		write(1, &mass->buf[mass->sub_indx[i]], mass->sub_indx[i + 1] - mass->sub_indx[i] + 1);
 		i = i + 2;
 		write(1,"\n", 1);
 	}
@@ -20,27 +20,27 @@ static void	ft_subsr_index_dec(char sym, int ind, int *i_substr, t_all *mass)
 	if (*i_substr == 0 && ind != 0)
 	{
 		(*i_substr)++;
-		mass->substr_inds[*i_substr] = ind - 1;
+		mass->sub_indx[*i_substr] = ind - 1;
 		(*i_substr)++;
-		mass->substr_inds[*i_substr] = ind;
+		mass->sub_indx[*i_substr] = ind;
 	}
 	else if (*i_substr % 2 != 0)
 	{
-		if (mass->buf[mass->substr_inds[*i_substr - 1]] == sym)
+		if (mass->buf[mass->sub_indx[*i_substr - 1]] == sym)
 		{
-			mass->substr_inds[*i_substr] = ind;
+			mass->sub_indx[*i_substr] = ind;
 			(*i_substr)++;
-			mass->substr_inds[*i_substr] = ind + 1;
+			mass->sub_indx[*i_substr] = ind + 1;
 		}
 		else
 		{
-			mass->substr_inds[*i_substr] = ind - 1;
+			mass->sub_indx[*i_substr] = ind - 1;
 			(*i_substr)++;
-			mass->substr_inds[*i_substr] = ind;
+			mass->sub_indx[*i_substr] = ind;
 		}
 	}
 	else
-		mass->substr_inds[*i_substr] = ind;
+		mass->sub_indx[*i_substr] = ind;
 	(*i_substr)++;
 }
 
@@ -73,7 +73,7 @@ int		ft_pars_quotes(char *line, t_all *mass)
 			if (line[index] == '\0')
 			{
 				printf("Possible Multiline\n");
-				free(mass->substr_inds);
+				free(mass->sub_indx);
 				return (-1);
 			}
 		}
@@ -88,9 +88,9 @@ void	ft_parser(t_all *mass)
 {
 	//добавьте обработку случая на 0 символов
 	mass->count_sym = ft_strlen(mass->buf);
-	mass->substr_inds = (int*)malloc(sizeof(int) * mass->count_sym);
-	mass->substr_inds[0] = 0;
-	ft_bzero(mass->substr_inds, mass->count_sym);
+	mass->sub_indx = (int*)malloc(sizeof(int) * mass->count_sym);
+	mass->sub_indx[0] = 0;
+	ft_bzero(mass->sub_indx, mass->count_sym);
 	if (ft_pars_quotes(mass->buf, mass) == -1)
 		exit(-1);
 	ft_print_substr(mass);

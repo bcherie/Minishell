@@ -14,21 +14,34 @@ typedef struct		s_tokens
 	struct	s_tokens *prev;
 	char	type;
 	int		index;
-	int		range;
-	char	direction;
 	char	*container;
-	char	redir;
-	char	pipe;
 }					t_tokens;
 
-typedef struct		s_all
+typedef struct	s_utils
+{
+	int			st;
+	int			n_st;
+	int 		end;
+	int			n_end;
+	int			flag_token_join;
+	int			flag_find_command;
+	int			i_keyshift;
+	int			i_count;
+	int			iter;
+	int			c_end;
+}				t_utils;
+
+typedef struct	s_all
 {
 	char		*buf;
 	char		**tmp;
-	int			*substr_inds;
+	int			*sub_indx;
 	int			count_sym;
 	t_tokens	*tokens;
+	int			number_of_pretokens;
 }				t_all;
+
+
 
 size_t	words_count(char const *s, char sp);
 void  ft_echo(t_all mass, int j);
