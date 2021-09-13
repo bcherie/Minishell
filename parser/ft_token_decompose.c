@@ -277,6 +277,8 @@ int	ft_token_decompose(t_all *mass)
 	// one sym after ' " - ('d)
 	//	flag / tilda
 	// 	dollar
+	// < file cat
+	// --n
 	return (0);
 }
 
