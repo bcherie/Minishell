@@ -30,8 +30,8 @@ int main (void)
 
 	// while (1)
 	// {
-		//mass.buf = readline("Minishell: ");
-		mass.buf = "echo\" \"X";
+		mass.buf = readline("Minishell: ");
+		//mass.buf = "echo\" \"Xa";
 		if (ft_strlen(mass.buf) > 0)
 			add_history(mass.buf);
 		ft_parser(&mass);

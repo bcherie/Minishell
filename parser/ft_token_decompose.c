@@ -170,7 +170,7 @@ int	ft_token_decompose(t_all *mass)
 	u.iter = 0;
 	u.flag_find_command = 1;
 	u.flag_token_join = 0;
-	//
+	//ec"ho"gffdg
 	//token_differentiator
 	while(ret > 0 && u.iter < mass->number_of_pretokens)
 	{
@@ -279,6 +279,10 @@ int	ft_token_decompose(t_all *mass)
 	// 	dollar
 	// < file cat
 	// --n
+	// ec"ho"gffdg
+	// echo AAAA > new.txte jhjqhweljqwje
+	// >> 111 echo ASDFGHHJ
+	// echo 1234"567""'$USER'"
 	return (0);
 }
 

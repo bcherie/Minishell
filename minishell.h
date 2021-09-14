@@ -51,7 +51,7 @@ void ft_cd(t_all mass, int j);
 void echo_n(t_all mass, int j, int i);
 
 t_tokens	*ft_token_create(void);
-t_tokens *ft_token_add(t_all *mass);
+t_tokens 	*ft_token_add(t_all *mass);
 void		ft_token_clean(t_tokens *head);
 int			fpf_strchr(const char *s, int c);
 
