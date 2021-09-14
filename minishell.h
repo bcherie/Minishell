@@ -23,7 +23,6 @@ typedef struct	s_utils
 	int			n_st;
 	int 		end;
 	int			n_end;
-	int			c_end;
 	int			flag_token_join;
 	int			flag_find_command;
 	int			flag_find_file;

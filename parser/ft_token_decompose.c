@@ -50,6 +50,20 @@ int ft_findcommand(char *buf, int start, int end)
 	return (ret_end);
 }
 
+void ft_checkkeysym_assist(char sym, int counter, t_utils *u, char *buf)
+{
+	u->i_count = counter;
+	if (sym == '<' || sym == '>')
+	{
+		if (counter > 2)
+			u->i_count = 0;
+		if (counter == 2 && buf[u->n_st + 1] != sym)
+			u->i_count = 0;
+	}
+	else if (sym == '|' && counter != 1)
+		u->i_count = 0;		
+}
+
 int ft_checkkeysym(char *buf, t_utils *u)
 {
 	int		i;
@@ -69,12 +83,7 @@ int ft_checkkeysym(char *buf, t_utils *u)
 			counter++;
 		i++;
 	}
-	if ((sym == '<' || sym == '>') && counter > 2)
-		u->i_count = 0;
-	else if (sym == '|' && counter != 1)
-		u->i_count = 0;
-	else
-		u->i_count = counter;
+	ft_checkkeysym_assist(sym, counter, u, buf);
 	u->i_keyshift = i;
 	return (i);
 }
@@ -153,6 +162,19 @@ void ft_pretoken_count(t_all *mass)
 	}
 	mass->number_of_pretokens = count;
 }
+void ft_init_utils_struct(t_utils *u)
+{
+	u->iter = 0;
+	u->flag_find_command = 1;
+	u->flag_token_join = 0;
+	u->flag_find_file = 0;
+	u->i_keyshift = 0;
+	u->i_count = 0;
+	u->st = 0;
+	u->n_st = 0;
+	u->end = 0;
+	u->n_end = 0;
+}
 
 int	ft_token_decompose(t_all *mass)
 {
@@ -167,12 +189,7 @@ int	ft_token_decompose(t_all *mass)
 	mass->tmp = (char**)malloc(sizeof(char*) * 3);
 	mass->tmp[2] = NULL;
 	ft_pretoken_count(mass);
-	u.iter = 0;
-	u.flag_find_command = 1;
-	u.flag_token_join = 0;
-	u.flag_find_file = 0;
-	//ec"ho"gffdg
-	//token_differentiator
+	ft_init_utils_struct(&u);
 	while(ret > 0 && u.iter < mass->number_of_pretokens)
 	{
 		u.st = mass->sub_indx[i];
