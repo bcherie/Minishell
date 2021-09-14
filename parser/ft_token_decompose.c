@@ -191,22 +191,15 @@ int	ft_token_decompose(t_all *mass)
 					ft_checkkeysym(mass->buf, &u);
 					//
 					if (u.i_count <= 0)
-					{
-						//значит пайп или редирект невалиден
-						//или значения были ложными, короче что-то пошло не так
 						return (-1);
-					}
+						// add cleaner
 					else
 					{
 						tmp_token = ft_token_add(mass);
 						ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
-						if (mass->buf[u.n_st] == '|')
-							u.flag_find_command = 1;
-						else
-						{
+						u.flag_find_command = 1;
+						if (mass->buf[u.n_st] != '|')
 							u.flag_find_file = 1;
-							u.flag_find_command = 0;
-						}
 						u.flag_token_join = 0;
 						u.n_st = u.i_keyshift;					
 					}
@@ -214,58 +207,19 @@ int	ft_token_decompose(t_all *mass)
 				else
 				{
 					u.n_end = ft_findrange(mass->buf, u.n_st, u.end);
-					if (u.flag_find_command == 1)
-					{
-						tmp_token = ft_token_add(mass);
-						u.c_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
-						mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.c_end - u.n_st + 1);
-						tmp_token->container = mass->tmp[1];
-						tmp_token->type = 'c';
-						u.flag_find_command = 0;
-						u.n_st = u.c_end + 1;
-					}
-					else
-					{
-						if (u.flag_token_join == 0)
-						{
-							tmp_token = ft_token_add(mass);
-							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
-							tmp_token->container = mass->tmp[1];
-							tmp_token->type = 'a';
-							u.flag_token_join = 1;
-						}
-						else
-						{
-							mass->tmp[2] = mass->tmp[1];
-							mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
-							tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
-							free(mass->tmp[1]);
-							free(mass->tmp[2]);
-						}
-						u.n_st = u.n_end + 1;
-					}
+					u.n_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
+					if (ft_token_former(mass, &u) == 0)
+						return (-1);
 				}
 			}
 			else if (ret == 1)
 			{
+				ft_token_join_test(mass, &u);
 				u.n_st++;
 				u.n_end--;
-				if (u.flag_token_join == 0)
-				{
-					tmp_token = ft_token_add(mass);
-					mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
-					tmp_token->container = mass->tmp[1];
-					u.flag_token_join = 1;
-				}
-				else
-				{
-					mass->tmp[2] = mass->tmp[1];
-					mass->tmp[1] = ft_substr(mass->buf, u.n_st, u.n_end - u.n_st + 1);
-					tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
-					free(mass->tmp[1]);
-					free(mass->tmp[2]);
-				}
-				u.n_st = u.n_end + 2;
+				if (ft_token_former(mass, &u) == 0)
+					return (-1);
+				u.n_st++;
 			}
 		}
 		i = i + 2;

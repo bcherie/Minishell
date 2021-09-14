@@ -54,12 +54,18 @@ void echo_n(t_all mass, int j, int i);
 t_tokens	*ft_token_create(void);
 t_tokens 	*ft_token_add(t_all *mass);
 void		ft_token_clean(t_tokens **head);
-int			fpf_strchr(const char *s, int c);
-
+int			ft_token_former(t_all *mass, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
 int			ft_token_decompose(t_all *mass);
+void		ft_token_name(t_tokens *tmp_token, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
+
+
+
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
 
 void		ft_parser(t_all *mass);
+int			fpf_strchr(const char *s, int c);
 
 #endif
