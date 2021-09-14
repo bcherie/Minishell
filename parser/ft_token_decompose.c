@@ -143,7 +143,7 @@ void ft_pretoken_count(t_all *mass)
 	checker = 1;
 	while (checker == 1)
 	{
-		if (mass->buf[mass->sub_indx[i]] == '\0' || mass->buf[mass->sub_indx[i] + 1] == '\0')
+		if (mass->buf[mass->sub_indx[i]] == '\0' || mass->buf[mass->sub_indx[i + 1]] == '\0')
 			checker = 0;
 		else
 		{
@@ -220,6 +220,7 @@ int	ft_token_decompose(t_all *mass)
 				u.n_end--;
 				if (ft_token_former(mass, &u) == 0)
 					return (-1);
+				u.flag_token_join = 0;
 				u.n_st++;
 			}
 		}
@@ -236,8 +237,6 @@ int	ft_token_decompose(t_all *mass)
 	}
 	ft_token_clean(&(mass->tokens));
 	// global cleaner
-	// start from ""
-	// one sym after ' " - ('d)
 	//	flag / tilda
 	// 	dollar
 	// < file cat

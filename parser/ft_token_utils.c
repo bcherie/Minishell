@@ -131,7 +131,6 @@ void	ft_token_name(t_tokens *tmp_token, t_utils *u)
 	{	
 		u->flag_find_file = 0;
 		tmp_token->type= 'f';
-		u->flag_find_command = 1;
 	}
 	else if (u->flag_find_command == 1)
 	{
