@@ -180,7 +180,7 @@ int	ft_token_decompose(t_all *mass)
 		u.n_st = u.st;
 		u.n_end = u.end;
 		ret = ft_pretoken_check(mass->buf, u.st, u.end);
-		while (u.n_st < u.end)
+		while (u.n_st <= u.end)
 		{
 			if (ret == 2)
 			{
@@ -197,8 +197,9 @@ int	ft_token_decompose(t_all *mass)
 					{
 						tmp_token = ft_token_add(mass);
 						ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
-						u.flag_find_command = 1;
-						if (mass->buf[u.n_st] != '|')
+						if (mass->buf[u.n_st] == '|')
+							u.flag_find_command = 1;
+						else
 							u.flag_find_file = 1;
 						u.flag_token_join = 0;
 						u.n_st = u.i_keyshift;					

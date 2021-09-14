@@ -92,15 +92,15 @@ int		ft_token_former(t_all *mass, t_utils *u)
 	}
 	else
 	{
-		mass->tmp[1] = mass->tmp[0];
-		mass->tmp[0] = ft_substr(mass->buf, u->n_st, u->n_end - u->n_st + 1);
+		mass->tmp[2] = mass->tmp[1];
+		mass->tmp[1] = ft_substr(mass->buf, u->n_st, u->n_end - u->n_st + 1);
 		tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
-		if (mass->tmp[0] != NULL)
-			free(mass->tmp[1]);
 		if (mass->tmp[1] != NULL)
+			free(mass->tmp[1]);
+		if (mass->tmp[2] != NULL)
 			free(mass->tmp[2]);
-		mass->tmp[0] = NULL;
 		mass->tmp[1] = NULL;
+		mass->tmp[2] = NULL;
 	}
 	u->n_st = u->n_end + 1;
 	return (1);
@@ -108,15 +108,20 @@ int		ft_token_former(t_all *mass, t_utils *u)
 
 void	ft_token_join_test(t_all *mass, t_utils *u)
 {
-	char	prev_char;
+	char		prev_char;
+	t_tokens	*last;
 
 	prev_char = 'x';
+	last = ft_find_last_token(mass->tokens);
 	u->flag_token_join = 0;
 	if (u->iter > 0)
 	{
 		prev_char = mass->buf[u->st - 1];
-		if (prev_char == 34 || prev_char == 39 || prev_char != ' ')
-			u->flag_token_join = 1;
+		if (!fpf_strchr("RrLlp", last->type))
+		{
+			if (prev_char == 34 || prev_char == 39 || prev_char != ' ')
+				u->flag_token_join = 1;
+		}
 	}
 }
 
@@ -125,7 +130,8 @@ void	ft_token_name(t_tokens *tmp_token, t_utils *u)
 	if (u->flag_find_file == 1)
 	{	
 		u->flag_find_file = 0;
-		tmp_token->type= 'a';
+		tmp_token->type= 'f';
+		u->flag_find_command = 1;
 	}
 	else if (u->flag_find_command == 1)
 	{
