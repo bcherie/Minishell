@@ -50,18 +50,19 @@ t_tokens *ft_token_add(t_all *mass)
 	return (new);
 }
 
-void	ft_token_clean(t_tokens *head)
+void	ft_token_clean(t_tokens **head)
 {
 	t_tokens *tmp;
 
-	if (head == NULL)
+	if (!head || !(*head))
 		return ;
-	tmp = head;
-	while (tmp->next != NULL)
+	tmp = NULL;
+	while (*head)
 	{
-		head = head->next;
-		free(tmp);
-		tmp = head;
+		tmp = (*head)->next;
+		free((*head)->container);
+		(*head)->container = NULL;
+		free(*head);
+		*head = tmp;
 	}
-	free(tmp);
 }

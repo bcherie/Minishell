@@ -170,6 +170,7 @@ int	ft_token_decompose(t_all *mass)
 	u.iter = 0;
 	u.flag_find_command = 1;
 	u.flag_token_join = 0;
+	u.flag_find_file = 0;
 	//ec"ho"gffdg
 	//token_differentiator
 	while(ret > 0 && u.iter < mass->number_of_pretokens)
@@ -199,9 +200,15 @@ int	ft_token_decompose(t_all *mass)
 					{
 						tmp_token = ft_token_add(mass);
 						ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
-						u.n_st = u.i_keyshift;
-						u.flag_find_command = 1;
+						if (mass->buf[u.n_st] == '|')
+							u.flag_find_command = 1;
+						else
+						{
+							u.flag_find_file = 1;
+							u.flag_find_command = 0;
+						}
 						u.flag_token_join = 0;
+						u.n_st = u.i_keyshift;					
 					}
 				}
 				else
@@ -272,7 +279,8 @@ int	ft_token_decompose(t_all *mass)
 		printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
 		tmp2 = tmp2->next;
 	}
-	// cleaner
+	ft_token_clean(&(mass->tokens));
+	// global cleaner
 	// start from ""
 	// one sym after ' " - ('d)
 	//	flag / tilda

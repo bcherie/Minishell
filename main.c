@@ -30,12 +30,16 @@ int main (void)
 
 	// while (1)
 	// {
-		mass.buf = readline("Minishell: ");
-		//mass.buf = "echo\" \"Xa";
+		// mass.buf = readline("Minishell: ");
+		mass.buf = "echo\" \"Xa";
 		if (ft_strlen(mass.buf) > 0)
 			add_history(mass.buf);
 		ft_parser(&mass);
 		// ft_split_commands(mass);
 	// }
+		mass.buf = "2nd wave";
+		if (ft_strlen(mass.buf) > 0)
+			add_history(mass.buf);
+		ft_parser(&mass);
 	return (0);
 }

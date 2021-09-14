@@ -26,6 +26,7 @@ typedef struct	s_utils
 	int			c_end;
 	int			flag_token_join;
 	int			flag_find_command;
+	int			flag_find_file;
 	int			i_keyshift;
 	int			i_count;
 	int			iter;
@@ -52,7 +53,7 @@ void echo_n(t_all mass, int j, int i);
 
 t_tokens	*ft_token_create(void);
 t_tokens 	*ft_token_add(t_all *mass);
-void		ft_token_clean(t_tokens *head);
+void		ft_token_clean(t_tokens **head);
 int			fpf_strchr(const char *s, int c);
 
 int			ft_token_decompose(t_all *mass);
