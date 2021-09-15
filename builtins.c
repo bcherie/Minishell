@@ -59,14 +59,16 @@ void ft_pwd(void)
 	printf("%s\n", path);
 }
 
-void ft_cd(t_all mass, int j)
+void ft_cd(t_all *mass, t_tokens *tmp)
 {
 	int res;
 	char *home;
+	int i = 0;
+	res = 1;
 
-	if(j == 1)
+	if(mass->a_count == 0)
 	{
-		if(ft_strlen(mass.tmp[0]) == 2)
+		if(ft_strlen(tmp->container) == 2)
 		{
 			home = getenv("HOME");
 			chdir(home);
@@ -74,14 +76,14 @@ void ft_cd(t_all mass, int j)
 		else
 			printf("command not found\n");
 	}
-	else if (j == 2)
+	else if (mass->a_count == 1)
 	{
 		ft_pwd();
-		res = chdir(mass.tmp[1]);
+		res = chdir(mass->args[i]);
 		printf("res: %d\n", res);
 		if(res != 0)
 			printf("Не могу перейти к каталогу\n");
 	}
-	else
-		printf("No such file or directory\n");
+	// else
+	// 	printf("No such file or directory\n");
 }
