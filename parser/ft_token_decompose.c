@@ -156,7 +156,7 @@ void ft_pretoken_count(t_all *mass)
 			checker = 0;
 		else
 		{
-			printf("\nSUBS: indexes 2N - (%d) : (%c) - (%c)", mass->sub_indx[i], mass->buf[mass->sub_indx[i]], mass->buf[mass->sub_indx[i + 1]]);
+			//printf("\nSUBS: indexes 2N - (%d) : (%c) - (%c)", mass->sub_indx[i], mass->buf[mass->sub_indx[i]], mass->buf[mass->sub_indx[i + 1]]);
 			count++;
 			i = i + 2;
 		}
