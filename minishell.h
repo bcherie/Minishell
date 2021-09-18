@@ -23,9 +23,9 @@ typedef struct	s_utils
 	int			n_st;
 	int 		end;
 	int			n_end;
-	int			c_end;
 	int			flag_token_join;
 	int			flag_find_command;
+	int			flag_find_file;
 	int			i_keyshift;
 	int			i_count;
 	int			iter;
@@ -36,9 +36,11 @@ typedef struct	s_all
 	char		*buf;
 	char		**tmp;
 	int			*sub_indx;
+	int			*sub_prev;
 	int			count_sym;
 	t_tokens	*tokens;
 	int			number_of_pretokens;
+	t_utils		u_mass;
 	int			a_count;
 	char		**args;
 }				t_all;
@@ -54,14 +56,20 @@ void echo_n(t_all *mass, t_tokens *tmp);
 void ft_execve(t_all *mass, t_tokens *tmp);
 
 t_tokens	*ft_token_create(void);
-t_tokens *ft_token_add(t_all *mass);
-void		ft_token_clean(t_tokens *head);
-int			fpf_strchr(const char *s, int c);
-
+t_tokens 	*ft_token_add(t_all *mass);
+void		ft_token_clean(t_tokens **head);
+int			ft_token_former(t_all *mass, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
 int			ft_token_decompose(t_all *mass);
+void		ft_token_name(t_tokens *tmp_token, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
+
+
+
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
 
 void		ft_parser(t_all *mass);
+int			fpf_strchr(const char *s, int c);
 
 #endif

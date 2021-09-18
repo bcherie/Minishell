@@ -73,23 +73,30 @@ static void ft_check_comm(t_all *mass)
 			break ;
 		tmp = tmp->next;
 	}
-
 }
 
 int main (void)
 {
-	t_all mass;
-	mass.buf = NULL;
+	t_all	*mass;
 
-	// while (1)
-	// {
-	// 	mass.buf = readline("Minishell: ");
-		mass.buf = "echo ffff -n dsfdsads";
-		if (ft_strlen(mass.buf) > 0)
-			add_history(mass.buf);
-		ft_parser(&mass);
-		// ft_split_commands(mass);
-		ft_check_comm(&mass);
-	// }
-	return (0);
+	mass = (t_all*)malloc(sizeof(t_all));
+	ft_bzero(mass, sizeof(t_all));
+
+	while (1)
+	{
+		mass->buf = readline("Minishell: ");
+		//mass.buf = "e'cho' <file arg";
+		//mass->buf = "0'2''56'|'112'45 789' 1'";
+		if (ft_strlen(mass->buf) > 0)
+		{
+			add_history(mass->buf);
+			ft_parser(mass);
+			ft_check_comm(mass);
+		}
+		if (mass->buf != NULL)
+		{
+			free(mass->buf);
+			mass->buf = NULL;
+		}
+	}
 }
