@@ -82,7 +82,7 @@ int main (void)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			ft_check_comm(&mass);
+			ft_check_comm(mass);
 		}
 		if (mass->buf != NULL)
 		{
