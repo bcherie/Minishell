@@ -51,6 +51,7 @@ void	ft_echo(t_all *mass, t_tokens *tmp);
 void ft_pwd(void);
 void ft_cd(t_all *mass, t_tokens *tmp);
 void echo_n(t_all *mass, t_tokens *tmp);
+void ft_execve(t_all *mass, t_tokens *tmp);
 
 t_tokens	*ft_token_create(void);
 t_tokens *ft_token_add(t_all *mass);
