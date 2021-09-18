@@ -1,4 +1,4 @@
-#include "struct.h"
+#include "minishell.h"
 
 
 void init(t_all mass)
