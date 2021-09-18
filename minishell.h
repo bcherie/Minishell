@@ -41,6 +41,8 @@ typedef struct	s_all
 	t_tokens	*tokens;
 	int			number_of_pretokens;
 	t_utils		u_mass;
+	int			a_count;
+	char		**args;
 }				t_all;
 
 
@@ -49,7 +51,7 @@ size_t	words_count(char const *s, char sp);
 void  ft_echo(t_all mass, int j);
 // void  ft_echo(t_all mass);
 void ft_pwd(void);
-void ft_cd(t_all mass, int j);
+void ft_cd(t_all *mass, t_tokens *tmp);
 void echo_n(t_all mass, int j, int i);
 
 t_tokens	*ft_token_create(void);
