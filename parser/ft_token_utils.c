@@ -79,6 +79,46 @@ t_tokens *ft_find_last_token(t_tokens *head)
 	}
 }
 
+char *ft_dollar_insert(char *line, t_all *mass, t_utils *u)
+{
+	char 	*dollar;
+	char	*substring;
+	char	*newline = NULL;
+	t_utils	t;
+
+	(void)substring;
+	(void)newline;
+	(void)u;
+	ft_bzero(&t, sizeof(t_utils));
+	t.end = ft_strlen(line);
+	t.n_end = t.end;
+	dollar = "";
+	while (line[t.iter] != '\0' && line[t.iter] != '$')
+		t.iter++;
+	if (line[t.iter] == '$')
+	{
+		t.st = t.iter;
+		t.n_st = ++(t.iter);
+		if (fpf_strchr("+.,/ ", line[t.iter]))
+			return (line);
+		else if (fpf_strchr("?0#;", line[t.iter]))
+		{
+			if (line[t.iter] == '#' || line[t.iter] == '?')
+				mass->tmp[0] = ft_strdup("0");
+			else
+				mass->tmp[0] = ft_strdup("minishell");
+		}
+		else if (fpf_strchr("123456789", line[t.iter]))
+			t.n_st = ++(t.iter);
+		while (ft_isalnum(line[t.iter]))
+			t.iter++;
+	}
+	else
+		return (line);
+	return(newline);
+}
+
+
 int		ft_token_former(t_all *mass, t_utils *u)
 {
 	t_tokens	*tmp_token;

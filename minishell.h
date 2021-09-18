@@ -15,6 +15,7 @@ typedef struct		s_tokens
 	char	type;
 	int		index;
 	char	*container;
+	char	**args;
 }					t_tokens;
 
 typedef struct	s_utils
