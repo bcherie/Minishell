@@ -186,7 +186,6 @@ int	ft_token_decompose(t_all *mass)
 
 	i = 0;
 	ret = 1;
-	//building mass->tmp_container
 	mass->tmp = (char**)malloc(sizeof(char*) * 3);
 	mass->tmp[2] = NULL;
 	ft_pretoken_count(mass);
