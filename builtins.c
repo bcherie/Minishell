@@ -1,24 +1,24 @@
 #include "minishell.h"
 
-void ft_execve(t_all *mass, t_tokens *tmp)
-{
-	char *path;
-	char **path_arg;
-	int i;
+// void ft_execve(t_all *mass, t_tokens *tmp)
+// {
+// 	char *path;
+// 	char **path_arg;
+// 	int i;
 
-	i = 0;
-	path = getenv("PATH");
-	path_arg = ft_split(path, ':');
-	//mass->str = path_arg[i];
-	//printf("\npath:%s\n", mass->str);
-	//ft_cd(mass->str);
-	i = chdir("/usr/bin");
-	if (i == 0)
-		printf("sucsess");
-	// printf("\npath:%s\n", tmp);
-	// printf("\npath1:%s, path2:%s\n", path_arg[0], path_arg[1]);
-	//ret = execve("/bin/ls", NULL, NULL);
-}
+// 	i = 0;
+// 	path = getenv("PATH");
+// 	path_arg = ft_split(path, ':');
+// 	//mass->str = path_arg[i];
+// 	//printf("\npath:%s\n", mass->str);
+// 	//ft_cd(mass->str);
+// 	i = chdir("/usr/bin");
+// 	if (i == 0)
+// 		printf("sucsess");
+// 	// printf("\npath:%s\n", tmp);
+// 	// printf("\npath1:%s, path2:%s\n", path_arg[0], path_arg[1]);
+// 	//ret = execve("/bin/ls", NULL, NULL);
+// }
 
 void echo_n(t_all *mass, t_tokens *tmp)
 {
@@ -109,6 +109,11 @@ void ft_cd(t_all *mass, t_tokens *tmp)
 	}
 	else if (mass->a_count == 1)
 	{
+		if(mass->args[0][i] == '~' && ft_strlen(mass->args[i]) == 1)
+		{
+			home = getenv("HOME");
+			chdir(home);
+		}
 		ft_pwd();
 		res = chdir(mass->args[i]);
 		printf("res: %d\n", res);

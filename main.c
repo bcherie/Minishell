@@ -54,8 +54,8 @@ static void check_buildin(t_tokens *tmp, t_all *mass)
 		ft_echo(mass, tmp);
 	// if(ft_strncmp(tmp->container, "export", 6) == 0)
 	// 	ft_export();
-	if(ft_strncmp(tmp->container, "exeve", 5) == 0)
-		ft_execve(mass, tmp);
+	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
+	// 	ft_execve(mass, tmp);
 
 }
 
@@ -92,6 +92,7 @@ int main (void)
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_check_comm(mass);
+			ft_token_clean(&(mass->tokens));
 		}
 		if (mass->buf != NULL)
 		{
