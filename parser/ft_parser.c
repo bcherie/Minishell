@@ -24,7 +24,7 @@ static int	ft_subsr_index_dec(char sym, int *ind, t_all *mass, char *line)
 		(*ind)++;
 	if (line[*ind] == '\0')
 	{
-		printf("Possible Multiline\n");
+		printf("Warning: possible multiline! Program has stopped\n");
 		return (0);
 	}
 	mass->sub_prev[mass->u_mass.iter] = *ind;
@@ -46,6 +46,11 @@ int		ft_pars_quotes(char *line, t_all *mass)
 				return (-1);
 		}
 		ind++;
+	}
+	if (mass->u_mass.iter == 0)
+	{
+		mass->sub_prev[0] = 0;
+		mass->sub_prev[1] = mass->count_sym - 1;
 	}
 	return (0);
 }
@@ -97,6 +102,6 @@ void	ft_parser(t_all *mass)
 	if (ft_pars_quotes(mass->buf, mass) == -1)
 		exit(-1);
 	ft_build_subindex(mass);
-	//ft_print_substr(mass);
+	// ft_print_substr(mass);
 	ft_token_decompose(mass);
 }
