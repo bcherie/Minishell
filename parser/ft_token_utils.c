@@ -21,6 +21,7 @@ t_tokens *ft_token_create(void)
 		return (NULL);
 	token->next = NULL;
 	token->prev = NULL;
+	token->container = NULL;
 	token->type = 'x';
 	token->index = 0;
 	return (token);
@@ -116,10 +117,10 @@ void	ft_token_join_test(t_all *mass, t_utils *u)
 	u->flag_token_join = 0;
 	if (u->iter > 0)
 	{
-		prev_char = mass->buf[u->st - 1];
+		prev_char = mass->buf[u->n_st - 1];
 		if (!fpf_strchr("RrLlp", last->type))
 		{
-			if (prev_char == 34 || prev_char == 39 || prev_char != ' ')
+			if (prev_char != ' ')
 				u->flag_token_join = 1;
 		}
 	}

@@ -36,9 +36,11 @@ typedef struct	s_all
 	char		*buf;
 	char		**tmp;
 	int			*sub_indx;
+	int			*sub_prev;
 	int			count_sym;
 	t_tokens	*tokens;
 	int			number_of_pretokens;
+	t_utils		u_mass;
 }				t_all;
 
 

@@ -16,7 +16,6 @@ int	ft_spacekill(char *buf, int start, int end)
 	new_start = start;
 	while (buf[new_start] == ' ' && new_start < end)
 		new_start++;
-	//можно попать на конец строки!
 	if (buf[new_start] == ' ')
 		new_start++;
 	return (new_start);
@@ -152,10 +151,12 @@ void ft_pretoken_count(t_all *mass)
 	checker = 1;
 	while (checker == 1)
 	{
+		
 		if (mass->buf[mass->sub_indx[i]] == '\0' || mass->buf[mass->sub_indx[i + 1]] == '\0')
 			checker = 0;
 		else
 		{
+			printf("\nSUBS: indexes 2N - (%d) : (%c) - (%c)", mass->sub_indx[i], mass->buf[mass->sub_indx[i]], mass->buf[mass->sub_indx[i + 1]]);
 			count++;
 			i = i + 2;
 		}
@@ -199,46 +200,46 @@ int	ft_token_decompose(t_all *mass)
 		ret = ft_pretoken_check(mass->buf, u.st, u.end);
 		while (u.n_st <= u.end)
 		{
-			if (ret == 2)
-			{
+			if (mass->buf[u.n_st] == ' ')
 				u.n_st  = ft_spacekill(mass->buf, u.n_st, u.end);
-				if (fpf_strchr("<>|", mass->buf[u.n_st]))
+			else
+			{
+				if (ret == 2)
 				{
-					//
-					ft_checkkeysym(mass->buf, &u);
-					//
-					if (u.i_count <= 0)
-						return (-1);
-						// add cleaner
+					if (fpf_strchr("<>|", mass->buf[u.n_st]))
+					{
+						ft_checkkeysym(mass->buf, &u);
+						if (u.i_count <= 0)
+							return (-1);
+						else
+						{
+							tmp_token = ft_token_add(mass);
+							ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
+							if (mass->buf[u.n_st] == '|')
+								u.flag_find_command = 1;
+							else
+								u.flag_find_file = 1;
+							u.n_st = u.i_keyshift;					
+						}
+					}
 					else
 					{
-						tmp_token = ft_token_add(mass);
-						ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
-						if (mass->buf[u.n_st] == '|')
-							u.flag_find_command = 1;
-						else
-							u.flag_find_file = 1;
-						u.flag_token_join = 0;
-						u.n_st = u.i_keyshift;					
+						ft_token_join_test(mass, &u);
+						u.n_end = ft_findrange(mass->buf, u.n_st, u.end);
+						u.n_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
+						if (ft_token_former(mass, &u) == 0)
+							return (-1);
 					}
 				}
-				else
+				else if (ret == 1)
 				{
-					u.n_end = ft_findrange(mass->buf, u.n_st, u.end);
-					u.n_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
+					ft_token_join_test(mass, &u);
+					u.n_st++;
+					u.n_end--;
 					if (ft_token_former(mass, &u) == 0)
 						return (-1);
+					u.n_st++;
 				}
-			}
-			else if (ret == 1)
-			{
-				ft_token_join_test(mass, &u);
-				u.n_st++;
-				u.n_end--;
-				if (ft_token_former(mass, &u) == 0)
-					return (-1);
-				u.flag_token_join = 0;
-				u.n_st++;
 			}
 		}
 		i = i + 2;
@@ -249,7 +250,10 @@ int	ft_token_decompose(t_all *mass)
 	tmp2 = mass->tokens;
 	while (tmp2 != NULL)
 	{
-		printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
+		if (tmp2->container != NULL)
+			printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
+		else
+			printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", tmp2->index, tmp2->type);
 		tmp2 = tmp2->next;
 	}
 	ft_token_clean(&(mass->tokens));

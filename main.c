@@ -22,19 +22,29 @@
 // 	return (0);
 // }
 
-
 int main (void)
 {
-	t_all mass;
-	mass.buf = NULL;
+	t_all	*mass;
 
-	while (1)
+	mass = (t_all*)malloc(sizeof(t_all));
+	ft_bzero(mass, sizeof(t_all));
+
+while (1)
 	{
-		mass.buf = readline("Minishell: ");
-		// mass.buf = "leon'i'd";
-		if (ft_strlen(mass.buf) > 0)
-			add_history(mass.buf);
-		ft_parser(&mass);
+		mass->buf = readline("Minishell: ");
+		//mass.buf = "e'cho' <file arg";
+		//mass->buf = "0'2''56'|'112'45 789' 1'";
+		if (ft_strlen(mass->buf) > 0)
+		{
+			add_history(mass->buf);
+			ft_parser(mass);
+		}
+		if (mass->buf != NULL)
+		{
+			free(mass->buf);
+			mass->buf = NULL;
+		}
+
 		// ft_split_commands(mass);
 	}
 		// mass.buf = "2nd wave";
