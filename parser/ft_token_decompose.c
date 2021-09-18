@@ -156,7 +156,7 @@ void ft_pretoken_count(t_all *mass)
 			checker = 0;
 		else
 		{
-			//printf("\nSUBS: indexes 2N - (%d) : (%c) - (%c)", mass->sub_indx[i], mass->buf[mass->sub_indx[i]], mass->buf[mass->sub_indx[i + 1]]);
+			// printf("\nSUBS: indexes 2N - (%d) : (%c) - (%c)", mass->sub_indx[i], mass->buf[mass->sub_indx[i]], mass->buf[mass->sub_indx[i + 1]]);
 			count++;
 			i = i + 2;
 		}
@@ -267,17 +267,3 @@ int	ft_token_decompose(t_all *mass)
 	// echo 1234"567""'$USER'"
 	return (0);
 }
-
-// int ft_parse_command(t_all *mass)
-// {
-// 	if(ft_strncmp(mass->tmp[1], "echo", 5) == 0)
-// 	{
-// 		ft_echo(mass);
-// 		mass->tokens.type = 'b';
-// 	}
-// 	// else if(ft_strncmp(mass.tmp[0], "pwd", 4) == 0)
-		
-
-// 	printf("\nDecomposed_Value-%s\n", mass->tmp[1]);
-
-// }
