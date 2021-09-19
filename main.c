@@ -53,17 +53,18 @@
 // 	}
 // }
 
+
 int main (void)
 {
 	t_all	*mass;
 
 	mass = (t_all*)malloc(sizeof(t_all));
-	ft_bzero(mass, sizeof(t_all));
-	mass->buf = NULL;
+	
 	
 	while (1)
 	{
-		//mass->buf = ft_strdup("e 1|2 2");
+		ft_bzero(mass, sizeof(t_all));
+		//mass->buf = ft_strdup("ec'ho' |cho cho");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
@@ -72,10 +73,16 @@ int main (void)
 			//ft_check_comm(mass);
 			ft_token_clean(&(mass->tokens));
 		}
-		if (mass->buf != NULL)
-		{
-			free(mass->buf);
-			mass->buf = NULL;
-		}
+		free(mass->buf);
+		// if (mass->buf != NULL)
+		// {
+		// 	free(mass->buf);
+		// 	mass->buf = NULL;
+		// }
+		// if (mass->tmp != NULL)
+		// {
+		// 	free(mass->tmp);
+		// 	mass->tmp = NULL;
+		// }
 	}
 }
