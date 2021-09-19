@@ -247,14 +247,14 @@ int	ft_token_decompose(t_all *mass)
 	t_tokens *tmp2;
 
 	tmp2 = mass->tokens;
-	while (tmp2 != NULL)
-	{
-		if (tmp2->container != NULL)
-			printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
-		else
-			printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", tmp2->index, tmp2->type);
-		tmp2 = tmp2->next;
-	}
+	// while (tmp2 != NULL)
+	// {
+	// 	if (tmp2->container != NULL)
+	// 		printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
+	// 	else
+	// 		printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", tmp2->index, tmp2->type);
+	// 	tmp2 = tmp2->next;
+	// }
 	// ft_token_clean(&(mass->tokens));
 	// global cleaner
 	//	flag / tilda

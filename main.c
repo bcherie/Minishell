@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-static void ft_check_args(t_tokens *tmp, t_all *mass)
+static void ft_check_args(t_tokens *tmp, t_all *mass, t_tokens *command)
 {
 	//int i = 0;
 	while (tmp && tmp->type != '|')
@@ -9,10 +9,14 @@ static void ft_check_args(t_tokens *tmp, t_all *mass)
 		{
 			// mass->args[i] = &tmp->container[i];
 			// i++;
+			command->count++;
 			mass->a_count++;
 		}
+		if(tmp->type == 'a')
+			command->args = &tmp->container;
 		tmp = tmp->next;
 	}
+	// printf("\nend: %d",tmp->count);
 	//printf("\nargs: %s", mass->args[0]);
 	//printf("\na_count: %d", mass->a_count);
 }
@@ -39,41 +43,26 @@ static void ft_check_args(t_tokens *tmp, t_all *mass)
 
 static void ft_command_tockens(t_tokens *tmp, t_all *mass, t_tokens *command)
 {
-	// int i = 0;
+	int i = 0;
 	// int len = 0;
 	// int start = 0;
-	// int	end = 0;
 	command->args = (char **)malloc(sizeof(char *) * mass->a_count + 1);
-
-	char *str = "\0";
-	// tmp = mass->tokens;
-	// while (tmp->container)
-	// {
-	// 	len = len + ft_strlen(tmp->container);
-	// 	tmp = tmp->next;
-	// }
 	while (tmp && tmp->type != '|')
 	{
-		str = ft_strjoin(str, tmp->container);
-		//tmp = tmp->next;
-		if(tmp->next == NULL)
-			break ;
+		if(tmp->type == 'c')
+			command->range = i + 1;
+		if(tmp->type == 'a')
+			command->args = &tmp->container;
 		tmp = tmp->next;
 	}
-	// len = ft_strlen(str);
-	printf("\nstr: %s", str);
-	// printf("\nstr: %d", len);
-	// while (tmp && tmp->type != '|')
+	// if(tmp && tmp->type == '|')
 	// {
-	// 	if(tmp->type == 'c')
-	// 		command->range = i + 1;
-	// 	if(tmp->type == 'a')
-	// 		command->args = &tmp->container;
-	// 	tmp = tmp->next;
+	// 	command->st = command->end;
+	// 	tmp->container = ft_substr(tmp->container, command->st, len);
 	// }
-	//tmp = mass->tokens;
+	// tmp = mass->tokens;
 	// printf("\ncontain: %s\n", tmp->container);
-	//len = ft_strlen(tmp->container) - ft_strlen(command->container);
+	// len = ft_strlen(tmp->container) - ft_strlen(command->container);
 }
 
 static void ft_check_comm(t_all *mass)
@@ -81,24 +70,46 @@ static void ft_check_comm(t_all *mass)
 	t_tokens	*tmp;
 	t_tokens	*command;
 	// int start = 0;
-	// int i = 0;
+	int i = 0;
+	int len = 0;
 	command = mass->tokens;
+	command->st = 0;
 	tmp = mass->tokens;
-	ft_check_args(tmp, mass);
-	command->args = (char **)malloc(sizeof(char *) * mass->a_count + 1);
-
-
-	// while(tmp)
-	// {
-	// 	if(tmp->type == 'c')
-	// 	{
+	command->end = 0;
+	// tmp->count = tmp->container[0];
+	ft_check_args(tmp, mass, command);
+	// command->args = (char **)malloc(sizeof(char *) * mass->a_count + 1);
+	tmp = mass->tokens;
+	//length tocken |
+	while (tmp->container && tmp->type != '|')
+	{
+		i = ft_strlen(tmp->container);
+		command->end = command->end + i;
+		// while (command->end < i)
+		// 	command->end++;
+		tmp = tmp->next;
+	}
+	// tmp = mass->tokens;
+	while(tmp)
+	{
+		if(tmp->type == 'c')
+		{
 			ft_command_tockens(tmp, mass, command);
-	// 		check_buildin(tmp, mass);
-	// 	}
-	// 	// else
-	// 	// 	break ;
-	// 	tmp = tmp->next;
-	// }
+			tmp = mass->tokens;
+			command->st = command->end;
+			len = command->end;
+			tmp->container = ft_substr(tmp->container, command->st, len);
+			//check_buildin(tmp, mass);
+		}
+		if(tmp && tmp->type == 'p')
+		{
+			// command->st = command->end;
+			// len = command->end;
+			// tmp->container = ft_substr(tmp->container, command->st, len);
+			ft_command_tockens(tmp, mass, command);
+		}
+		tmp = tmp->next;
+	}
 
 	// while (tmp && tmp->type != '|')
 	// {
