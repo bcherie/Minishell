@@ -188,6 +188,8 @@ int	ft_token_decompose(t_all *mass)
 	ret = 1;
 	mass->tmp = (char**)malloc(sizeof(char*) * 3);
 	mass->tmp[2] = NULL;
+	mass->tmp[0] = NULL;
+	mass->tmp[1] = NULL;
 	ft_pretoken_count(mass);
 	ft_init_utils_struct(&u);
 	while(ret > 0 && u.iter < mass->number_of_pretokens)
