@@ -88,16 +88,11 @@ char *ft_dollar_insert(char *line, t_all *mass)
 				while (ft_isalnum(line[t.i_keyshift]))
 					(t.i_keyshift)++;
 				mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter + 1);
-				substring = getwd(mass->tmp[0]);
+				substring = getenv(mass->tmp[0]);
 				free(mass->tmp[0]);
 				mass->tmp[0] = NULL;
 				while (substring[t.i_count] != '\0')
-					ft_dfbuf_addchar(head, substring[t.i_count]);
-				if (substring)
-				{
-					free(substring);
-					substring = NULL;
-				}
+					ft_dfbuf_addchar(head, substring[(t.i_count)++]);
 				t.iter = t.i_keyshift;
 				continue ;
 			}

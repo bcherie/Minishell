@@ -64,7 +64,7 @@ int main (void)
 	while (1)
 	{
 		ft_bzero(mass, sizeof(t_all));
-		//mass->buf = ft_strdup("ec'ho' |cho cho");
+		//mass->buf = ft_strdup("$HOME cho");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
