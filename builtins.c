@@ -20,64 +20,108 @@
 // 	//ret = execve("/bin/ls", NULL, NULL);
 // }
 
-void echo_n(t_all *mass, t_tokens *tmp)
+void echo_n(t_ptr *t_ptr)
 {
-	// int len;
 	int i;
 	int j;
+	int	flag;
 
-	// len = 0;
 	i = 0;
 	j = 0;
-	//printf("j: %d\n", j);
-	// echo -n
-	if(mass->a_count == 1)
-		printf("");
-	if(mass->a_count > 1)
+
+	if(t_ptr->count == 0)
 	{
-		// len = ft_strlen(&tmp->container[1]);
-		while (tmp->container[i])
+		printf("");
+		return ;
+	}
+	if(t_ptr->command->args[0][0] != '-' && t_ptr->command->args[0][1] != 'n')
+		flag = 0;
+	else
+	{
+		j = 1;
+		while (t_ptr->command->args[0][j] == 'n')
+			j++;
+		if (t_ptr->command->args[0][j] != '\0')
 		{
-			if(tmp->args[0][i] != '-' && tmp->container[i + 1] != 'n')
-			{
-				write(1, &tmp->args[j], ft_strlen(tmp->args[j]));
-				write(1, "\n", 1);
-			}
-			else
-				write(1, &tmp->args[j], ft_strlen(tmp->args[j]));
-			i++;
+			i = 0;
+			flag = 0;
+		}
+		else
+		{
+			i = 1;
+			flag = 1;
 		}
 	}
+	while (t_ptr->command->args[i] != NULL)
+	{
+		write(1, t_ptr->command->args[i], ft_strlen(t_ptr->command->args[i]));
+		i++;
+	}
+	if (!flag)
+		write(1, "\n", 1);
+	// if(t_ptr->count >= 1)
+	// {
+	// 	// len = ft_strlen(&tmp->container[1]);
+	// 	while (t_ptr->command->args[i])
+	// 	{
+	// 		if(t_ptr->command->args[0][0] != '-' && t_ptr->command->args[0][1] != 'n')
+	// 		{
+	// 			write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
+	// 			write(1, "\n", 1);
+	// 		}
+	// 		else
+	// 		{
+	// 			j = 1;
+	// 			while (t_ptr->command->args[0][j] == 'n')
+	// 				j++;
+	// 			if (t_ptr->command->args[0][j])
+	// 			{
+	// 				write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
+	// 				write(1, "\n", 1);
+	// 			}
+	// 			else
+	// 			{
+	// 				t_ptr->command->args++;
+	// 				write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
+	// 			}
+	// 		}
+	// 		i++;
+	// 	}
+	// }
 }
 
-void	ft_echo(t_all *mass, t_tokens *tmp)
+void	ft_echo(t_ptr *t_ptr)
 {
 	int i;
 	int j;
+	char space;
 	//прописать тут флаг -n
 
 	i = 0;
 	j = 0;
-	if(mass->a_count == 0)
+	space = ' ';
+	if(t_ptr->count == 0)
 	{
-		if (ft_strlen(tmp->container) == 4)
+		if (ft_strlen(t_ptr->command->container) == 4)
 			printf("\n");
 		else
 			printf("command not found\n");
 	}
-	else if(mass->a_count >= 1)
+	else if(t_ptr->count >= 1)
 	{
-		while (tmp->args[j])
+		while (t_ptr->command->args[i])
 		{
-			if (!(ft_strnstr(tmp->args[i], "-n", ft_strlen(tmp->args[i]))))
+			if (!(ft_strnstr(t_ptr->command->args[i], "-n", ft_strlen(t_ptr->command->args[i]))))
 			{
-				write(1, tmp->args[i], ft_strlen(tmp->args[i]));
-				printf("\n");
+				write(1, t_ptr->command->args[i], ft_strlen(t_ptr->command->args[i]));
+				if(t_ptr->command->args[i + 1] != NULL)
+					write(1, " ", 1);
 			}
 			else
-				echo_n(mass, tmp);
-			j++;
+		 		echo_n(t_ptr);
+			i++;
 		}
+		printf("\n");
 	}
 }
 
@@ -90,16 +134,16 @@ void ft_pwd(void)
 	printf("%s\n", path);
 }
 
-void ft_cd(t_all *mass, t_tokens *tmp)
+void ft_cd(t_ptr *t_ptr)
 {
 	int res;
 	char *home;
 	int i = 0;
 	res = 1;
 
-	if(mass->a_count == 0)
+	if(t_ptr->count == 0)
 	{
-		if(ft_strlen(tmp->container) == 2)
+		if(ft_strlen(t_ptr->command->container) == 2)
 		{
 			home = getenv("HOME");
 			chdir(home);
@@ -107,15 +151,15 @@ void ft_cd(t_all *mass, t_tokens *tmp)
 		else
 			printf("command not found\n");
 	}
-	else if (mass->a_count == 1)
+	else if (t_ptr->count == 1)
 	{
-		if(tmp->args[0][i] == '~' && ft_strlen(tmp->args[i]) == 1)
+		if(t_ptr->command->args[0][i] == '~' && ft_strlen(t_ptr->command->args[i]) == 1)
 		{
 			home = getenv("HOME");
 			chdir(home);
 		}
 		ft_pwd();
-		res = chdir(tmp->args[i]);
+		res = chdir(t_ptr->command->args[i]);
 		printf("res: %d\n", res);
 		if(res != 0)
 			printf("Не могу перейти к каталогу\n");

@@ -17,10 +17,22 @@ typedef struct		s_tokens
 	int		range; //range command
 	char	*container;
 	char	**args;
+	char	**n_args;
 	int		st;
 	int		end;
 	int		count;
 }					t_tokens;
+
+typedef struct		s_ptr
+{
+	t_tokens		*head;
+	t_tokens		*start;
+	t_tokens		*end;
+	t_tokens		*tmp0;
+	t_tokens		*tmp1;
+	t_tokens		*command;
+	int				count;
+}					t_ptr;
 
 typedef struct	s_utils
 {
@@ -48,16 +60,17 @@ typedef struct	s_all
 	t_utils		u_mass;
 	int			a_count;
 	char		**args;
+	t_ptr		t_ptrs;
 }				t_all;
 
 
 
 size_t	words_count(char const *s, char sp);
-void	ft_echo(t_all *mass, t_tokens *tmp);
+void	ft_echo(t_ptr *t_ptr);
 // void  ft_echo(t_all mass);
 void ft_pwd(void);
-void ft_cd(t_all *mass, t_tokens *tmp);
-void echo_n(t_all *mass, t_tokens *tmp);
+void ft_cd(t_ptr *t_ptr);
+void echo_n(t_ptr *t_ptr);
 void ft_execve(t_all *mass, t_tokens *tmp);
 
 t_tokens	*ft_token_create(void);
