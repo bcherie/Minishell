@@ -67,6 +67,7 @@ void	ft_token_clean(t_tokens **head)
 		*head = tmp;
 	}
 }
+
 t_tokens *ft_find_last_token(t_tokens *head)
 {
 	if (head == NULL)
@@ -79,45 +80,6 @@ t_tokens *ft_find_last_token(t_tokens *head)
 	}
 }
 
-char *ft_dollar_insert(char *line, t_all *mass, t_utils *u)
-{
-	char 	*dollar;
-	char	*substring;
-	char	*newline = NULL;
-	t_utils	t;
-
-	(void)substring;
-	(void)newline;
-	(void)u;
-	ft_bzero(&t, sizeof(t_utils));
-	t.end = ft_strlen(line);
-	t.n_end = t.end;
-	dollar = "";
-	while (line[t.iter] != '\0' && line[t.iter] != '$')
-		t.iter++;
-	if (line[t.iter] == '$')
-	{
-		t.st = t.iter;
-		t.n_st = ++(t.iter);
-		if (fpf_strchr("+.,/ ", line[t.iter]))
-			return (line);
-		else if (fpf_strchr("?0#;", line[t.iter]))
-		{
-			if (line[t.iter] == '#' || line[t.iter] == '?')
-				mass->tmp[0] = ft_strdup("0");
-			else
-				mass->tmp[0] = ft_strdup("minishell");
-		}
-		else if (fpf_strchr("123456789", line[t.iter]))
-			t.n_st = ++(t.iter);
-		while (ft_isalnum(line[t.iter]))
-			t.iter++;
-	}
-	else
-		return (line);
-	return(newline);
-}
-
 
 int		ft_token_former(t_all *mass, t_utils *u)
 {
@@ -128,6 +90,7 @@ int		ft_token_former(t_all *mass, t_utils *u)
 	{
 		tmp_token = ft_token_add(mass);
 		mass->tmp[1] = ft_substr(mass->buf, u->n_st, u->n_end - u->n_st + 1);
+		mass->tmp[1] = ft_dollar_insert(mass->tmp[1], mass);
 		tmp_token->container = mass->tmp[1];
 		ft_token_name(tmp_token, u);
 	}
@@ -136,6 +99,7 @@ int		ft_token_former(t_all *mass, t_utils *u)
 		mass->tmp[2] = mass->tmp[1];
 		mass->tmp[1] = ft_substr(mass->buf, u->n_st, u->n_end - u->n_st + 1);
 		tmp_token->container = ft_strjoin(tmp_token->container, mass->tmp[1]);
+		tmp_token->container = ft_dollar_insert(tmp_token->container, mass);
 		if (mass->tmp[1] != NULL)
 			free(mass->tmp[1]);
 		if (mass->tmp[2] != NULL)
