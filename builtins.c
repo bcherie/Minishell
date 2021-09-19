@@ -38,13 +38,13 @@ void echo_n(t_all *mass, t_tokens *tmp)
 		// len = ft_strlen(&tmp->container[1]);
 		while (tmp->container[i])
 		{
-			if(mass->args[0][i] != '-' && tmp->container[i + 1] != 'n')
+			if(tmp->args[0][i] != '-' && tmp->container[i + 1] != 'n')
 			{
-				write(1, &mass->args[j], ft_strlen(mass->args[j]));
+				write(1, &tmp->args[j], ft_strlen(tmp->args[j]));
 				write(1, "\n", 1);
 			}
 			else
-				write(1, &mass->args[j], ft_strlen(mass->args[j]));
+				write(1, &tmp->args[j], ft_strlen(tmp->args[j]));
 			i++;
 		}
 	}
@@ -67,11 +67,11 @@ void	ft_echo(t_all *mass, t_tokens *tmp)
 	}
 	else if(mass->a_count >= 1)
 	{
-		while (mass->args[j])
+		while (tmp->args[j])
 		{
-			if (!(ft_strnstr(mass->args[i], "-n", ft_strlen(mass->args[i]))))
+			if (!(ft_strnstr(tmp->args[i], "-n", ft_strlen(tmp->args[i]))))
 			{
-				write(1, mass->args[i], ft_strlen(mass->args[i]));
+				write(1, tmp->args[i], ft_strlen(tmp->args[i]));
 				printf("\n");
 			}
 			else
@@ -109,13 +109,13 @@ void ft_cd(t_all *mass, t_tokens *tmp)
 	}
 	else if (mass->a_count == 1)
 	{
-		if(mass->args[0][i] == '~' && ft_strlen(mass->args[i]) == 1)
+		if(tmp->args[0][i] == '~' && ft_strlen(tmp->args[i]) == 1)
 		{
 			home = getenv("HOME");
 			chdir(home);
 		}
 		ft_pwd();
-		res = chdir(mass->args[i]);
+		res = chdir(tmp->args[i]);
 		printf("res: %d\n", res);
 		if(res != 0)
 			printf("Не могу перейти к каталогу\n");

@@ -14,7 +14,9 @@ typedef struct		s_tokens
 	struct	s_tokens *prev;
 	char	type;
 	int		index;
+	int		range; //range command
 	char	*container;
+	char	**args;
 }					t_tokens;
 
 typedef struct	s_utils
