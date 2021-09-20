@@ -33,6 +33,7 @@ typedef struct		s_ptr
 	t_tokens		*command;
 	int				count;
 }					t_ptr;
+
 typedef struct	s_dbuf
 {
 	char			buf[201];

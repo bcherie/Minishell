@@ -11,7 +11,7 @@ static int	simple_check(char *line)
 		{
 			if (line[++i] == '\0')
 				break ;
-			if (ft_isalnum(line[i]))
+			if (ft_isalnum(line[i]) || line[i] == '#' || line[i] == '?')
 				return (1);
 		}
 		i++;

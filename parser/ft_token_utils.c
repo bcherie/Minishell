@@ -90,7 +90,8 @@ int		ft_token_former(t_all *mass, t_utils *u)
 	{
 		tmp_token = ft_token_add(mass);
 		mass->tmp[1] = ft_substr(mass->buf, u->n_st, u->n_end - u->n_st + 1);
-		mass->tmp[1] = ft_dollar_insert(mass->tmp[1], mass);
+		if (u->flag_dollar_on == 1)
+			mass->tmp[1] = ft_dollar_insert(mass->tmp[1], mass);
 		tmp_token->container = mass->tmp[1];
 		ft_token_name(tmp_token, u);
 	}
