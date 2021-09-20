@@ -30,7 +30,7 @@ void echo_n(t_ptr *t_ptr)
 	j = 0;
 	flag = 0;
 
-	if(t_ptr->count == 0)
+	if(t_ptr->count == 1)
 	{
 		printf("");
 		return ;
@@ -60,7 +60,7 @@ void echo_n(t_ptr *t_ptr)
 	// }
 	// if (!flag)
 	// 	write(1, "\n", 1);
-	if(t_ptr->count >= 1)
+	if(t_ptr->count > 1)
 	{
 		// len = ft_strlen(&tmp->container[1]);
 		// while (t_ptr->command->args[i])
