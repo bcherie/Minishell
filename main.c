@@ -65,6 +65,10 @@ static void check_buildin(t_ptr *t_ptr)
 
 }
 
+// static void ft_check_comm(t_all *mass)
+// {
+// 	t_tokens *tmp;
+
 
 static void ft_check_comm(t_all *mass)
 {
@@ -112,12 +116,10 @@ int main (void)
 	t_all	*mass;
 
 	mass = (t_all*)malloc(sizeof(t_all));
-
-
 	while (1)
 	{
 		ft_bzero(mass, sizeof(t_all));
-		//mass->buf = ft_strdup("ec'ho' |cho cho");
+		//mass->buf = ft_strdup("-\'$PWD 9##\' cho");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
@@ -132,15 +134,5 @@ int main (void)
 			mass->buf = NULL;
 		}
 		free(mass->buf);
-		// if (mass->buf != NULL)
-		// {
-		// 	free(mass->buf);
-		// 	mass->buf = NULL;
-		// }
-		// if (mass->tmp != NULL)
-		// {
-		// 	free(mass->tmp);
-		// 	mass->tmp = NULL;
-		// }
 	}
 }

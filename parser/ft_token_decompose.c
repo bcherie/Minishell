@@ -169,6 +169,7 @@ void ft_init_utils_struct(t_utils *u)
 	u->flag_find_command = 1;
 	u->flag_token_join = 0;
 	u->flag_find_file = 0;
+	u->flag_dollar_on = 1;
 	u->i_keyshift = 0;
 	u->i_count = 0;
 	u->st = 0;
@@ -235,11 +236,14 @@ int	ft_token_decompose(t_all *mass)
 				else if (ret == 1)
 				{
 					ft_token_join_test(mass, &u);
+					if (mass->buf[u.n_st] == 39)
+						u.flag_dollar_on = 0;
 					u.n_st++;
 					u.n_end--;
 					if (ft_token_former(mass, &u) == 0)
 						return (-1);
 					u.n_st++;
+					u.flag_dollar_on = 1;
 				}
 			}
 		}

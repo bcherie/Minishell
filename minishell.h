@@ -33,6 +33,12 @@ typedef struct		s_ptr
 	t_tokens		*command;
 	int				count;
 }					t_ptr;
+typedef struct	s_dbuf
+{
+	char			buf[201];
+	struct s_dbuf	*next;
+	int				full;
+}				t_dbuf;
 
 typedef struct	s_utils
 {
@@ -43,6 +49,7 @@ typedef struct	s_utils
 	int			flag_token_join;
 	int			flag_find_command;
 	int			flag_find_file;
+	int			flag_dollar_on;
 	int			i_keyshift;
 	int			i_count;
 	int			iter;
@@ -82,6 +89,12 @@ int			ft_token_decompose(t_all *mass);
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);
 
+
+t_dbuf		*ft_dbuf_create(void);
+t_dbuf		*ft_dbuf_add(t_dbuf **head);
+int			ft_dbuf_clean(t_dbuf **head);
+
+char 		*ft_dollar_insert(char *line, t_all *mass);
 
 
 int 		ft_command_finder(char *buf, int start, int end);
