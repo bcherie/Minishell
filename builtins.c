@@ -91,9 +91,18 @@ void echo_n(t_ptr *t_ptr)
 
 		if(t_ptr->command->args[0][0] == '-' && t_ptr->command->args[0][1] == 'n')
 		{
-			flag = 1;
+			// flag = 1;
 			while (t_ptr->command->args[0][j] == 'n')
 				j++;
+			// if(t_ptr->command->args[0][j] != '\0')
+			// {
+			// j = 1;
+			while(t_ptr->command->args[i + 1][0] == '-' && t_ptr->command->args[i + 1][1] == 'n')
+			{
+				i++;
+			}
+			// }
+
 		}
 		// else
 		// 	flag = 0;
