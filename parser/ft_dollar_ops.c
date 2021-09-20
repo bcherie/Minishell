@@ -23,7 +23,7 @@ static void	ft_dfbuf_addchar(t_dbuf *dbuf, char sym)
 {
 	while (dbuf->next != NULL)
 		dbuf = dbuf->next;
-	if (dbuf->full == 201)
+	if (dbuf->full == 200)
 	{
 		ft_dbuf_add(&dbuf);
 		dbuf = dbuf->next;
@@ -57,8 +57,11 @@ static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 		newline[i] = head->buf[j];
 		i++;
 		j++;
-		if (j == 201)
+		if (j == 200)
+		{ 
 			head = head->next;
+			j = 0;
+		}
 	}
 }
 
@@ -84,15 +87,24 @@ char *ft_dollar_insert(char *line, t_all *mass)
 			if (ft_isalpha(line[t.iter + 1]))
 			{
 				t.iter++;
+
 				t.i_keyshift = t.iter;
 				while (ft_isalnum(line[t.i_keyshift]))
 					(t.i_keyshift)++;
-				mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter + 1);
+				
+				if (t.iter == t.i_keyshift)
+					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter + 1);
+				else
+					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter);
 				substring = getenv(mass->tmp[0]);
-				free(mass->tmp[0]);
+				if (mass->tmp[0] != NULL)
+					free(mass->tmp[0]);
 				mass->tmp[0] = NULL;
-				while (substring[t.i_count] != '\0')
-					ft_dfbuf_addchar(head, substring[(t.i_count)++]);
+				if (substring != NULL)
+				{
+					while (substring[t.i_count] != '\0')
+						ft_dfbuf_addchar(head, substring[(t.i_count)++]);
+				}
 				t.iter = t.i_keyshift;
 				continue ;
 			}
@@ -113,8 +125,8 @@ char *ft_dollar_insert(char *line, t_all *mass)
 			}
 			else if (ft_isdigit(line[t.iter + 1]))
 				t.iter++;
-			t.iter++;
 		}
+		t.iter++;
 	}
 	t.i_count = ft_dfbuf_count(head);
 	newline = (char *)malloc(t.i_count + 1);

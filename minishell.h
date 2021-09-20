@@ -34,6 +34,7 @@ typedef struct	s_utils
 	int			flag_token_join;
 	int			flag_find_command;
 	int			flag_find_file;
+	int			flag_dollar_on;
 	int			i_keyshift;
 	int			i_count;
 	int			iter;

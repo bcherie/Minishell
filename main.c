@@ -61,11 +61,11 @@ int main (void)
 	mass = (t_all*)malloc(sizeof(t_all));
 	
 	
-	while (1)
-	{
+	//while (1)
+	//{
 		ft_bzero(mass, sizeof(t_all));
-		//mass->buf = ft_strdup("$HOME cho");
-		mass->buf = readline("Minishell: ");
+		mass->buf = ft_strdup("-\'$PWD 9##\' cho");
+		//mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
@@ -84,5 +84,5 @@ int main (void)
 		// 	free(mass->tmp);
 		// 	mass->tmp = NULL;
 		// }
-	}
+	//}
 }
