@@ -261,6 +261,7 @@ int	ft_token_decompose(t_all *mass)
 			printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", tmp2->index, tmp2->type);
 		tmp2 = tmp2->next;
 	}
+	// ft_token_clean(&(mass->tokens));
 	// global cleaner
 	//	flag / tilda
 	// 	dollar

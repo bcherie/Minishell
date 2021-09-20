@@ -109,6 +109,11 @@ void ft_cd(t_all *mass, t_tokens *tmp)
 	}
 	else if (mass->a_count == 1)
 	{
+		if(mass->args[0][i] == '~' && ft_strlen(mass->args[i]) == 1)
+		{
+			home = getenv("HOME");
+			chdir(home);
+		}
 		ft_pwd();
 		res = chdir(mass->args[i]);
 		printf("res: %d\n", res);
