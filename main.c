@@ -58,8 +58,8 @@ static void check_buildin(t_ptr *t_ptr)
 		ft_cd(t_ptr);
 	if(ft_strncmp(t_ptr->command->container, "echo", 4) == 0)
 		ft_echo(t_ptr);
-	// if(ft_strncmp(tmp->container, "export", 6) == 0)
-	// 	ft_export();
+	// if(ft_strncmp(t_ptr->command->container, "export", 6) == 0)
+	// 	ft_export(t_ptr);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
 

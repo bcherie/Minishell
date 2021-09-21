@@ -5,6 +5,7 @@
 // 	char *path;
 // 	char **path_arg;
 // 	int i;
+// use stat function here!!!!!!!!!!!!!
 
 // 	i = 0;
 // 	path = getenv("PATH");
@@ -19,6 +20,12 @@
 // 	// printf("\npath1:%s, path2:%s\n", path_arg[0], path_arg[1]);
 // 	//ret = execve("/bin/ls", NULL, NULL);
 // }
+
+void ft_export(t_ptr *t_ptr)
+{
+	
+
+}
 
 void echo_n(t_ptr *t_ptr)
 {
@@ -130,13 +137,11 @@ void	ft_echo(t_ptr *t_ptr)
 {
 	int i;
 	int j;
-	char space;
 	int flag;
 	//прописать тут флаг -n
 	flag = 0;
 	i = 0;
 	j = 0;
-	space = ' ';
 	if(t_ptr->count == 0)
 	{
 		if (ft_strlen(t_ptr->command->container) == 4)

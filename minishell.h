@@ -79,6 +79,7 @@ void ft_pwd(void);
 void ft_cd(t_ptr *t_ptr);
 void echo_n(t_ptr *t_ptr);
 void ft_execve(t_all *mass, t_tokens *tmp);
+void ft_export(t_ptr *t_ptr);
 
 t_tokens	*ft_token_create(void);
 t_tokens 	*ft_token_add(t_all *mass);
