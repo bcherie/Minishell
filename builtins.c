@@ -151,7 +151,7 @@ void	ft_echo(t_ptr *t_ptr)
 	}
 	else if(t_ptr->count >= 1)
 	{
-		while (t_ptr->command->args[i])
+		while (i < t_ptr->command->count)
 		{
 			if (!(ft_strnstr(t_ptr->command->args[i], "-n", ft_strlen(t_ptr->command->args[i]))))
 			{

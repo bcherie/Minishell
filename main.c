@@ -45,6 +45,7 @@ static void ft_check_args(t_ptr *t_ptr)
 		}
 	}
 }
+
 static void check_buildin(t_ptr *t_ptr)
 {
 	if (ft_strncmp(t_ptr->command->container, "pwd", 3) == 0)
@@ -64,11 +65,6 @@ static void check_buildin(t_ptr *t_ptr)
 	// 	ft_execve(mass, tmp);
 
 }
-
-// static void ft_check_comm(t_all *mass)
-// {
-// 	t_tokens *tmp;
-
 
 static void ft_check_comm(t_all *mass)
 {
@@ -103,12 +99,15 @@ static void ft_check_comm(t_all *mass)
 		}
 		t_ptr->tmp0 = t_ptr->tmp0->next;
 	}
-	// while(t_ptr->head)
-	// {
-		if(t_ptr->head->type == 'c')
+	while (t_ptr->head)
+	{
+		if (t_ptr->head->type == 'c')
+		{
 			check_buildin(t_ptr);
-	// 	t_ptr->head = t_ptr->head->next;
-	// }
+			break ;
+		}
+		t_ptr->head = t_ptr->head->next;
+	}
 }
 
 int main (void)
@@ -119,7 +118,7 @@ int main (void)
 	while (1)
 	{
 		ft_bzero(mass, sizeof(t_all));
-		//mass->buf = ft_strdup("-\'$PWD 9##\' cho");
+		//mass->buf = ft_strdup("echo $? text");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
