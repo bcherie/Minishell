@@ -8,6 +8,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+typedef struct s_env
+{
+	char	**env_args;
+}				t_env;
+
 typedef struct		s_tokens
 {
 	struct	s_tokens *next;
@@ -17,7 +22,7 @@ typedef struct		s_tokens
 	int		range; //range command
 	char	*container;
 	char	**args;
-	char	**n_args;
+	// char	**env_args;
 	int		st;
 	int		end;
 	int		count;
@@ -32,6 +37,8 @@ typedef struct		s_ptr
 	t_tokens		*tmp1;
 	t_tokens		*command;
 	int				count;
+	t_env			*env_st;
+	char			**env_args;
 }					t_ptr;
 
 typedef struct	s_dbuf
@@ -69,6 +76,7 @@ typedef struct	s_all
 	int			a_count;
 	char		**args;
 	t_ptr		t_ptrs;
+	t_env		*env_st;
 }				t_all;
 
 
@@ -81,6 +89,7 @@ void ft_cd(t_ptr *t_ptr);
 void echo_n(t_ptr *t_ptr);
 void ft_execve(t_all *mass, t_tokens *tmp);
 void ft_export(t_ptr *t_ptr);
+void ft_env(t_ptr *t_ptr);
 
 t_tokens	*ft_token_create(void);
 t_tokens 	*ft_token_add(t_all *mass);

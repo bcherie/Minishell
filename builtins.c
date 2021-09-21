@@ -18,12 +18,27 @@
 // 		printf("sucsess");
 // 	// printf("\npath:%s\n", tmp);
 // 	// printf("\npath1:%s, path2:%s\n", path_arg[0], path_arg[1]);
-// 	//ret = execve("/bin/ls", NULL, NULL);
+// 	//ret = execve("/bin/ls"(commad[0]), command, env);
 // }
 
-void ft_export(t_ptr *t_ptr)
+// void ft_export(t_ptr *t_ptr)
+// {
+
+
+// }
+void ft_env(t_ptr *t_ptr)
 {
-	
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (t_ptr->env_args[i])
+	{
+		write(1, t_ptr->env_args[i], ft_strlen(t_ptr->env_args[i]));
+		write(1, "\n", 1);
+		i++;
+	}
 
 }
 

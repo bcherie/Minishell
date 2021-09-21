@@ -63,10 +63,33 @@ static void check_buildin(t_ptr *t_ptr)
 	// 	ft_export(t_ptr);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
+	if(ft_strncmp(t_ptr->command->container, "env", 3) == 0)
+		ft_env(t_ptr);
 
 }
 
-static void ft_check_comm(t_all *mass)
+static	void add_env(t_ptr *t_ptr, char **env)
+{
+	int	l;
+	int	i;
+
+	l =	0;
+	i = 0;
+	while (env[l] != NULL)
+		l++;
+	//printf("\n%d\n", l);
+	t_ptr->env_args = (char **)malloc(sizeof(char *) * l);
+	//printf("\n%s\n", env[5]);
+	while (env[i] != NULL)
+	{
+		t_ptr->env_args[i] = env[i];
+		i++;
+	}
+	printf("\n%s\n", t_ptr->env_args[5]);
+
+}
+
+static void ft_check_comm(t_all *mass, char **env)
 {
 	t_tokens	*tmp;
 	t_tokens	*command;
@@ -80,6 +103,7 @@ static void ft_check_comm(t_all *mass)
 	command->st = 0;
 	tmp = mass->tokens;
 	command->end = 0;
+	add_env(t_ptr, env);
 	// tmp->count = tmp->container[0];
 	if (t_ptr->start->type == 'p')
 	{
@@ -110,11 +134,31 @@ static void ft_check_comm(t_all *mass)
 	}
 }
 
-int main (void)
+int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
+	// int	i;
+	// int l;
 
+	(void)argv;
+	(void)argc;
+	// i =	0;
+	// l =	0;
+	// env_st = NULL;
+	// while (env[l] != NULL)
+	// 	l++;
+	// //printf("\n%d\n", l);
+	// env_st = (t_env *)malloc(sizeof(t_env));
+	// env_st->env_args = (char **)malloc(sizeof(char *) * l);
 	mass = (t_all*)malloc(sizeof(t_all));
+
+	//printf("\n%s\n", env[5]);
+	// while (env[i] != NULL)
+	// {
+	// 	env_st->env_args[i] = env[i];
+	// 	i++;
+	// }
+	//printf("\n%s\n", env_st->env_args[5]);
 	while (1)
 	{
 		ft_bzero(mass, sizeof(t_all));
@@ -124,7 +168,7 @@ int main (void)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			ft_check_comm(mass);
+			ft_check_comm(mass, env);
 			ft_token_clean(&(mass->tokens));
 		}
 		if (mass->buf != NULL)
@@ -134,4 +178,5 @@ int main (void)
 		}
 		free(mass->buf);
 	}
+	return (0);
 }
