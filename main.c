@@ -46,7 +46,7 @@ static void ft_check_args(t_ptr *t_ptr)
 	}
 }
 
-static void check_buildin(t_ptr *t_ptr)
+static void check_buildin(t_ptr *t_ptr, char **env)
 {
 	if (ft_strncmp(t_ptr->command->container, "pwd", 3) == 0)
 	{
@@ -64,28 +64,73 @@ static void check_buildin(t_ptr *t_ptr)
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
 	if(ft_strncmp(t_ptr->command->container, "env", 3) == 0)
-		ft_env(t_ptr);
+		ft_env(t_ptr, env);
 
 }
 
-static	void add_env(t_ptr *t_ptr, char **env)
+static	void add_env(char **env)
 {
 	int	l;
 	int	i;
+	int j;
+	t_tokens	*eniroment = NULL;
+	// t_tokens	*head;
+
+	// t_tokens	*new;
+	char **tmp = NULL;
 
 	l =	0;
 	i = 0;
-	while (env[l] != NULL)
-		l++;
-	//printf("\n%d\n", l);
-	t_ptr->env_args = (char **)malloc(sizeof(char *) * l);
-	//printf("\n%s\n", env[5]);
+	j = 0;
+	tmp = (char **)malloc(sizeof(char));
+	// eniroment = malloc(sizeof(t_tokens));
+	// while (env[l] != NULL)
+	// 	l++;
+	// new = ft_env_create();
+	// eniroment = env[i];
 	while (env[i] != NULL)
 	{
-		t_ptr->env_args[i] = env[i];
+		tmp = ft_split(env[i], '=');
+		if (tmp)
+			ft_lstadd_back(&eniroment, ft_lstnew(tmp[0], tmp[1]));
 		i++;
 	}
-	printf("\n%s\n", t_ptr->env_args[5]);
+	tmp = ft_split(env[i], '=');
+	if (tmp)
+		ft_lstadd_back(&eniroment, ft_lstnew(tmp[0], tmp[1]));
+	// while (eniroment->container)
+	// {
+	// 	// if (eniroment->container[j] == '=')
+	// 	// {
+	// 		tmp = ft_split(eniroment->container, '=');
+	// 		eniroment->key = tmp[0];
+	// 		eniroment->value = tmp[1];
+	// 	// }
+	// 	eniroment = eniroment->next;
+	// }
+	// 	eniroment = eniroment->next;
+	// eniroment->next = new;
+	// new->prev = eniroment;
+	// new->index = eniroment->index + 1;
+
+	printf("key: %s\n", eniroment->key);
+	printf("value: %s\n", eniroment->value);
+
+	// while (eniroment->key[eniroment->count])
+	// {
+	// 	printf("%s\n", eniroment->key);
+	// 	eniroment->count++;
+	// }
+
+	//printf("\n%d\n", l);
+	// t_ptr->env_args = (char **)malloc(sizeof(char *) * l);
+	//printf("\n%s\n", env[5]);
+	// while (env[i] != NULL)
+	// {
+	// 	t_ptr->env_args[i] = env[i];
+	// 	i++;
+	// }
+	// printf("\n%s\n", t_ptr->env_args[5]);
 
 }
 
@@ -103,8 +148,8 @@ static void ft_check_comm(t_all *mass, char **env)
 	command->st = 0;
 	tmp = mass->tokens;
 	command->end = 0;
-	add_env(t_ptr, env);
-	// tmp->count = tmp->container[0];
+	add_env(env);
+
 	if (t_ptr->start->type == 'p')
 	{
 		printf("Error!");
@@ -127,7 +172,7 @@ static void ft_check_comm(t_all *mass, char **env)
 	{
 		if (t_ptr->head->type == 'c')
 		{
-			check_buildin(t_ptr);
+			check_buildin(t_ptr, env);
 			break ;
 		}
 		t_ptr->head = t_ptr->head->next;
