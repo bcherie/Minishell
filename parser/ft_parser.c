@@ -1,20 +1,5 @@
 #include "../minishell.h"
 
-// static void ft_print_substr(t_all *mass)
-// {
-// 	int i;
-
-// 	i = 2;
-// 	write(1, &mass->buf[mass->sub_indx[0]], mass->sub_indx[1] - mass->sub_indx[0] + 1);
-// 	write(1,"\n", 1);
-// 	while(mass->sub_indx[i - 1] != 0)
-// 	{
-// 		write(1, &mass->buf[mass->sub_indx[i]], mass->sub_indx[i + 1] - mass->sub_indx[i] + 1);
-// 		i = i + 2;
-// 		write(1,"\n", 1);
-// 	}
-// }
-
 static int	ft_subsr_index_dec(char sym, int *ind, t_all *mass, char *line)
 {
 	mass->sub_prev[mass->u_mass.iter] = *ind;
@@ -103,12 +88,8 @@ void	ft_parser(t_all *mass)
 	mass->sub_prev[0] = 0;
 	ft_bzero(mass->sub_indx, mass->count_sym + 4);
 	ft_bzero(mass->sub_prev, mass->count_sym + 4);
-	// printf("PQ\n");
 	if (ft_pars_quotes(mass->buf, mass) == -1)
-		exit(-1);
-	// printf("BS\n");
+		exit(-1);;
 	ft_build_subindex(mass);
-	//ft_print_substr(mass);
-	// printf("TOkDEC\n");
 	ft_token_decompose(mass);
 }
