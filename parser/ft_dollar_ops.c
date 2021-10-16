@@ -49,7 +49,7 @@ static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 {
 	int	i;
 	int j;
-	
+
 	i = 0;
 	j = 0;
 	while(i < len && head != NULL)
@@ -58,7 +58,7 @@ static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 		i++;
 		j++;
 		if (j == 200)
-		{ 
+		{
 			head = head->next;
 			j = 0;
 		}
@@ -91,7 +91,7 @@ char *ft_dollar_insert(char *line, t_all *mass)
 				t.i_keyshift = t.iter;
 				while (ft_isalnum(line[t.i_keyshift]))
 					(t.i_keyshift)++;
-				
+
 				if (t.iter == t.i_keyshift)
 					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter + 1);
 				else

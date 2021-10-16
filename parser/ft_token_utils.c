@@ -1,4 +1,4 @@
-#include "../minishell.h"
+ #include "../minishell.h"
 
 //b - buildins
 //e - exec
@@ -135,7 +135,7 @@ void	ft_token_join_test(t_all *mass, t_utils *u)
 void	ft_token_name(t_tokens *tmp_token, t_utils *u)
 {
 	if (u->flag_find_file == 1)
-	{	
+	{
 		u->flag_find_file = 0;
 		tmp_token->type= 'f';
 	}

@@ -5,6 +5,7 @@
 // 	char *path;
 // 	char **path_arg;
 // 	int i;
+// use stat function here!!!!!!!!!!!!!
 
 // 	i = 0;
 // 	path = getenv("PATH");
@@ -17,8 +18,96 @@
 // 		printf("sucsess");
 // 	// printf("\npath:%s\n", tmp);
 // 	// printf("\npath1:%s, path2:%s\n", path_arg[0], path_arg[1]);
-// 	//ret = execve("/bin/ls", NULL, NULL);
+// 	//ret = execve("/bin/ls"(commad[0]), command, env);
 // }
+
+// void ft_export(t_ptr *t_ptr)
+// {
+// 	int i;
+// 	// int j;
+// 	// int res;
+// 	// char *alph;
+// 	// char *alph_up;
+// 	// int	z;
+
+// 	i = 0;
+// 	//t_env *env;
+
+
+
+// 	while (t_ptr->env_args[i])
+// 	{
+// 		ft_env_add(t_ptr);
+// 		// t_ptr->env->container = t_ptr->env_args[i];
+// 		// t_ptr->env = t_ptr->env->next;
+// 		i++;
+// 	}
+// 	printf("\n%s\n", t_ptr->env->container);
+
+// 	// alph = "abcdefghijklmnopqrstuvwxyz";
+// 	// alph_up = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+// 	// i = 0;
+// 	// j = 0;
+// 	// z = 0;
+// 	// if(t_ptr->count == 0)
+// 	// {
+// 	// 	//отсортировать енв в алфавитном порядке
+// 	// 	while (t_ptr->env_args[i])
+// 	// 	{
+// 	// 		if(ft_strncmp(&t_ptr->env_args[0][0], alph[z], 66) == 0 || ft_strncmp(&t_ptr->env_args[0][0], alph_up[z], 66) == 0)
+// 	// 			// res = ft_strncmp(&t_ptr->env_args[i][j + 1], &t_ptr->env_args[i + 1][j + 1], 10);
+// 	// 			{
+// 	// 				write(1, &t_ptr->env_args[i], ft_strlen(&t_ptr->env_args[i][j + 1]));
+// 	// 		 		write(1, "\n", 1);
+// 	// 			}
+// 			// else
+// 			// {
+// 			// 	if(res > 0)
+// 			// 	{
+// 			// 		write(1, &t_ptr->env_args[i], ft_strlen(&t_ptr->env_args[i][j + 1]));
+// 			// 		write(1, "\n", 1);
+// 			// 		write(1, &t_ptr->env_args[i + 1], ft_strlen(&t_ptr->env_args[i + 1][j + 1]));
+// 			// 		write(1, "\n", 1);
+// 			// 	}
+// 			// 	else
+// 			// 	{
+// 			// 		write(1, &t_ptr->env_args[i + 1], ft_strlen(&t_ptr->env_args[i + 1][j + 1]));
+// 			// 		write(1, "\n", 1);
+// 			// 		write(1, &t_ptr->env_args[i], ft_strlen(&t_ptr->env_args[i + 1][j + 1]));
+// 			// 		write(1, "\n", 1);
+// 			// 	}
+// 			// }
+// 	// 		i++;
+// 	// 	}
+// 	// }
+
+
+// }
+void ft_env(t_ptr *t_ptr, char **env)
+{
+	int i;
+	int j;
+	int l;
+
+	i = 0;
+	j = 0;
+	l = 0;
+
+	while (env[l] != NULL)
+		l++;
+	t_ptr->env_args = (char **)malloc(sizeof(char *) * l);
+	while (env[i] != NULL)
+	{
+		t_ptr->env_args[i] = env[i];
+		i++;
+	}
+	while (t_ptr->env_args[j])
+	{
+		write(1, t_ptr->env_args[j], ft_strlen(t_ptr->env_args[j]));
+		write(1, "\n", 1);
+		j++;
+	}
+}
 
 void echo_n(t_ptr *t_ptr)
 {
@@ -35,84 +124,19 @@ void echo_n(t_ptr *t_ptr)
 		printf("");
 		return ;
 	}
-	// if(t_ptr->command->args[0][0] != '-' && t_ptr->command->args[0][1] != 'n')
-	// 	flag = 0;
-	// else
-	// {
-	// 	j = 1;
-	// 	while (t_ptr->command->args[0][j] == 'n')
-	// 		j++;
-	// 	if (t_ptr->command->args[0][j] != '\0')
-	// 	{
-	// 		i = 0;
-	// 		flag = 0;
-	// 	}
-	// 	else
-	// 	{
-	// 		i = 1;
-	// 		flag = 1;
-	// 	}
-	// }
-	// while (t_ptr->command->args[i] != NULL)
-	// {
-	// 	write(1, t_ptr->command->args[i], ft_strlen(t_ptr->command->args[i]));
-	// 	i++;
-	// }
-	// if (!flag)
-	// 	write(1, "\n", 1);
 	if(t_ptr->count > 1)
 	{
-		// len = ft_strlen(&tmp->container[1]);
-		// while (t_ptr->command->args[i])
-		// {
-			// if(t_ptr->command->args[0][0] != '-' && t_ptr->command->args[0][1] != 'n')
-			// {
-			// 	write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
-			// 	write(1, "\n", 1);
-			// }
-			// else
-			// {
-			// 	// j = j + 1;
-			// 	while (t_ptr->command->args[0][j] == 'n')
-			// 		j++;
-			// 	if (t_ptr->command->args[0][j])
-			// 	{
-			// 		write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
-			// 		write(1, "\n", 1);
-			// 	}
-			// 	else
-			// 	{
-			// 		t_ptr->command->args++;
-			// 		write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
-			// 	}
-			// }
-			// i++;
-		// }
 
 		if(t_ptr->command->args[0][0] == '-' && t_ptr->command->args[0][1] == 'n')
 		{
 			// flag = 1;
 			while (t_ptr->command->args[0][j] == 'n')
 				j++;
-			// if(t_ptr->command->args[0][j] != '\0')
-			// {
-			// j = 1;
 			while(t_ptr->command->args[i + 1][0] == '-' && t_ptr->command->args[i + 1][1] == 'n')
 			{
 				i++;
 			}
-			// }
-
 		}
-		// else
-		// 	flag = 0;
-		// if(flag == 0)
-		// {
-		// 	write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
-		// 	write(1, "\n", 1);
-		// }
-		// else
-		// {
 		t_ptr->command->args++;
 		// write(1, t_ptr->command->args++, ft_strlen(*t_ptr->command->args));
 		while (t_ptr->command->args[i])
@@ -130,13 +154,11 @@ void	ft_echo(t_ptr *t_ptr)
 {
 	int i;
 	int j;
-	char space;
 	int flag;
 	//прописать тут флаг -n
 	flag = 0;
 	i = 0;
 	j = 0;
-	space = ' ';
 	if(t_ptr->count == 0)
 	{
 		if (ft_strlen(t_ptr->command->container) == 4)
