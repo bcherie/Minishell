@@ -97,9 +97,7 @@ char *ft_dollar_insert(char *line, t_all *mass)
 				else
 					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter);
 				substring = getenv(mass->tmp[0]);
-				if (mass->tmp[0] != NULL)
-					free(mass->tmp[0]);
-				mass->tmp[0] = NULL;
+				tmp_int_cleaner(mass, 0);
 				if (substring != NULL)
 				{
 					while (substring[t.i_count] != '\0')

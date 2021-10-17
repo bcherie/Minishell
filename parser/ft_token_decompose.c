@@ -1,39 +1,6 @@
 #include "../minishell.h"
 
-int simple_startend_check(int start, int end)
-{
-	if (start < 0 || end < 0 || (end - start) < 0)
-		return (0);
-	return (1);
-}
-
-int	ft_spacekill(char *buf, int start, int end)
-{
-	int	new_start;
-
-	if (simple_startend_check(start, end) == 0)
-		return (-1);
-	new_start = start;
-	while (buf[new_start] == ' ' && new_start < end)
-		new_start++;
-	if (buf[new_start] == ' ')
-		new_start++;
-	return (new_start);
-}
-
-int	ft_spacekill_left(char *buf, int start, int end)
-{
-	int	new_end;
-
-	if (simple_startend_check(start, end) == 0)
-		return (-1);
-	new_end = end;
-	while (buf[new_end] == ' ' && new_end > start)
-		new_end--;
-	return (new_end);
-}
-
-int ft_findcommand(char *buf, int start, int end)
+int	ft_findcommand(char *buf, int start, int end)
 {
 	int	ret_end;
 
@@ -41,7 +8,6 @@ int ft_findcommand(char *buf, int start, int end)
 	if (simple_startend_check(start, end) == 0)
 		return (-1);
 	ret_end = start;
-
 	while (buf[ret_end] != ' ' && buf[ret_end] != '\0' && ret_end < end)
 		ret_end++;
 	if (fpf_strchr(" \0", buf[ret_end]))
@@ -49,7 +15,7 @@ int ft_findcommand(char *buf, int start, int end)
 	return (ret_end);
 }
 
-void ft_checkkeysym_assist(char sym, int counter, t_utils *u, char *buf)
+void	ft_checkkeysym_assist(char sym, int counter, t_utils *u, char *buf)
 {
 	u->i_count = counter;
 	if (sym == '<' || sym == '>')
@@ -63,7 +29,7 @@ void ft_checkkeysym_assist(char sym, int counter, t_utils *u, char *buf)
 		u->i_count = 0;
 }
 
-int ft_checkkeysym(char *buf, t_utils *u)
+int	ft_checkkeysym(char *buf, t_utils *u)
 {
 	int		i;
 	int		counter;
@@ -87,7 +53,7 @@ int ft_checkkeysym(char *buf, t_utils *u)
 	return (i);
 }
 
-int ft_findrange(char *buf, int start, int end)
+int	ft_findrange(char *buf, int start, int end)
 {
 	int	ret_end;
 
@@ -107,7 +73,7 @@ int ft_findrange(char *buf, int start, int end)
 	return (ret_end);
 }
 
-static int ft_pretoken_check(char *string, int start, int end)
+static int	ft_pretoken_check(char *string, int start, int end)
 {
 	if (start < 0 || end < 0 || string == NULL || end - start < 0)
 		return (-1);
@@ -140,7 +106,7 @@ void	ft_token_keys(char sym, int count, t_tokens *token)
 	}
 }
 
-void ft_pretoken_count(t_all *mass)
+void	ft_pretoken_count(t_all *mass)
 {
 	int	count;
 	int	i;
@@ -151,8 +117,8 @@ void ft_pretoken_count(t_all *mass)
 	checker = 1;
 	while (checker == 1)
 	{
-
-		if (mass->buf[mass->sub_indx[i]] == '\0' || mass->buf[mass->sub_indx[i + 1]] == '\0')
+		if (mass->buf[mass->sub_indx[i]] == '\0' || \
+		mass->buf[mass->sub_indx[i + 1]] == '\0')
 			checker = 0;
 		else
 		{
@@ -162,7 +128,8 @@ void ft_pretoken_count(t_all *mass)
 	}
 	mass->number_of_pretokens = count;
 }
-void ft_init_utils_struct(t_utils *u)
+
+void	ft_init_utils_struct(t_utils *u)
 {
 	u->iter = 0;
 	u->flag_find_command = 1;
@@ -177,6 +144,49 @@ void ft_init_utils_struct(t_utils *u)
 	u->n_end = 0;
 }
 
+static int	ft_token_decompose_nonquotes(t_all *mass, t_tokens *tm, t_utils *u)
+{
+	if (fpf_strchr("<>|", mass->buf[u->n_st]))
+	{
+		ft_checkkeysym(mass->buf, u);
+		if (u->i_count <= 0)
+			return (-1);
+		else
+		{
+			tm = ft_token_add(mass);
+			ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
+			if (mass->buf[u->n_st] == '|')
+				u->flag_find_command = 1;
+			else
+				u->flag_find_file = 1;
+			u->n_st = u->i_keyshift;
+		}
+	}
+	else
+	{
+		ft_token_join_test(mass, u);
+		u->n_end = ft_findrange(mass->buf, u->n_st, u->end);
+		u->n_end = ft_findcommand(mass->buf, u->n_st, u->n_end);
+		if (ft_token_former(mass, u) == 0)
+			return (-1);
+	}
+	return (1);
+}
+
+static int	ft_token_decompose_quotes(t_all *mass, t_utils *u)
+{
+	ft_token_join_test(mass, u);
+	if (mass->buf[u->n_st] == 39)
+		u->flag_dollar_on = 0;
+	u->n_st++;
+	u->n_end--;
+	if (ft_token_former(mass, u) == 0)
+		return (-1);
+	u->n_st++;
+	u->flag_dollar_on = 1;
+	return (1);
+}
+
 int	ft_token_decompose(t_all *mass)
 {
 	t_tokens	*tmp_token;
@@ -186,13 +196,10 @@ int	ft_token_decompose(t_all *mass)
 
 	i = 0;
 	ret = 1;
-	mass->tmp = (char**)malloc(sizeof(char*) * 3);
-	mass->tmp[2] = NULL;
-	mass->tmp[0] = NULL;
-	mass->tmp[1] = NULL;
+	tmp_token = NULL;
 	ft_pretoken_count(mass);
 	ft_init_utils_struct(&u);
-	while(ret > 0 && u.iter < mass->number_of_pretokens)
+	while (ret > 0 && u.iter < mass->number_of_pretokens)
 	{
 		u.st = mass->sub_indx[i];
 		u.end = mass->sub_indx[i + 1];
@@ -202,73 +209,18 @@ int	ft_token_decompose(t_all *mass)
 		while (u.n_st <= u.end)
 		{
 			if (mass->buf[u.n_st] == ' ')
-				u.n_st  = ft_spacekill(mass->buf, u.n_st, u.end);
+				u.n_st = ft_spacekill(mass->buf, u.n_st, u.end);
 			else
 			{
 				if (ret == 2)
-				{
-					if (fpf_strchr("<>|", mass->buf[u.n_st]))
-					{
-						ft_checkkeysym(mass->buf, &u);
-						if (u.i_count <= 0)
-							return (-1);
-						else
-						{
-							tmp_token = ft_token_add(mass);
-							ft_token_keys(mass->buf[u.n_st], u.i_count, tmp_token);
-							if (mass->buf[u.n_st] == '|')
-								u.flag_find_command = 1;
-							else
-								u.flag_find_file = 1;
-							u.n_st = u.i_keyshift;
-						}
-					}
-					else
-					{
-						ft_token_join_test(mass, &u);
-						u.n_end = ft_findrange(mass->buf, u.n_st, u.end);
-						u.n_end = ft_findcommand(mass->buf, u.n_st, u.n_end);
-						if (ft_token_former(mass, &u) == 0)
-							return (-1);
-					}
-				}
+					ft_token_decompose_nonquotes(mass, tmp_token, &u);
 				else if (ret == 1)
-				{
-					ft_token_join_test(mass, &u);
-					if (mass->buf[u.n_st] == 39)
-						u.flag_dollar_on = 0;
-					u.n_st++;
-					u.n_end--;
-					if (ft_token_former(mass, &u) == 0)
-						return (-1);
-					u.n_st++;
-					u.flag_dollar_on = 1;
-				}
+					ft_token_decompose_quotes(mass, &u);
 			}
 		}
 		i = i + 2;
 		u.iter++;
 	}
-	t_tokens *tmp2;
-
-	tmp2 = mass->tokens;
-	while (tmp2 != NULL)
-	{
-		if (tmp2->container != NULL)
-			printf("\nDecomposed: IND - (%d): container - (%s): type - (%c)\n", tmp2->index, tmp2->container, tmp2->type);
-		else
-			printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", tmp2->index, tmp2->type);
-		tmp2 = tmp2->next;
-	}
-	// ft_token_clean(&(mass->tokens));
-	// global cleaner
-	//	flag / tilda
-	// 	dollar
-	// < file cat
-	// --n
-	// ec"ho"gffdg
-	// echo AAAA > new.txte jhjqhweljqwje
-	// >> 111 echo ASDFGHHJ
-	// echo 1234"567""'$USER'"
+	ft_print_container(mass);
 	return (0);
 }

@@ -206,7 +206,7 @@ int main (int argc, char **argv, char **env)
 	//printf("\n%s\n", env_st->env_args[5]);
 	while (1)
 	{
-		ft_bzero(mass, sizeof(t_all));
+		init_t_alls(mass);
 		//mass->buf = ft_strdup("echo $? text");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
@@ -216,12 +216,8 @@ int main (int argc, char **argv, char **env)
 			ft_check_comm(mass, env);
 			ft_token_clean(&(mass->tokens));
 		}
-		if (mass->buf != NULL)
-		{
-			free(mass->buf);
-			mass->buf = NULL;
-		}
-		free(mass->buf);
+		global_cleaner(mass, 0);
 	}
+	global_cleaner(mass, 1);
 	return (0);
 }

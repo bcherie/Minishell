@@ -18,7 +18,7 @@ typedef struct		s_tokens
 	struct	s_tokens *next;
 	struct	s_tokens *prev;
 	char	type;
-	int		index;
+	int		index; 
 	int		range; //range command
 	char	*container;
 	char	**args;
@@ -74,11 +74,13 @@ typedef struct	s_utils
 
 typedef struct	s_all
 {
+	//PARSER
+	int			*sub_indx; // - производится 
+	int			*sub_quotes; // - 
+	int			count_sym;
+	//------------//
 	char		*buf;
 	char		**tmp;
-	int			*sub_indx;
-	int			*sub_prev;
-	int			count_sym;
 	t_tokens	*tokens;
 	int			number_of_pretokens;
 	t_utils		u_mass;
@@ -124,8 +126,19 @@ char 		*ft_dollar_insert(char *line, t_all *mass);
 
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
-
+// PARSER
 void		ft_parser(t_all *mass);
+int			ft_spacekill(char *buf, int start, int end);
+int			ft_spacekill_left(char *buf, int start, int end);
 int			fpf_strchr(const char *s, int c);
-
+int			simple_startend_check(int start, int end);
+// Tokens
+void		ft_token_name(t_tokens *tmp_token, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
+t_tokens	*ft_find_last_token(t_tokens *head);
+// Additional Utils
+int		init_t_alls(t_all *mass);
+void	tmp_int_cleaner(t_all *mass, int mode);
+void	global_cleaner(t_all *mass, int mode);
+void	ft_print_container(t_all *mass);
 #endif
