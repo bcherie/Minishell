@@ -78,10 +78,12 @@ typedef struct	s_all
 	int			*sub_indx; // - производится 
 	int			*sub_quotes; // - 
 	int			count_sym;
-	//------------//
 	char		*buf;
+	//------------//
+	
 	char		**tmp;
 	t_tokens	*tokens;
+	t_tokens	*environment;
 	int			number_of_pretokens;
 	t_utils		u_mass;
 	int			a_count;
@@ -126,6 +128,9 @@ char 		*ft_dollar_insert(char *line, t_all *mass);
 
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
+//BUILDIN_ENV
+int			ft_find_char_position(const char *s, char find);
+void		ft_add_environment(t_all *mass, char **env);
 // PARSER
 void		ft_parser(t_all *mass);
 int			ft_spacekill(char *buf, int start, int end);
@@ -136,6 +141,9 @@ int			simple_startend_check(int start, int end);
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);
 t_tokens	*ft_find_last_token(t_tokens *head);
+
+int	ft_dfbuf_count(t_dbuf *dbuf);
+void	ft_dfbuf_addchar(t_dbuf *dbuf, char sym);
 // Additional Utils
 int		init_t_alls(t_all *mass);
 void	tmp_int_cleaner(t_all *mass, int mode);

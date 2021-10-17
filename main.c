@@ -68,72 +68,6 @@ static void check_buildin(t_ptr *t_ptr, char **env)
 
 }
 
-static	void add_env(char **env)
-{
-	int	l;
-	int	i;
-	int j;
-	t_tokens	*eniroment = NULL;
-	// t_tokens	*head;
-
-	// t_tokens	*new;
-	char **tmp = NULL;
-
-	l =	0;
-	i = 0;
-	j = 0;
-	tmp = (char **)malloc(sizeof(char));
-	// eniroment = malloc(sizeof(t_tokens));
-	// while (env[l] != NULL)
-	// 	l++;
-	// new = ft_env_create();
-	// eniroment = env[i];
-	while (env[i] != NULL)
-	{
-		tmp = ft_split(env[i], '=');
-		if (tmp)
-			ft_lstadd_back(&eniroment, ft_lstnew(tmp[0], tmp[1]));
-		i++;
-	}
-	tmp = ft_split(env[i], '=');
-	if (tmp)
-		ft_lstadd_back(&eniroment, ft_lstnew(tmp[0], tmp[1]));
-	// while (eniroment->container)
-	// {
-	// 	// if (eniroment->container[j] == '=')
-	// 	// {
-	// 		tmp = ft_split(eniroment->container, '=');
-	// 		eniroment->key = tmp[0];
-	// 		eniroment->value = tmp[1];
-	// 	// }
-	// 	eniroment = eniroment->next;
-	// }
-	// 	eniroment = eniroment->next;
-	// eniroment->next = new;
-	// new->prev = eniroment;
-	// new->index = eniroment->index + 1;
-
-	printf("key: %s\n", eniroment->key);
-	printf("value: %s\n", eniroment->value);
-
-	// while (eniroment->key[eniroment->count])
-	// {
-	// 	printf("%s\n", eniroment->key);
-	// 	eniroment->count++;
-	// }
-
-	//printf("\n%d\n", l);
-	// t_ptr->env_args = (char **)malloc(sizeof(char *) * l);
-	//printf("\n%s\n", env[5]);
-	// while (env[i] != NULL)
-	// {
-	// 	t_ptr->env_args[i] = env[i];
-	// 	i++;
-	// }
-	// printf("\n%s\n", t_ptr->env_args[5]);
-
-}
-
 static void ft_check_comm(t_all *mass, char **env)
 {
 	t_tokens	*tmp;
@@ -148,7 +82,7 @@ static void ft_check_comm(t_all *mass, char **env)
 	command->st = 0;
 	tmp = mass->tokens;
 	command->end = 0;
-	add_env(env);
+	ft_add_environment(mass, env);
 
 	if (t_ptr->start->type == 'p')
 	{

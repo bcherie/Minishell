@@ -1,7 +1,7 @@
 NAME = minishell
 D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, print_container parser dollar_buf dollar_ops token_decompose token_utils token_utils2 token_utils3))
-D_BUILD_INS = $(addprefix build_ins/ft_, $(addsuffix .c, ))
-SRCS =	main.c main_utils.c builtins.c buildin_utils.c $(D_PARSE)
+D_BUILD_INS = $(addprefix build_ins/ft_, $(addsuffix .c, env env_utils))
+SRCS =	main.c main_utils.c builtins.c buildin_utils.c $(D_PARSE) $(D_BUILD_INS)
 
 OBJS = $(SRCS:.c=.o)
 
