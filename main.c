@@ -57,14 +57,15 @@ static void check_buildin(t_ptr *t_ptr, char **env)
 	}
 	if (ft_strncmp(t_ptr->command->container, "cd", 2) == 0)
 		ft_cd(t_ptr);
-	if(ft_strncmp(t_ptr->command->container, "echo", 4) == 0)
+	if (ft_strncmp(t_ptr->command->container, "echo", 4) == 0)
 		ft_echo(t_ptr);
+	(void)env;
 	// if(ft_strncmp(t_ptr->command->container, "export", 6) == 0)
 	// 	ft_export(t_ptr);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
-	if(ft_strncmp(t_ptr->command->container, "env", 3) == 0)
-		ft_env(t_ptr, env);
+	// if (ft_strncmp(t_ptr->command->container, "env", 3) == 0)
+	// 	ft_env(t_ptr->, env);
 
 }
 
@@ -83,7 +84,6 @@ static void ft_check_comm(t_all *mass, char **env)
 	tmp = mass->tokens;
 	command->end = 0;
 	ft_add_environment(mass, env);
-
 	if (t_ptr->start->type == 'p')
 	{
 		printf("Error!");
@@ -116,37 +116,19 @@ static void ft_check_comm(t_all *mass, char **env)
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
-	// int	i;
-	// int l;
-
 	(void)argv;
 	(void)argc;
-	// i =	0;
-	// l =	0;
-	// env_st = NULL;
-	// while (env[l] != NULL)
-	// 	l++;
-	// //printf("\n%d\n", l);
-	// env_st = (t_env *)malloc(sizeof(t_env));
-	// env_st->env_args = (char **)malloc(sizeof(char *) * l);
 	mass = (t_all*)malloc(sizeof(t_all));
-
-	//printf("\n%s\n", env[5]);
-	// while (env[i] != NULL)
-	// {
-	// 	env_st->env_args[i] = env[i];
-	// 	i++;
-	// }
-	//printf("\n%s\n", env_st->env_args[5]);
 	while (1)
 	{
 		init_t_alls(mass);
-		//mass->buf = ft_strdup("echo $? text");
 		mass->buf = readline("Minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
+			ft_build_command_tokens(mass);
+			ft_print_container(mass);
 			ft_check_comm(mass, env);
 			ft_token_clean(&(mass->tokens));
 		}
