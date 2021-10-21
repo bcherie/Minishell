@@ -75,6 +75,8 @@ void	ft_build_command_tokens(t_all *mass)
 			if (tmp_end != NULL)
 				tmp_end->prev = tmp_start;
 		}
+		tmp_start->index = i;
+		i++;
 		tmp_start = tmp_start->next;	
 	}
 }

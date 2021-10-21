@@ -12,6 +12,8 @@ t_tokens	*ft_lstnew(char *key, char *value)
 	if (value != NULL)
 		new->value = value;
 	new->next = NULL;
+	new->type = '0';
+	new->index = -1;
 	return (new);
 }
 

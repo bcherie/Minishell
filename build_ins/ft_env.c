@@ -35,22 +35,19 @@ void	ft_add_environment(t_all *mass, char **env)
 	// printf("value: %s\n", mass->environment->value);
 }
 
-void	ft_env(t_all *mass)
+void	ft_env(t_all *mass, t_tokens *tok)
 {
 	t_tokens	*tmp;
 
 	tmp = mass->environment;
+	if (tok->count != 0)
+	{
+		printf("env: %s: No such file or directory\n", tok->args[0]);
+		return ;
+	}
 	while (tmp != NULL)
 	{
-		if (mass->environment->key != NULL)
-		{
-			printf("%s", mass->environment->key);
-			if (mass->environment->value != NULL)
-			{
-				printf("=%s", mass->environment->value);
-			}
-			printf("\n");
-		}
+		ft_print_env_token(tmp);
 		tmp = tmp->next;
 	}
 }

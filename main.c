@@ -1,115 +1,38 @@
 #include "minishell.h"
 
-static void ft_check_args(t_ptr *t_ptr)
+static void ft_check_buildin(t_all *mass, t_tokens *tok)
 {
-	t_ptr->command = NULL;
-	t_ptr->tmp1 = t_ptr->start;
-	t_ptr->count = 0;
-	int i;
-
-	i = 0;
-	i = t_ptr->start->index;
-	while (i <= t_ptr->end->index)
-	{
-		if (t_ptr->tmp1->type == 'c')
-			t_ptr->command = t_ptr->tmp1;
-		else if (t_ptr->tmp1->type == 'a')
-			(t_ptr->count)++;
-		t_ptr->tmp1 = t_ptr->tmp1->next;
-		i++;
-	}
-	if (t_ptr->command != NULL)
-	{
-		t_ptr->command->count = t_ptr->count;
-		if (t_ptr->count != 0)
-		{
-			t_ptr->command->args = (char **)malloc(sizeof(char *) * t_ptr->count);
-			if (!(t_ptr->command->args))
-			{
-				exit(-1);
-				printf("Error, malloc\n");
-			}
-			t_ptr->tmp1 = t_ptr->start;
-			i = t_ptr->start->index;
-			t_ptr->count = 0;
-			while (i <= t_ptr->end->index)
-			{
-				if (t_ptr->tmp1->type == 'a')
-				{
-					t_ptr->command->args[t_ptr->count] = t_ptr->tmp1->container;
-					(t_ptr->count)++;
-				}
-				t_ptr->tmp1 = t_ptr->tmp1->next;
-				i++;
-			}
-		}
-	}
-}
-
-static void check_buildin(t_ptr *t_ptr, char **env)
-{
-	if (ft_strncmp(t_ptr->command->container, "pwd", 3) == 0)
-	{
-		if(ft_strlen(t_ptr->command->container) == 3)
-			ft_pwd();
-		else
-			printf("command not found\n");
-	}
-	if (ft_strncmp(t_ptr->command->container, "cd", 2) == 0)
-		ft_cd(t_ptr);
-	if (ft_strncmp(t_ptr->command->container, "echo", 4) == 0)
-		ft_echo(t_ptr);
-	(void)env;
-	// if(ft_strncmp(t_ptr->command->container, "export", 6) == 0)
-	// 	ft_export(t_ptr);
+	if (ft_strncmp(tok->container, "pwd", 4) == 0)
+		ft_pwd();
+	else if (ft_strncmp(tok->container, "cd", 3) == 0)
+		ft_cd(tok);
+	else if (ft_strncmp(tok->container, "echo", 5) == 0)
+		ft_echo(tok);
+	else if (ft_strncmp(tok->container, "env", 4) == 0)
+		ft_env(mass, tok);
+	else if(ft_strncmp(tok->container, "export", 7) == 0)
+		ft_export(mass, tok);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
-	// if (ft_strncmp(t_ptr->command->container, "env", 3) == 0)
-	// 	ft_env(t_ptr->, env);
-
+	else
+		return ;
 }
 
-static void ft_check_comm(t_all *mass, char **env)
+static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
-	t_tokens	*command;
-	t_ptr		*t_ptr;
-	// int start = 0;
-	t_ptr = &mass->t_ptrs;
-	t_ptr->head = mass->tokens;
-	t_ptr->start = t_ptr->head;
-	t_ptr->tmp0 = t_ptr->head;
-	command = mass->tokens;
-	command->st = 0;
+
 	tmp = mass->tokens;
-	command->end = 0;
-	ft_add_environment(mass, env);
-	if (t_ptr->start->type == 'p')
+	// Fork commands!!!
+
+	while (tmp != NULL)
 	{
-		printf("Error!");
-		exit(-1);
-	}
-	while (t_ptr->start)
-	{
-		if (t_ptr->tmp0->type == 'p' || t_ptr->tmp0->next == NULL)
+		if (tmp->type == 'c')
 		{
-			if (t_ptr->tmp0->next == NULL)
-				t_ptr->end = t_ptr->tmp0;
-			else
-				t_ptr->end = t_ptr->tmp0->prev;
-			ft_check_args(t_ptr);
-			t_ptr->start = t_ptr->tmp0->next;
-		}
-		t_ptr->tmp0 = t_ptr->tmp0->next;
-	}
-	while (t_ptr->head)
-	{
-		if (t_ptr->head->type == 'c')
-		{
-			check_buildin(t_ptr, env);
+			ft_check_buildin(mass, tmp);
 			break ;
 		}
-		t_ptr->head = t_ptr->head->next;
+		tmp = tmp->next;
 	}
 }
 
@@ -126,11 +49,13 @@ int main (int argc, char **argv, char **env)
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
+			ft_add_environment(mass, env);
 			ft_parser(mass);
 			ft_build_command_tokens(mass);
-			ft_print_container(mass);
-			ft_check_comm(mass, env);
+			//ft_print_container(mass);
+			ft_run_ops(mass);
 			ft_token_clean(&(mass->tokens));
+			//ft_token_clean(&(mass->environment));
 		}
 		global_cleaner(mass, 0);
 	}
