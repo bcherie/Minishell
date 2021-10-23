@@ -1,6 +1,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define ENV_TOK_FULL 65
+# define ENV_TOK_PARTIAL 66
+
 #include "libft/libft.h"
 #include <stdio.h>
 #include <readline/readline.h>
@@ -48,8 +51,12 @@ void		ft_export(t_all *mass, t_tokens *tok);
 
 //BUILDIN_ENV
 int			ft_find_char_position(const char *s, char find);
+int			ft_is_valid_env_token(const char *tok);
+void		ft_copy_mark_env_token(t_all *mass, const char *env_cont);
+t_tokens	*ft_is_in_enviroment(t_all *mass, const char *env_cont);
+void		ft_update_environment(t_all *mass, const char *env_cont);
 void		ft_add_environment(t_all *mass, char **env);
-void		ft_print_env_token(t_tokens *tok);
+void		ft_print_env_token(t_tokens *tok, char mode);
 int			ft_count_tokens(t_tokens *head);
 
 

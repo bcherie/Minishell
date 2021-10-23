@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-static t_tokens *find_pre_min(t_tokens *head)
+static t_tokens	*find_pre_min(t_tokens *head)
 {
 	t_tokens	*tmp;
 
@@ -13,7 +13,7 @@ static t_tokens *find_pre_min(t_tokens *head)
 static int	ft_compare_keys(const char *f, const char *s)
 {
 	int	len_f;
-	int len_s;
+	int	len_s;
 	int	out_strcmp;
 
 	out_strcmp = 0;
@@ -51,6 +51,18 @@ static void	ft_enumerate_tokens(t_tokens *head)
 	}
 }
 
+static void	ft_renumerate_tokens(t_tokens *head)
+{
+	t_tokens	*tok;
+
+	tok = head;
+	while (tok != NULL)
+	{
+		tok->index = -1;
+		tok = tok->next;
+	}
+}
+
 void	ft_export(t_all *mass, t_tokens *tok)
 {
 	t_tokens	*tmp;
@@ -58,31 +70,21 @@ void	ft_export(t_all *mass, t_tokens *tok)
 	int			count;
 
 	tmp = mass->environment;
-	if (tmp == NULL)
-		return ;
-	iter = 0;
+	iter = -1;
 	if (tok->count > 0)
-		ft_add_environment(mass, tok->args);
+	{
+		while (++iter < tok->count)
+			ft_update_environment(mass, tok->args[iter]);
+		return ;
+	}
 	count = ft_count_tokens(tmp);
 	ft_enumerate_tokens(tmp);
-	while (iter < count)
+	while (++iter < count)
 	{
 		tmp = mass->environment;
 		while (tmp != NULL && tmp->index != iter)
 			tmp = tmp->next;
-		ft_print_env_token(tmp);
-		iter++;
+		ft_print_env_token(tmp, ENV_TOK_PARTIAL);
 	}
+	ft_renumerate_tokens(mass->environment);
 }
-
-/* TO_DO
-
-- Сделать расширенную разметку типов: не все печатаются в энвехе, что-то печатается только в экспорте
-- Сделать обработку ввода на валидный и невалидный аргумент
-- Рассмотреть кейс с вэлью с началом с ' '
-- В цдэхе сделать обновление pwd/oldpwd
-- Вынести копирование env перед основным циклом программы
-
-
-
-*/

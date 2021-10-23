@@ -15,13 +15,20 @@ int	ft_count_tokens(t_tokens *head)
 	return (counter);
 }
 
-void	ft_print_env_token(t_tokens *tok)
+void	ft_print_env_token(t_tokens *tok, char mode)
 {
-	if (tok->key != NULL)
+	if (mode == ENV_TOK_FULL)
 	{
-		printf("%s", tok->key);
-		if (tok->value != NULL)
-			printf("=%s", tok->value);
-		printf("\n");
+		if (tok->type == mode)
+			printf("%s=%s\n", tok->key, tok->value);
 	}
+	else if (mode == ENV_TOK_PARTIAL)
+	{
+		if (tok->value != NULL)
+			printf("declare -x %s=\"%s\"\n", tok->key, tok->value);
+		else
+			printf("declare -x %s=\"\"\n", tok->key);
+	}
+	else
+		return ;
 }

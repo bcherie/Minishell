@@ -40,7 +40,15 @@ void global_cleaner(t_all *mass, int mode)
 
 int	init_t_alls(t_all *mass)
 {
-	ft_bzero(mass, sizeof(t_all));
+	mass->sub_indx = NULL;
+	mass->sub_quotes = NULL;
+	mass->buf = NULL;
+	mass->tokens = NULL;
+	mass->count_sym = 0;
+	mass->number_of_pretokens = 0;
+	ft_bzero(&(mass->u_mass), sizeof(t_utils));
+	mass->a_count = 0;
+	mass->args = NULL;
 	mass->tmp = (char **)malloc(sizeof(char *) * 3);
 	if (mass->tmp == NULL)
 		return (0);

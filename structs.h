@@ -71,7 +71,6 @@ typedef struct	s_all
 	t_utils		u_mass;
 	int			a_count;
 	char		**args;
-	t_ptr		t_ptrs;
 }				t_all;
 
 

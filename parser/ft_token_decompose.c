@@ -221,6 +221,5 @@ int	ft_token_decompose(t_all *mass)
 		i = i + 2;
 		u.iter++;
 	}
-	ft_print_container(mass);
 	return (0);
 }

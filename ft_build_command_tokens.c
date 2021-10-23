@@ -23,13 +23,14 @@ static void	morph_token(t_tokens *start)
 	i = 0;
 	if (start->count > 0)
 	{
-		start->args = (char **)malloc(sizeof(char *) * start->count);
+		start->args = (char **)malloc(sizeof(char *) * (start->count + 1));
 		while (i < start->count)
 		{
 			start->args[i] = tmp->container;
 			i++;
 			tmp = tmp->next;
 		}
+		start->args[i] = NULL;
 	}
 }
 

@@ -39,9 +39,11 @@ static void ft_run_ops(t_all *mass)
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
+
 	(void)argv;
 	(void)argc;
 	mass = (t_all*)malloc(sizeof(t_all));
+	ft_add_environment(mass, env);
 	while (1)
 	{
 		init_t_alls(mass);
@@ -49,7 +51,6 @@ int main (int argc, char **argv, char **env)
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
-			ft_add_environment(mass, env);
 			ft_parser(mass);
 			ft_build_command_tokens(mass);
 			//ft_print_container(mass);
