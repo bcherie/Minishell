@@ -52,6 +52,7 @@ void 		echo_n(t_tokens *tok);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
 void		ft_env(t_all *mass, t_tokens *tok);
 void		ft_export(t_all *mass, t_tokens *tok);
+void		ft_unset(t_all *mass, t_tokens *tok);
 void		ft_exit(t_all *mass, t_tokens *tok);
 
 //BUILDIN_ENV

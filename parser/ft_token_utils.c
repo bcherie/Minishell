@@ -8,9 +8,7 @@ t_tokens	*ft_token_create(void)
 	token = (t_tokens *)malloc(sizeof(t_tokens));
 	if (token == NULL)
 		return (NULL);
-	token->next = NULL;
-	token->prev = NULL;
-	token->container = NULL;
+	ft_bzero(token, sizeof(t_tokens));
 	token->type = 'x';
 	token->index = 0;
 	return (token);
@@ -40,18 +38,55 @@ t_tokens	*ft_token_add(t_all *mass)
 	return (new);
 }
 
+static void ft_token_clean_args(t_tokens **tok)
+{
+	int	i;
+
+	i = 0;
+	if ((*tok)->args == NULL)
+		return ;
+	while (i < (*tok)->count)
+	{
+		if ((*tok)->args[i] != NULL)
+		{
+			free((*tok)->args[i]);
+			(*tok)->args[i] = NULL;
+		}
+		i++;
+	}
+	free ((*tok)->args);
+	(*tok)->args = NULL;
+}
+
+static void ft_token_clean_keyval(t_tokens **tok)
+{
+	if ((*tok)->key != NULL)
+	{
+		free((*tok)->key);
+		(*tok)->key = NULL;
+	}
+	if ((*tok)->value != NULL)
+	{
+		free((*tok)->value);
+		(*tok)->value = NULL;
+	}
+}
+
 void	ft_token_clean(t_tokens **head)
 {
 	t_tokens	*tmp;
+	int			i;
 
 	if (!head || !(*head))
 		return ;
-	tmp = NULL;
 	while (*head)
 	{
+		i = 0;
 		tmp = (*head)->next;
 		free((*head)->container);
 		(*head)->container = NULL;
+		ft_token_clean_args(head);
+		ft_token_clean_keyval(head);
 		free(*head);
 		*head = tmp;
 	}

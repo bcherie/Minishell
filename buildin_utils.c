@@ -7,11 +7,9 @@ t_tokens	*ft_lstnew(char *key, char *value)
 	new = (t_tokens*)malloc(sizeof(t_tokens));
 	if (!new)
 		return (NULL);
-	if (key != NULL)
-		new->key = key;
-	if (value != NULL)
-		new->value = value;
-	new->next = NULL;
+	ft_bzero(new, sizeof(t_tokens));
+	new->key = key;
+	new->value = value;
 	new->type = '0';
 	new->index = -1;
 	return (new);

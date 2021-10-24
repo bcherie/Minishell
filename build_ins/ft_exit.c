@@ -10,7 +10,7 @@ void	ft_exit(t_all *mass, t_tokens *tok)
 		if (ft_ms_atoi_checksyms(tok->args[0]) == 0)
 		{
 			printf("exit\n");
-			printf("minishell: exit: %s: numeric argument required\n", tok->args[0]);
+			ft_print_report(tok->container, tok->args[0], REPORT_NUMARG);
 		}
 		else
 		{	

@@ -87,5 +87,7 @@ void	ft_update_environment(t_all *mass, char *command, char *env_cont)
 			ft_strlcpy(upd->value, &env_cont[fchar + 1], len - fchar);
 			upd->type = ENV_TOK_FULL;
 		}
+		if (upd->type == ENV_TOK_UNSET)
+			upd->type = ENV_TOK_PARTIAL;
 	}
 }

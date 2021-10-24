@@ -5,19 +5,15 @@ TO_DO
 	- Написать очистку аргов в токен очистке
 	- 
 */
+
 void	ft_unset(t_all *mass, t_tokens *tok)
 {
 	t_tokens	*tmp;
 	int			iter;
 	int			length;
-	int			num_env;
 
-	tmp = NULL;
-	
 	iter = -1;
-	length = 0;
-	num_env = ft_count_tokens(mass->environment);
-	while (++iter < num_env)
+	while (++iter < tok->count)
 	{
 		length = ft_strlen(tok->args[iter]);
 		tmp = mass->environment;
@@ -26,6 +22,9 @@ void	ft_unset(t_all *mass, t_tokens *tok)
 			if (ft_strncmp(tok->args[iter], tmp->key, length) == 0)
 			{
 				tmp->type = ENV_TOK_UNSET;
+				if (tmp->value != NULL)
+					free(tmp->value);
+				tmp->value = NULL;
 				break ;
 			}
 			tmp = tmp->next;

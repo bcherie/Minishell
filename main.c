@@ -14,6 +14,8 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_export(mass, tok);
 	else if(ft_strncmp(tok->container, "exit", 5) == 0)
 		ft_exit(mass, tok);
+	else if(ft_strncmp(tok->container, "unset", 6) == 0)
+		ft_unset(mass, tok);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
 	else
