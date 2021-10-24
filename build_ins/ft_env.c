@@ -10,7 +10,7 @@ void	ft_add_environment(t_all *mass, char **env)
 		ft_copy_mark_env_token(mass, env[i]);
 		i++;
 	}
-	ft_update_environment(mass, "OLDPWD");
+	ft_update_environment(mass, NULL, "OLDPWD");
 }
 
 void	ft_env(t_all *mass, t_tokens *tok)
@@ -19,13 +19,13 @@ void	ft_env(t_all *mass, t_tokens *tok)
 
 	tmp = mass->environment;
 	if (tok->count != 0)
-	{
 		printf("env: %s: No such file or directory\n", tok->args[0]);
-		return ;
-	}
-	while (tmp != NULL)
+	else
 	{
-		ft_print_env_token(tmp, ENV_TOK_FULL);
-		tmp = tmp->next;
+		while (tmp != NULL)
+		{
+			ft_print_env_token(tmp, ENV_TOK_FULL);
+			tmp = tmp->next;
+		}
 	}
 }

@@ -17,14 +17,6 @@ int	ft_find_char_position(const char *s, char find)
 	return (-1);
 }
 
-int		ft_is_valid_env_token(const char *tok)
-{
-	if (ft_isalpha(tok[0]) == 1 || tok[0] == '_')
-		return (1);
-	printf("%s is not valid identifier\n", tok);
-	return (0);
-}
-
 void	ft_copy_mark_env_token(t_all *mass, const char *env_cont)
 {
 	t_tokens	*env_tmp;
@@ -72,13 +64,13 @@ t_tokens	*ft_is_in_enviroment(t_all *mass, const char *env_cont)
 	return (NULL);
 }
 
-void	ft_update_environment(t_all *mass, const char *env_cont)
+void	ft_update_environment(t_all *mass, char *command, char *env_cont)
 {
 	t_tokens	*upd;
 	int			fchar;
 	int			len;
 
-	if (ft_is_valid_env_token(env_cont) == 0)
+	if (ft_is_valid_env_token(command, env_cont) == 0)
 		return ;
 	len = ft_strlen(env_cont);
 	fchar = ft_find_char_position(env_cont, '=');

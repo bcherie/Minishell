@@ -26,6 +26,7 @@ void	tmp_int_cleaner(t_all *mass, int mode)
 void global_cleaner(t_all *mass, int mode)
 {
 	tmp_int_cleaner(mass, 1);
+	ft_token_clean(&(mass->tokens));
 	if (mass->buf != NULL)
 	{
 		free(mass->buf);
@@ -33,8 +34,9 @@ void global_cleaner(t_all *mass, int mode)
 	}
 	if (mode == 1 && mass != NULL)
 	{	
+		ft_token_clean(&(mass->environment));
 		free(mass);
-		mass = NULL; 
+		mass = NULL;
 	}
 }
 

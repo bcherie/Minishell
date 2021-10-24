@@ -12,6 +12,8 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_env(mass, tok);
 	else if(ft_strncmp(tok->container, "export", 7) == 0)
 		ft_export(mass, tok);
+	else if(ft_strncmp(tok->container, "exit", 5) == 0)
+		ft_exit(mass, tok);
 	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
 	// 	ft_execve(mass, tmp);
 	else
@@ -39,7 +41,7 @@ static void ft_run_ops(t_all *mass)
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
-
+	
 	(void)argv;
 	(void)argc;
 	mass = (t_all*)malloc(sizeof(t_all));
@@ -47,19 +49,15 @@ int main (int argc, char **argv, char **env)
 	while (1)
 	{
 		init_t_alls(mass);
-		mass->buf = readline("Minishell: ");
+		mass->buf = readline("minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_build_command_tokens(mass);
-			//ft_print_container(mass);
 			ft_run_ops(mass);
-			ft_token_clean(&(mass->tokens));
-			//ft_token_clean(&(mass->environment));
 		}
 		global_cleaner(mass, 0);
 	}
-	global_cleaner(mass, 1);
 	return (0);
 }

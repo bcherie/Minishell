@@ -74,7 +74,7 @@ void	ft_export(t_all *mass, t_tokens *tok)
 	if (tok->count > 0)
 	{
 		while (++iter < tok->count)
-			ft_update_environment(mass, tok->args[iter]);
+			ft_update_environment(mass, tok->container, tok->args[iter]);
 		return ;
 	}
 	count = ft_count_tokens(tmp);

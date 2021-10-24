@@ -3,6 +3,10 @@
 
 # define ENV_TOK_FULL 65
 # define ENV_TOK_PARTIAL 66
+# define ENV_TOK_UNSET 67
+# define REPORT_IDENT 1
+# define REPORT_NOFDIR 2
+# define REPORT_NUMARG 3
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -48,17 +52,23 @@ void 		echo_n(t_tokens *tok);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
 void		ft_env(t_all *mass, t_tokens *tok);
 void		ft_export(t_all *mass, t_tokens *tok);
+void		ft_exit(t_all *mass, t_tokens *tok);
 
 //BUILDIN_ENV
 int			ft_find_char_position(const char *s, char find);
-int			ft_is_valid_env_token(const char *tok);
+int			ft_is_valid_env_token(char *command, char *val);
 void		ft_copy_mark_env_token(t_all *mass, const char *env_cont);
 t_tokens	*ft_is_in_enviroment(t_all *mass, const char *env_cont);
-void		ft_update_environment(t_all *mass, const char *env_cont);
+void		ft_update_environment(t_all *mass, char *command, char *env_cont);
 void		ft_add_environment(t_all *mass, char **env);
 void		ft_print_env_token(t_tokens *tok, char mode);
 int			ft_count_tokens(t_tokens *head);
 
+int			ft_ms_atoi_checksyms(const char *str);
+long long	ft_atolonglong(const char *str);
+
+// VALIDATION REPORT
+void 		ft_print_report(char *command, char *val, int type);
 
 //// PARSER
 void		ft_parser(t_all *mass);
