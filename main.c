@@ -182,6 +182,10 @@ static void ft_check_comm(t_all *mass, char **env)
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
+	pid_t pid;
+	pid_t mypid;
+	pid_t parentpid;
+	// int pipefd[2];
 	// int	i;
 	// int l;
 
@@ -214,6 +218,12 @@ int main (int argc, char **argv, char **env)
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_check_comm(mass, env);
+			pid = fork();
+			mypid=getpid();
+			parentpid=getppid();
+			// printf ("echo 111 | cat -e\n");
+			printf ("%d\n", mypid);
+			// printf ("%d\n", parentpid);
 			ft_token_clean(&(mass->tokens));
 		}
 		if (mass->buf != NULL)
