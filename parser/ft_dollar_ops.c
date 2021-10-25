@@ -86,7 +86,7 @@ char	*ft_dollar_insert(char *line, t_all *mass)
 			if (ft_isalpha(line[t.iter + 1]))
 			{
 				ft_alpha(mass, &t, line);
-				substring = getenv(mass->tmp[0]);
+				substring = ft_envops_getval(mass, mass->tmp[0]);
 				tmp_int_cleaner(mass, 0);
 				if (substring != NULL)
 				{
