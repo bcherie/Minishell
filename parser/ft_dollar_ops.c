@@ -5,7 +5,7 @@ static int	simple_check(char *line)
 	int	i;
 
 	i = 0;
-	while(line[i] != '\0')
+	while (line[i] != '\0')
 	{
 		if (line[i] == '$')
 		{
@@ -19,40 +19,14 @@ static int	simple_check(char *line)
 	return (0);
 }
 
-static void	ft_dfbuf_addchar(t_dbuf *dbuf, char sym)
-{
-	while (dbuf->next != NULL)
-		dbuf = dbuf->next;
-	if (dbuf->full == 200)
-	{
-		ft_dbuf_add(&dbuf);
-		dbuf = dbuf->next;
-	}
-	dbuf->buf[dbuf->full] = sym;
-	(dbuf->full)++;
-}
-
-static int	ft_dfbuf_count(t_dbuf *dbuf)
-{
-	int	i;
-
-	i = 0;
-	while (dbuf)
-	{
-		i += dbuf->full;
-		dbuf = dbuf->next;
-	}
-	return (i);
-}
-
 static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 0;
 	j = 0;
-	while(i < len && head != NULL)
+	while (i < len && head != NULL)
 	{
 		newline[i] = head->buf[j];
 		i++;
@@ -64,16 +38,41 @@ static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 		}
 	}
 }
+// static void ft_substring(t_all *m, t_dbuf **head, t_utils *t, char **subst)
+// {
+// 	*subst = getenv(m->tmp[0]);
+// 	tmp_int_cleaner(m, 0);
+// 	if (*subst != NULL)
+// 	{
+// 		while (*subst[t->i_count] != '\0')
+// 			ft_dfbuf_addchar(*head, *subst[(t->i_count)++]);
+// 	}
+// }
 
-char *ft_dollar_insert(char *line, t_all *mass)
+static void	ft_alpha(t_all *mass, t_utils *t, char *line)
 {
-	char	*newline = NULL;
-	char	*subline = NULL;
-	char	*substring = NULL;
+	t->iter++;
+	t->i_keyshift = t->iter;
+	while (ft_isalnum(line[t->i_keyshift]))
+		(t->i_keyshift)++;
+	if (t->iter == t->i_keyshift)
+		mass->tmp[0] = ft_substr(line, t->iter, t->i_keyshift - t->iter + 1);
+	else
+		mass->tmp[0] = ft_substr(line, t->iter, t->i_keyshift - t->iter);
+	t->iter = t->i_keyshift;
+}
+
+char	*ft_dollar_insert(char *line, t_all *mass)
+{
+	char	*newline;
+	char	*subline;
+	char	*substring;
 	t_dbuf	*head;
 	t_utils	t;
 
-
+	newline = NULL;
+	subline = NULL;
+	substring = NULL;
 	if (simple_check(line) == 0)
 		return (line);
 	ft_bzero(&t, sizeof(t_utils));
@@ -86,26 +85,14 @@ char *ft_dollar_insert(char *line, t_all *mass)
 		{
 			if (ft_isalpha(line[t.iter + 1]))
 			{
-				t.iter++;
-
-				t.i_keyshift = t.iter;
-				while (ft_isalnum(line[t.i_keyshift]))
-					(t.i_keyshift)++;
-
-				if (t.iter == t.i_keyshift)
-					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter + 1);
-				else
-					mass->tmp[0] = ft_substr(line, t.iter, t.i_keyshift - t.iter);
+				ft_alpha(mass, &t, line);
 				substring = getenv(mass->tmp[0]);
-				if (mass->tmp[0] != NULL)
-					free(mass->tmp[0]);
-				mass->tmp[0] = NULL;
+				tmp_int_cleaner(mass, 0);
 				if (substring != NULL)
 				{
 					while (substring[t.i_count] != '\0')
 						ft_dfbuf_addchar(head, substring[(t.i_count)++]);
 				}
-				t.iter = t.i_keyshift;
 				continue ;
 			}
 			else if (fpf_strchr("0#?", line[t.iter + 1]))
@@ -135,5 +122,5 @@ char *ft_dollar_insert(char *line, t_all *mass)
 	ft_dbuf_clean(&head);
 	free(line);
 	line = NULL;
-	return(newline);
+	return (newline);
 }

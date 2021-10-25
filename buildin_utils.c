@@ -7,11 +7,11 @@ t_tokens	*ft_lstnew(char *key, char *value)
 	new = (t_tokens*)malloc(sizeof(t_tokens));
 	if (!new)
 		return (NULL);
-	if (key != NULL)
-		new->key = key;
-	if (value != NULL)
-		new->value = value;
-	new->next = NULL;
+	ft_bzero(new, sizeof(t_tokens));
+	new->key = key;
+	new->value = value;
+	new->type = '0';
+	new->index = -1;
 	return (new);
 }
 
@@ -38,45 +38,3 @@ t_tokens	*ft_lstlast(t_tokens *lst)
 		lst = lst->next;
 	return (lst);
 }
-
-// t_tokens *ft_env_create(void)
-// {
-// 	t_tokens *env;
-
-// 	env = NULL;
-// 	env = (t_tokens*)malloc(sizeof(t_tokens));
-// 	if (env == NULL)
-// 		return (NULL);
-// 	env->next = NULL;
-// 	env->prev = NULL;
-// 	env->container = NULL;
-// 	env->type = 'x';
-// 	env->index = 0;
-// 	env->key = NULL;
-// 	env->value = NULL;
-// 	return (env);
-// }
-
-// t_tokens *ft_env_add(t_tokens *envir, char **env)
-// {
-// 	t_tokens	*tmp;
-// 	t_tokens	*new;
-
-// 	tmp = NULL;
-// 	new = ft_env_create();
-// 	if(t_ptr->env == NULL)
-// 	{
-// 		t_ptr->env = new;
-// 		t_ptr->env->index = 0;
-// 	}
-// 	else
-// 	{
-// 		tmp = t_ptr->env;
-// 		while (tmp->next != NULL)
-// 			tmp = tmp->next;
-// 		tmp->next = new;
-// 		new->prev = tmp;
-// 		new->index = tmp->index + 1;
-// 	}
-// 	return (new);
-// }

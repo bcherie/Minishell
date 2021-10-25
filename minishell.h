@@ -1,107 +1,24 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define ENV_TOK_FULL 65
+# define ENV_TOK_PARTIAL 66
+# define ENV_TOK_UNSET 67
+# define REPORT_IDENT 1
+# define REPORT_NOFDIR 2
+# define REPORT_NUMARG 3
+
 #include "libft/libft.h"
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-// typedef struct s_env
-// {
-// 	char	**env_args;
-// }				t_env;
-
-typedef struct		s_tokens
-{
-	struct	s_tokens *next;
-	struct	s_tokens *prev;
-	char	type;
-	int		index;
-	int		range; //range command
-	char	*container;
-	char	**args;
-	char	*key;
-	char	*value;
-	// char	**env_args;
-	int		st;
-	int		end;
-	int		count;
-}					t_tokens;
-
-typedef struct		s_ptr
-{
-	t_tokens		*head;
-	t_tokens		*start;
-	t_tokens		*end;
-	t_tokens		*tmp0;
-	t_tokens		*tmp1;
-	t_tokens		*command;
-	int				count;
-	char			**env_args;
-	t_tokens		*env;
-}					t_ptr;
-
-typedef struct s_env
-{
-	char *key;
-	char *value;
-
-}				t_env;
-
-typedef struct	s_dbuf
-{
-	char			buf[201];
-	struct s_dbuf	*next;
-	int				full;
-}				t_dbuf;
-
-typedef struct	s_utils
-{
-	int			st;
-	int			n_st;
-	int 		end;
-	int			n_end;
-	int			flag_token_join;
-	int			flag_find_command;
-	int			flag_find_file;
-	int			flag_dollar_on;
-	int			i_keyshift;
-	int			i_count;
-	int			iter;
-}				t_utils;
-
-typedef struct	s_all
-{
-	char		*buf;
-	char		**tmp;
-	int			*sub_indx;
-	int			*sub_prev;
-	int			count_sym;
-	t_tokens	*tokens;
-	int			number_of_pretokens;
-	t_utils		u_mass;
-	int			a_count;
-	char		**args;
-	t_ptr		t_ptrs;
-	t_env		*env_st;
-}				t_all;
+#include "structs.h"
 
 
-
-size_t	words_count(char const *s, char sp);
-void	ft_echo(t_ptr *t_ptr);
-// void  ft_echo(t_all mass);
-void ft_pwd(void);
-void ft_cd(t_ptr *t_ptr);
-void echo_n(t_ptr *t_ptr);
-void ft_execve(t_all *mass, t_tokens *tmp);
-// void ft_export(t_ptr *t_ptr);
-void ft_env(t_ptr *t_ptr, char **env);
-// t_env *ft_env_add(t_ptr *t_ptr);
-// t_tokens *ft_env_create(void);
-void	ft_lstadd_back(t_tokens **list, t_tokens *new);
+size_t		words_count(char const *s, char sp);
+void		ft_lstadd_back(t_tokens **list, t_tokens *new);
 t_tokens	*ft_lstnew(char *key, char *value);
 t_tokens	*ft_lstlast(t_tokens *lst);
 
@@ -125,7 +42,55 @@ char 		*ft_dollar_insert(char *line, t_all *mass);
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
 
-void		ft_parser(t_all *mass);
-int			fpf_strchr(const char *s, int c);
+//BUILDIN
 
+void		ft_echo(t_tokens *tok);
+
+void 		ft_pwd(void);
+// void 		ft_cd(t_tokens *tok);
+void ft_cd(t_tokens *tok, t_all *mass);
+void 		echo_n(t_tokens *tok);
+void 		ft_execve(t_all *mass, t_tokens *tmp);
+void		ft_env(t_all *mass, t_tokens *tok);
+void		ft_export(t_all *mass, t_tokens *tok);
+void		ft_unset(t_all *mass, t_tokens *tok);
+void		ft_exit(t_all *mass, t_tokens *tok);
+
+//BUILDIN_ENV
+int			ft_find_char_position(const char *s, char find);
+int			ft_is_valid_env_token(char *command, char *val);
+void		ft_copy_mark_env_token(t_all *mass, const char *env_cont);
+t_tokens	*ft_is_in_enviroment(t_all *mass, const char *env_cont);
+void		ft_update_environment(t_all *mass, char *command, char *env_cont);
+void		ft_add_environment(t_all *mass, char **env);
+void		ft_print_env_token(t_tokens *tok, char mode);
+int			ft_count_tokens(t_tokens *head);
+
+int			ft_ms_atoi_checksyms(const char *str);
+long long	ft_atolonglong(const char *str);
+
+// VALIDATION REPORT
+void 		ft_print_report(char *command, char *val, int type);
+
+//// PARSER
+void		ft_parser(t_all *mass);
+int			ft_spacekill(char *buf, int start, int end);
+int			ft_spacekill_left(char *buf, int start, int end);
+int			fpf_strchr(const char *s, int c);
+int			simple_startend_check(int start, int end);
+
+
+void		ft_build_command_tokens(t_all *mass);
+// Tokens
+void		ft_token_name(t_tokens *tmp_token, t_utils *u);
+void		ft_token_join_test(t_all *mass, t_utils *u);
+t_tokens	*ft_find_last_token(t_tokens *head);
+
+int			ft_dfbuf_count(t_dbuf *dbuf);
+void		ft_dfbuf_addchar(t_dbuf *dbuf, char sym);
+// Additional Utils
+int			init_t_alls(t_all *mass);
+void		tmp_int_cleaner(t_all *mass, int mode);
+void		global_cleaner(t_all *mass, int mode);
+void		ft_print_container(t_all *mass);
 #endif
