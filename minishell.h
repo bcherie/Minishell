@@ -64,6 +64,7 @@ void		ft_update_environment(t_all *mass, char *command, char *env_cont);
 void		ft_add_environment(t_all *mass, char **env);
 void		ft_print_env_token(t_tokens *tok, char mode);
 int			ft_count_tokens(t_tokens *head);
+char		*ft_envops_getval(t_all *mass, char *key);
 
 int			ft_ms_atoi_checksyms(const char *str);
 long long	ft_atolonglong(const char *str);
