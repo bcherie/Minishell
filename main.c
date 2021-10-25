@@ -5,7 +5,7 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
-		ft_cd(tok);
+		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
 		ft_echo(tok);
 	else if (ft_strncmp(tok->container, "env", 4) == 0)

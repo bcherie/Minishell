@@ -1,12 +1,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define ENV_TOK_FULL 65
-# define ENV_TOK_PARTIAL 66
-# define ENV_TOK_UNSET 67
-# define REPORT_IDENT 1
-# define REPORT_NOFDIR 2
-# define REPORT_NUMARG 3
+# define ENV_TOK_FULL 65 //Принтуется при ft_env: key=val
+# define ENV_TOK_PARTIAL 66 // Принтуется при ft_export: key
+# define ENV_TOK_UNSET 67 // Не принтуется
+
+
+# define REPORT_IDENT 1 // non valid identif
+# define REPORT_NOFDIR 2 // no file or directort
+# define REPORT_NUMARG 3 // no numeric
+# define REPORT_UNSET_PARAM 4
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -47,7 +50,7 @@ int			ft_space_cleaner(char *buf, int start, int end);
 void		ft_echo(t_tokens *tok);
 
 void 		ft_pwd(void);
-void 		ft_cd(t_tokens *tok);
+void 		ft_cd(t_all *mass, t_tokens *tok);
 void 		echo_n(t_tokens *tok);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
 void		ft_env(t_all *mass, t_tokens *tok);
@@ -64,8 +67,10 @@ void		ft_update_environment(t_all *mass, char *command, char *env_cont);
 void		ft_add_environment(t_all *mass, char **env);
 void		ft_print_env_token(t_tokens *tok, char mode);
 int			ft_count_tokens(t_tokens *head);
+/// getters setters
 char		*ft_envops_getval(t_all *mass, char *key);
-
+char		*ft_envops_setval(t_all *mass, char *key, char *val);
+///
 int			ft_ms_atoi_checksyms(const char *str);
 long long	ft_atolonglong(const char *str);
 
