@@ -16,8 +16,8 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if (tok->container)
-		ft_find_exec(mass, tok);
+	else if(tok->container != NULL)
+		ft_execve(mass, tok);
 	else
 		return ;
 }

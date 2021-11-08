@@ -19,7 +19,7 @@ void	ft_env(t_all *mass, t_tokens *tok)
 
 	tmp = mass->environment;
 	if (tok->count != 0)
-		ft_print_report(tok->container, tok->args[0], REPORT_NOFDIR);
+		ft_print_report(tok->container, tok->args[1], REPORT_NOFDIR);
 	else
 	{
 		while (tmp != NULL)

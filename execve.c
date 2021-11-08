@@ -16,6 +16,8 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 		tmp = ft_strjoin(current_f, tok->container);
 		if (stat(tmp, &buf) == 0)
 		{
+            // printf("\n%s\n---\n", tmp);
+            //printf("\n%s\n---\n", tok->args[0]);
 			execve(tmp, tok->args, NULL);
 			tok->container = NULL;
 		}
@@ -42,7 +44,7 @@ void	run_current_p(t_tokens *tok, char *current_path)
 	}
 }
 
-void    ft_find_exec(t_all *mass, t_tokens *tok)
+void    ft_execve(t_all *mass, t_tokens *tok)
 {
     // struct stat buf; // структура, где будет храниться инфа о файле
 

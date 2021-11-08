@@ -1,7 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#define _GNU_SOURCE
 # define ENV_TOK_FULL 65 //Принтуется при ft_env: key=val
 # define ENV_TOK_PARTIAL 66 // Принтуется при ft_export: key
 # define ENV_TOK_UNSET 67 // Не принтуется
@@ -52,7 +51,7 @@ void		ft_echo(t_tokens *tok);
 
 void 		ft_pwd(void);
 void 		ft_cd(t_all *mass, t_tokens *tok);
-void 		echo_n(t_tokens *tok);
+void 		echo_n(t_tokens *tok, int *flag);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
 void		ft_env(t_all *mass, t_tokens *tok);
 void		ft_export(t_all *mass, t_tokens *tok);
