@@ -53,7 +53,7 @@ void    ft_find_exec(t_all *mass, t_tokens *tok)
     // int     i;
 
 
-    // pid_t pid;
+    pid_t pid;
 
     // t_tokens *env;
 
@@ -87,17 +87,23 @@ void    ft_find_exec(t_all *mass, t_tokens *tok)
     current_path = ft_envops_getval(mass, "PWD");
     // else
     //     printf("PWD doesn't exist\n");
-    // pid = fork();
-    if (path)
-    {
-		run_exec_folders(tok, exec_folders);
-	}
-	else if (current_path)
+    pid = fork();
+	if (pid == 0)
 	{
-		run_current_p(tok, current_path);
+		printf("Child process PID[%d] start running, my parent PID is [%d] \n", getpid(), getppid());
+		if (path)
+		{
+			run_exec_folders(tok, exec_folders);
+		}
+		else if (current_path)
+		{
+			run_current_p(tok, current_path);
+		}
+		else
+		{
+			printf("Command hasn't found\n");
+		}
 	}
-	else
-	{
-		printf("Command hasn't found\n");
-	}
+	if (pid != 0)
+		wait(NULL);
 }
