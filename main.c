@@ -5,19 +5,19 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
-		ft_cd(tok, mass);
+		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
 		ft_echo(tok);
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
-	else if(ft_strncmp(tok->container, "export", 7) == 0)
+	else if (ft_strncmp(tok->container, "export", 7) == 0)
 		ft_export(mass, tok);
-	else if(ft_strncmp(tok->container, "exit", 5) == 0)
+	else if (ft_strncmp(tok->container, "exit", 5) == 0)
 		ft_exit(mass, tok);
-	else if(ft_strncmp(tok->container, "unset", 6) == 0)
+	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	// if(ft_strncmp(tmp->container, "exeve", 5) == 0)
-	// 	ft_execve(mass, tmp);
+	else if (tok->container)
+		ft_find_exec(mass, tok);
 	else
 		return ;
 }

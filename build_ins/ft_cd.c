@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-void ft_cd(t_tokens *tok, t_all *mass)
+void		ft_cd(t_all *mass, t_tokens *tok)
 {
 	int res;
 	char *home;
