@@ -19,12 +19,12 @@ static void	morph_token(t_tokens *start)
 	t_tokens	*tmp;
 	int			i;
 
-	tmp = start->next;
+	tmp = start;
 	i = 0;
 	if (start->count > 0)
 	{
-		start->args = (char **)malloc(sizeof(char *) * (start->count + 1));
-		while (i < start->count)
+		start->args = (char **)malloc(sizeof(char *) * (start->count + 2));
+		while (i < start->count + 1)
 		{
 			start->args[i] = tmp->container;
 			i++;
@@ -78,6 +78,6 @@ void	ft_build_command_tokens(t_all *mass)
 		}
 		tmp_start->index = i;
 		i++;
-		tmp_start = tmp_start->next;	
+		tmp_start = tmp_start->next;
 	}
 }

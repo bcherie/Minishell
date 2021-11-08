@@ -20,7 +20,6 @@
 #include <unistd.h>
 #include "structs.h"
 
-
 size_t		words_count(char const *s, char sp);
 void		ft_lstadd_back(t_tokens **list, t_tokens *new);
 t_tokens	*ft_lstnew(char *key, char *value);
