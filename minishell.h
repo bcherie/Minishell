@@ -51,7 +51,7 @@ void		ft_echo(t_tokens *tok);
 
 void 		ft_pwd(void);
 void 		ft_cd(t_all *mass, t_tokens *tok);
-void 		echo_n(t_tokens *tok);
+void 		echo_n(t_tokens *tok, int *flag);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
 void		ft_env(t_all *mass, t_tokens *tok);
 void		ft_export(t_all *mass, t_tokens *tok);

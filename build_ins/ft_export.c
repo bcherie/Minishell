@@ -70,10 +70,10 @@ void	ft_export(t_all *mass, t_tokens *tok)
 	int			count;
 
 	tmp = mass->environment;
-	iter = -1;
+	iter = 0;
 	if (tok->count > 0)
 	{
-		while (++iter < tok->count)
+		while (++iter < tok->count + 1)
 			ft_update_environment(mass, tok->container, tok->args[iter]);
 		return ;
 	}

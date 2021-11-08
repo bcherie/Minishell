@@ -12,8 +12,8 @@ void	ft_unset(t_all *mass, t_tokens *tok)
 	int			iter;
 	int			length;
 
-	iter = -1;
-	while (++iter < tok->count)
+	iter = 0;
+	while (++iter < tok->count + 1)
 	{
 		length = ft_strlen(tok->args[iter]);
 		tmp = mass->environment;
