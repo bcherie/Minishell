@@ -19,28 +19,10 @@ static int	simple_check(char *line)
 	return (0);
 }
 
-static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
+static void	ft_dol_a_case(char *line, t_all *mass, t_utils *t, t_dbuf *head)
 {
-	int	i;
-	int	j;
+	char	*substring;
 
-	i = 0;
-	j = 0;
-	while (i < len && head != NULL)
-	{
-		newline[i] = head->buf[j];
-		i++;
-		j++;
-		if (j == 200)
-		{
-			head = head->next;
-			j = 0;
-		}
-	}
-}
-
-static void	ft_alpha(t_all *mass, t_utils *t, char *line)
-{
 	t->iter++;
 	t->i_keyshift = t->iter;
 	while (ft_isalnum(line[t->i_keyshift]))
@@ -50,61 +32,68 @@ static void	ft_alpha(t_all *mass, t_utils *t, char *line)
 	else
 		mass->tmp[0] = ft_substr(line, t->iter, t->i_keyshift - t->iter);
 	t->iter = t->i_keyshift;
+	substring = ft_envops_getval(mass, mass->tmp[0]);
+	tmp_int_cleaner(mass, 0);
+	if (substring != NULL)
+	{
+		while (substring[t->i_count] != '\0')
+			ft_dfbuf_addchar(head, substring[(t->i_count)++]);
+	}
+}
+
+static void	ft_sym_case(char *line, t_utils *t, t_dbuf *head)
+{
+	char	*subline;
+
+	(t->iter)++;
+	subline = NULL;
+	if (line[t->iter] == '#' || line[t->iter] == '?')
+		ft_dfbuf_addchar(head, '0');
+	else
+	{
+		subline = "minishell";
+		while (*subline != '\0')
+		{
+			ft_dfbuf_addchar(head, *subline);
+			subline++;
+		}
+	}
+}
+
+static void	wheel(char *line, t_all *mass, t_utils *t, t_dbuf *head)
+{
+	while (line[t->iter] != '\0')
+	{
+		if (line[t->iter] != '$')
+			ft_dfbuf_addchar(head, line[t->iter]);
+		else
+		{
+			if (ft_isalpha(line[t->iter + 1]))
+			{
+				ft_dol_a_case(line, mass, t, head);
+				continue ;
+			}
+			else if (fpf_strchr("0#?", line[t->iter + 1]))
+				ft_sym_case(line, t, head);
+			else if (ft_isdigit(line[t->iter + 1]))
+				t->iter++;
+		}
+		t->iter++;
+	}
 }
 
 char	*ft_dollar_insert(char *line, t_all *mass)
 {
 	char	*newline;
-	char	*subline;
-	char	*substring;
 	t_dbuf	*head;
 	t_utils	t;
 
 	newline = NULL;
-	subline = NULL;
-	substring = NULL;
 	if (simple_check(line) == 0)
 		return (line);
 	ft_bzero(&t, sizeof(t_utils));
 	head = ft_dbuf_create();
-	while (line[t.iter] != '\0')
-	{
-		if (line[t.iter] != '$')
-			ft_dfbuf_addchar(head, line[t.iter]);
-		else
-		{
-			if (ft_isalpha(line[t.iter + 1]))
-			{
-				ft_alpha(mass, &t, line);
-				substring = ft_envops_getval(mass, mass->tmp[0]);
-				tmp_int_cleaner(mass, 0);
-				if (substring != NULL)
-				{
-					while (substring[t.i_count] != '\0')
-						ft_dfbuf_addchar(head, substring[(t.i_count)++]);
-				}
-				continue ;
-			}
-			else if (fpf_strchr("0#?", line[t.iter + 1]))
-			{
-				t.iter++;
-				if (line[t.iter] == '#' || line[t.iter] == '?')
-					ft_dfbuf_addchar(head, '0');
-				else
-				{
-					subline = "minishell";
-					while (*subline != '\0')
-					{
-						ft_dfbuf_addchar(head, *subline);
-						subline++;
-					}
-				}
-			}
-			else if (ft_isdigit(line[t.iter + 1]))
-				t.iter++;
-		}
-		t.iter++;
-	}
+	wheel(line, mass, &t, head);
 	t.i_count = ft_dfbuf_count(head);
 	newline = (char *)malloc(t.i_count + 1);
 	newline[t.i_count] = '\0';

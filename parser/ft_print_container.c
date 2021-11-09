@@ -2,7 +2,7 @@
 
 void	ft_print_container(t_all *mass)
 {
-	t_tokens *tmp;
+	t_tokens	*tmp;
 
 	tmp = mass->tokens;
 	while (tmp != NULL)

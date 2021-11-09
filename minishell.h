@@ -34,18 +34,25 @@ void		ft_token_join_test(t_all *mass, t_utils *u);
 int			ft_token_decompose(t_all *mass);
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);
-
-
+void		ft_token_clean_args(t_tokens **tok);
+void		ft_token_clean_keyval(t_tokens **tok);
+int			ft_pretoken_check(char *string, int start, int end);
+int			ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u);
+int			ft_token_decompose_quotes(t_all *mass, t_utils *u);
 t_dbuf		*ft_dbuf_create(void);
 t_dbuf		*ft_dbuf_add(t_dbuf **head);
 int			ft_dbuf_clean(t_dbuf **head);
-
+void		ft_dfbuf_collect(t_dbuf *head, char *newline, int len);
+int			ft_checkkeysym(char *buf, t_utils *u);
+void		ft_token_keys(char sym, int count, t_tokens *token);
 char 		*ft_dollar_insert(char *line, t_all *mass);
-
-
+int			ft_findrange(char *buf, int start, int end);
+int			ft_findcommand(char *buf, int start, int end);
 int 		ft_command_finder(char *buf, int start, int end);
 int			ft_space_cleaner(char *buf, int start, int end);
-
+void		ft_pretoken_count(t_all *mass);
+int			ft_pretoken_check(char *string, int start, int end);
+void		ft_init_utils_struct(t_utils *u);
 //BUILDIN
 
 void		ft_echo(t_tokens *tok);
