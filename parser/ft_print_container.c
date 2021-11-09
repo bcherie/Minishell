@@ -13,6 +13,14 @@ void	ft_print_container(t_all *mass)
 		else
 			printf("\nDecomposed: IND - (%d): container - NULL: type - (%c)\n", \
 			tmp->index, tmp->type);
+		if (tmp->args != NULL)
+		{
+			printf("-------\n");
+			int i;
+			i = -1;
+			while (++i < tmp->count)
+				printf("-- ARG[%d] is %s\n", i, tmp->args[i]);
+		}
 		tmp = tmp->next;
 	}
 }

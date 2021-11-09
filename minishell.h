@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "structs.h"
-
+ 
 
 size_t		words_count(char const *s, char sp);
 void		ft_lstadd_back(t_tokens **list, t_tokens *new);
@@ -94,6 +94,7 @@ int			simple_startend_check(int start, int end);
 
 
 void		ft_build_command_tokens(t_all *mass);
+void		ft_build_redirect_tokens(t_all *mass);
 // Tokens
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);

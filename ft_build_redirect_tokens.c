@@ -3,14 +3,21 @@
 static t_tokens *marking_tool(t_tokens *t)
 {
 	t_tokens	*tmp;
+	t_tokens	*last_redir;
 
 	tmp = t;
-	t->count = -1;
+	t->count = 0;
+	last_redir = NULL;
 	while (tmp != NULL && ft_strchr("cLlpa", tmp->type) == NULL)
 	{
-		t->count++;
+		if (tmp->type == 'r' || tmp->type == 'R')
+		{
+			t->count++;
+			last_redir = tmp;
+		}
 		tmp = tmp->next;
 	}
+	t->type = last_redir->type;
 	return (tmp);
 }
 
@@ -20,15 +27,22 @@ static void	morph_token(t_tokens *start)
 	int			i;
 
 	tmp = start;
-	i = 0;
+	i = -1;
 	if (start->count > 0)
 	{
 		start->args = (char **)malloc(sizeof(char *) * (start->count + 2));
-		while (i < start->count + 1)
+		while (++i < start->count)
 		{
-			start->args[i] = tmp->container;
-			i++;
-			tmp = tmp->next;
+			if (tmp->next->type == 'r' || tmp->next->type == 'R')
+			{
+				start->args[i] = NULL;
+				tmp = tmp->next;
+			}
+			else
+			{
+				start->args[i] = tmp->next->container;
+				tmp = tmp->next->next;
+			}
 		}
 		start->args[i] = NULL;
 	}

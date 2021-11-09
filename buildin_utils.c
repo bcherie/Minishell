@@ -35,7 +35,7 @@ t_tokens	*ft_lstlast(t_tokens *lst)
 	if (!lst)
 		return (NULL);
 	// Proverka
-	while (lst->next)
+	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }
