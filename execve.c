@@ -42,7 +42,7 @@ void	run_current_p(t_tokens *tok, char *current_path)
 	}
 }
 
-void    ft_find_exec(t_all *mass, t_tokens *tok)
+void    ft_execve(t_all *mass, t_tokens *tok)
 {
     // struct stat buf; // структура, где будет храниться инфа о файле
 

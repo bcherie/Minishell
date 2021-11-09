@@ -16,8 +16,8 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if (tok->container)
-		ft_find_exec(mass, tok);
+	else if(tok->container != NULL)
+		ft_execve(mass, tok);
 	else
 		return ;
 }
@@ -34,8 +34,10 @@ static void ft_run_ops(t_all *mass)
 		if (tmp->type == 'c')
 		{
 			ft_check_buildin(mass, tmp);
-			break ;
+			// break ;
 		}
+		else if (tmp->type == 'r' && tmp->container != NULL)
+			ft_check_redirect(tmp);
 		tmp = tmp->next;
 	}
 }
@@ -56,7 +58,10 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
+			//redirect
 			ft_build_command_tokens(mass);
+			//ft_redirect(mass);
+			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);
