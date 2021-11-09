@@ -2,7 +2,7 @@
 
 int	ft_find_char_position(const char *s, char find)
 {
-	int i;
+	int	i;
 	int	len;
 
 	i = 0;

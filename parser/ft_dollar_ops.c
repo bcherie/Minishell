@@ -38,16 +38,6 @@ static void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
 		}
 	}
 }
-// static void ft_substring(t_all *m, t_dbuf **head, t_utils *t, char **subst)
-// {
-// 	*subst = getenv(m->tmp[0]);
-// 	tmp_int_cleaner(m, 0);
-// 	if (*subst != NULL)
-// 	{
-// 		while (*subst[t->i_count] != '\0')
-// 			ft_dfbuf_addchar(*head, *subst[(t->i_count)++]);
-// 	}
-// }
 
 static void	ft_alpha(t_all *mass, t_utils *t, char *line)
 {

@@ -6,10 +6,11 @@
 # define ENV_TOK_UNSET 67 // Не принтуется
 
 
-# define REPORT_IDENT 1 // non valid identif
-# define REPORT_NOFDIR 2 // no file or directort
-# define REPORT_NUMARG 3 // no numeric
-# define REPORT_UNSET_PARAM 4
+# define REP_IDENT 1 // non valid identif
+# define REP_NOFDIR 2 // no file or directort
+# define REP_NUMARG 3 // no numeric
+# define REP_UNSET_PARAM 4 // param is unset
+# define REP_NOFCOMMAND 5 // command not found
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -49,7 +50,7 @@ int			ft_space_cleaner(char *buf, int start, int end);
 
 void		ft_echo(t_tokens *tok);
 
-void 		ft_pwd(void);
+char 		*ft_pwd(int type);
 void 		ft_cd(t_all *mass, t_tokens *tok);
 void 		echo_n(t_tokens *tok, int *flag);
 void 		ft_execve(t_all *mass, t_tokens *tmp);
@@ -74,7 +75,7 @@ char		*ft_envops_setval(t_all *mass, char *key, char *val);
 int			ft_ms_atoi_checksyms(const char *str);
 long long	ft_atolonglong(const char *str);
 
-// VALIDATION REPORT
+// VALIDATION REP
 void 		ft_print_report(char *command, char *val, int type);
 
 //// PARSER
