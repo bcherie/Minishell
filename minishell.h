@@ -36,6 +36,8 @@ void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);
 void		ft_token_clean_args(t_tokens **tok);
 void		ft_token_clean_keyval(t_tokens **tok);
+void		ft_token_clean_rout(t_tokens **tok);
+void		ft_token_clean_rinp(t_tokens **tok);
 int			ft_pretoken_check(char *string, int start, int end);
 int			ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u);
 int			ft_token_decompose_quotes(t_all *mass, t_utils *u);
@@ -91,10 +93,12 @@ int			ft_spacekill(char *buf, int start, int end);
 int			ft_spacekill_left(char *buf, int start, int end);
 int			fpf_strchr(const char *s, int c);
 int			simple_startend_check(int start, int end);
+void		ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new);
+void		ft_build_rout(t_tokens *start, t_tokens *end, t_tokens **new);
+void		ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new);
+void		ft_constructor(t_all *mass);
+void		ft_token_simple_clean(t_tokens **head);
 
-
-void		ft_build_command_tokens(t_all *mass);
-void		ft_build_redirect_tokens(t_all *mass);
 // Tokens
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);
 void		ft_token_join_test(t_all *mass, t_utils *u);

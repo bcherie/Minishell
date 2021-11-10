@@ -76,3 +76,17 @@ int	ft_token_former(t_all *mass, t_utils *u)
 	u->n_st = u->n_end + 1;
 	return (1);
 }
+
+void	ft_token_simple_clean(t_tokens **head)
+{
+	t_tokens	*tmp;
+
+	if (!head || !(*head))
+		return ;
+	while (*head)
+	{
+		tmp = (*head)->next;
+		free(*head);
+		*head = tmp;
+	}
+}

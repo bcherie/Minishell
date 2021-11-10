@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	counter_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 {
@@ -11,7 +11,7 @@ static void	counter_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 	}
 }
 
-void	ft_build_command_tokens(t_tokens *start, t_tokens *end, t_tokens **new)
+void	ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 {
 	int	i;
 

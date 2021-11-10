@@ -56,8 +56,7 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			ft_build_command_tokens(mass);
-			ft_build_redirect_tokens(mass);
+			ft_constructor(mass);
 			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
