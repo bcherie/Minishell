@@ -52,7 +52,10 @@ void	ft_token_clean_rinp(t_tokens **tok)
 	while (++i < num)
 	{
 		if ((*tok)->in_redir[i] != NULL)
+		{
 			free((*tok)->in_redir[i]);
+			(*tok)->in_redir[i] = NULL;
+		}
 	}
 	free((*tok)->in_redir);
 	(*tok)->in_redir = NULL;
@@ -71,7 +74,10 @@ void	ft_token_clean_rout(t_tokens **tok)
 	while (++i < num)
 	{
 		if ((*tok)->out_redir[i] != NULL)
+		{
 			free((*tok)->out_redir[i]);
+			(*tok)->out_redir[i] = NULL;
+		}
 	}
 	free((*tok)->out_redir);
 	(*tok)->out_redir = NULL;
