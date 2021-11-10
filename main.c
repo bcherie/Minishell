@@ -31,11 +31,7 @@ static void ft_run_ops(t_all *mass)
 
 	while (tmp != NULL)
 	{
-		if (tmp->type == 'c')
-		{
-			ft_check_buildin(mass, tmp);
-			break ;
-		}
+		ft_check_buildin(mass, tmp);
 		tmp = tmp->next;
 	}
 }
@@ -48,18 +44,20 @@ int main (int argc, char **argv, char **env)
 	(void)argc;
 	mass = (t_all*)malloc(sizeof(t_all));
 	ft_add_environment(mass, env);
+	//readline("minishell: ")
 	while (1)
 	{
 		init_t_alls(mass);
-		mass->buf = readline("minishell: ");
+		mass->buf = "echo new";
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_constructor(mass);
-			ft_print_container(mass);
+			//ft_print_container(mass);
 			ft_run_ops(mass);
 		}
+		printf("X\n");
 		global_cleaner(mass, 0);
 	}
 	return (0);

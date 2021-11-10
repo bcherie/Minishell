@@ -29,7 +29,7 @@ void global_cleaner(t_all *mass, int mode)
 	ft_token_clean(&(mass->tokens));
 	if (mass->buf != NULL)
 	{
-		free(mass->buf);
+		//free(mass->buf);
 		mass->buf = NULL;
 	}
 	if (mode == 1 && mass != NULL)

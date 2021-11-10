@@ -6,7 +6,9 @@ void	ft_token_clean_args(t_tokens **tok)
 	int	numargs;
 
 	i = 0;
-	if (((*tok)->args != NULL) && ((*tok)->args[0] == (*tok)->container))
+	if ((*tok)->args == NULL)
+		return ;
+	if ((*tok)->args[0] == (*tok)->container)
 		numargs = (*tok)->count + 2;
 	else
 		numargs = (*tok)->count + 1;
@@ -23,6 +25,7 @@ void	ft_token_clean_args(t_tokens **tok)
 	}
 	free((*tok)->args);
 	(*tok)->args = NULL;
+	(*tok)->container = NULL;
 }
 
 void	ft_token_clean_keyval(t_tokens **tok)
