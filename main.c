@@ -3,7 +3,7 @@
 static void ft_check_buildin(t_all *mass, t_tokens *tok)
 {
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
-		ft_pwd();
+		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
@@ -31,11 +31,8 @@ static void ft_run_ops(t_all *mass)
 
 	while (tmp != NULL)
 	{
-		if (tmp->type == 'c')
-		{
+		if (tmp->container != NULL) 
 			ft_check_buildin(mass, tmp);
-			break ;
-		}
 		tmp = tmp->next;
 	}
 }
@@ -56,9 +53,11 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			ft_build_command_tokens(mass);
+			ft_constructor(mass);
+			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
+		printf("X\n");
 		global_cleaner(mass, 0);
 	}
 	return (0);

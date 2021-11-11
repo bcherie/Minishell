@@ -1,11 +1,13 @@
 #include "../minishell.h"
 
-void ft_pwd(void)
+char	*ft_pwd(int type)
 {
-	char *path;
-	char *buffer;
+	char	*path;
+	char	*buffer;
 
 	buffer = NULL;
 	path = getcwd(buffer, sizeof(buffer));
-	printf("%s\n", path);
+	if (type == 1)
+		printf("%s\n", path);
+	return (path);
 }

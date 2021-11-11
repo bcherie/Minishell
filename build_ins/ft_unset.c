@@ -1,10 +1,4 @@
 #include "../minishell.h"
-/*
-TO_DO
-	- Написать разметку по ансетам в принт фун-и
-	- Написать очистку аргов в токен очистке
-	- 
-*/
 
 void	ft_unset(t_all *mass, t_tokens *tok)
 {

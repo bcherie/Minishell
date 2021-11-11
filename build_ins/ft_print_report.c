@@ -1,13 +1,17 @@
 #include "../minishell.h"
 
-void ft_print_report(char *command, char *val, int type)
+void	ft_print_report(char *command, char *val, int type)
 {
-	if (type == REPORT_IDENT)
+	if (type == REP_IDENT)
 		printf("minishell: %s: %s: is not valid identifier\n", command, val);
-	else if (type == REPORT_NOFDIR)
+	else if (type == REP_NOFDIR)
 		printf("minishell: %s: %s: No such file or directory\n", command, val);
-	else if (type == REPORT_NUMARG)
+	else if (type == REP_NUMARG)
 		printf("minishell: %s: %s: numeric argument required\n", command, val);
+	else if (type == REP_NOFCOMMAND)
+		printf("minishell: %s: command not found\n", command);
+	else if (type == REP_UNSET_PARAM)
+		printf("minishell: %s: HOME not set\n", command);
 	else
 		return ;
 }

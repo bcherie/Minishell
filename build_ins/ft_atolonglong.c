@@ -9,12 +9,12 @@ static void	simple_tr(const char *str, long long *z)
 	}
 }
 
-static int all_digit(const char *str)
+static int	all_digit(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i] != '\0')
+	while (str[i] != '\0')
 	{
 		if (ft_isdigit(str[i]) == 0)
 			return (0);
@@ -28,7 +28,7 @@ int	ft_ms_atoi_checksyms(const char *str)
 	int		len;
 	char	*l;
 	int		i;
-		
+
 	l = "9223372036854775807";
 	len = 0;
 	i = 0;
