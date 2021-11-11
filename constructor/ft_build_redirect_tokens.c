@@ -31,7 +31,7 @@ void	ft_build_rout(t_tokens *start, t_tokens *end, t_tokens **new)
 		{
 			(*new)->out_redir[i] = ft_strdup(&start->type);
 			if (start->next != NULL && start->next->type == 'f')
-				(*new)->out_redir[i + 1] = start->container;
+				(*new)->out_redir[i + 1] = start->next->container;
 			i += 2;
 		}
 		start = start->next;
@@ -70,7 +70,7 @@ void	ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new)
 		{
 			(*new)->in_redir[i] = ft_strdup(&start->type);
 			if (start->next != NULL && start->next->type == 'f')
-				(*new)->in_redir[i + 1] = start->container;
+				(*new)->in_redir[i + 1] = start->next->container;
 			i += 2;
 		}
 		start = start->next;
