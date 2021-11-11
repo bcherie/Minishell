@@ -3,7 +3,7 @@
 static void	counter_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 {
 	(*new)->count = -1;
-	while (start != end)
+	while (start != NULL && start != end)
 	{
 		if (start->type == 'c' || start->type == 'a')
 			((*new)->count)++;
@@ -35,4 +35,5 @@ void	ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 		}
 		start = start->next;
 	}
+	(*new)->args[i] = NULL;
 }

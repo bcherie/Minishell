@@ -15,8 +15,8 @@ static t_tokens*	find_edge(t_tokens *start_point)
 static void	merger(t_tokens *start, t_tokens *end, t_tokens **new)
 {
 	ft_build_comarg(start, end, new);
-	//ft_build_rinp(start, end, new);
-	//ft_build_rout(start, end, new);
+	ft_build_rinp(start, end, new);
+	ft_build_rout(start, end, new);
 }
 
 void	ft_constructor(t_all *mass)

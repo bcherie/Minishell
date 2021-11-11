@@ -18,7 +18,7 @@ void	ft_print_container(t_all *mass)
 			printf("-------\n");
 			int i;
 			i = -1;
-			while (++i < tmp->count)
+			while (++i < tmp->count + 1)
 				printf("-- ARG[%d] is %s\n", i, tmp->args[i]);
 		}
 		tmp = tmp->next;

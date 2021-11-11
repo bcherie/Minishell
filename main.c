@@ -16,8 +16,8 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if(ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if(tok->container != NULL)
-		ft_execve(mass, tok);
+	// else if(tok->container != NULL)
+	// 	//ft_execve(mass, tok);
 	else
 		return ;
 }
@@ -44,17 +44,16 @@ int main (int argc, char **argv, char **env)
 	(void)argc;
 	mass = (t_all*)malloc(sizeof(t_all));
 	ft_add_environment(mass, env);
-	//readline("minishell: ")
 	while (1)
 	{
 		init_t_alls(mass);
-		mass->buf = "echo new";
+		mass->buf = readline("minishell: ");
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_constructor(mass);
-			//ft_print_container(mass);
+			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
 		printf("X\n");
