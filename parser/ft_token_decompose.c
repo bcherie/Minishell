@@ -25,7 +25,10 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 			tm = ft_token_add(mass);
 			ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
 			if (mass->buf[u->n_st] == '|')
+			{
 				u->flag_find_command = 1;
+				u->flag_find_file = 0;
+			}	
 			else
 				u->flag_find_file = 1;
 			u->n_st = u->i_keyshift;

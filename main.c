@@ -63,11 +63,12 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
+			ft_print_container(mass);
 			ft_constructor(mass);
+			printf("\n\n");
 			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
-		printf("X\n");
 		global_cleaner(mass, 0);
 	}
 	return (0);
