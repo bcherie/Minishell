@@ -19,7 +19,15 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 	{
 		ft_checkkeysym(mass->buf, u);
 		if (u->i_count <= 0)
-			return (-1);
+		{
+			if (mass->buf[u->n_st] == '>')
+				ft_print_report(NULL, NULL, REP_SYNTAX_R);
+			if (mass->buf[u->n_st] == '<')
+				ft_print_report(NULL, NULL, REP_SYNTAX_L);
+			if (mass->buf[u->n_st] == '|')
+				ft_print_report(NULL, NULL, REP_SYNTAX_P);
+			return (FLAG_ERROR);
+		}
 		else
 		{
 			tm = ft_token_add(mass);
@@ -61,18 +69,23 @@ int	ft_token_decompose_quotes(t_all *mass, t_utils *u)
 
 static void	mini_wheel(t_all *mass, t_tokens *tmp_token, t_utils *u, int *ret)
 {
-	while (u->n_st <= u->end)
+	int	sym_test;
+
+	sym_test = 1;
+	while (u->n_st <= u->end && sym_test != FLAG_ERROR)
 	{
 		if (mass->buf[u->n_st] == ' ')
 			u->n_st = ft_spacekill(mass->buf, u->n_st, u->end);
 		else
 		{
 			if (*ret == 2)
-				ft_token_decompose_nquotes(mass, tmp_token, u);
+				sym_test = ft_token_decompose_nquotes(mass, tmp_token, u);
 			else if (*ret == 1)
-				ft_token_decompose_quotes(mass, u);
+				sym_test = ft_token_decompose_quotes(mass, u);
 		}
 	}
+	if (sym_test == FLAG_ERROR)
+		*ret = FLAG_ERROR;
 }
 
 int	ft_token_decompose(t_all *mass)
@@ -98,5 +111,7 @@ int	ft_token_decompose(t_all *mass)
 		i = i + 2;
 		u.iter++;
 	}
-	return (0);
+	if (ret == FLAG_ERROR)
+		return (-1);
+	return (FLAG_GOOD);
 }

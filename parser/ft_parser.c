@@ -94,5 +94,5 @@ void	ft_parser(t_all *mass)
 	if (ft_pars_quotes(mass->buf, mass) == -1)
 		exit(-1);
 	ft_build_subindex(mass);
-	ft_token_decompose(mass);
+	mass->flag_error = ft_token_decompose(mass);
 }

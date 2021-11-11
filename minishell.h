@@ -11,6 +11,11 @@
 # define REP_NUMARG 3 // no numeric
 # define REP_UNSET_PARAM 4 // param is unset
 # define REP_NOFCOMMAND 5 // command not found
+# define REP_SYNTAX_R -1 // command not found
+# define REP_SYNTAX_L -2 // command not found
+# define REP_SYNTAX_P -3 // command not found
+# define FLAG_ERROR -123
+# define FLAG_GOOD 0
 
 #include "libft/libft.h"
 #include <stdio.h>

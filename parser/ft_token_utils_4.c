@@ -42,10 +42,9 @@ int	ft_checkkeysym(char *buf, t_utils *u)
 		return (-1);
 	i = u->n_st;
 	sym = buf[u->n_st];
-	while (buf[i] == sym || buf[i] == ' ')
+	while (buf[i] == sym)
 	{
-		if (buf[i] == sym)
-			counter++;
+		counter++;
 		i++;
 	}
 	ft_checkkeysym_assist(sym, counter, u, buf);
