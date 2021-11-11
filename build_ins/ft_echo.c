@@ -17,10 +17,10 @@ static int	n_test(char *str)
 	return (1);
 }
 
-void echo_n(t_tokens *tok, int *flag)
+void	echo_n(t_tokens *tok, int *flag)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	j = 1;
@@ -47,7 +47,7 @@ void echo_n(t_tokens *tok, int *flag)
 
 void	ft_echo(t_tokens *tok)
 {
-	int flag;
+	int	flag;
 
 	flag = 0;
 	if (tok->count == 0)

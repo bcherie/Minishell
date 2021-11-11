@@ -38,71 +38,6 @@ t_tokens	*ft_token_add(t_all *mass)
 	return (new);
 }
 
-static void ft_token_clean_args(t_tokens **tok)
-{
-	int	i;
-	int	numargs;
-
-	i = 0;
-	if (((*tok)->args != NULL) && ((*tok)->args[0] == (*tok)->container))
-		numargs = (*tok)->count + 2;
-	else
-		numargs = (*tok)->count + 1;
-	if ((*tok)->args == NULL)
-		return ;
-	while (i < numargs)
-	{
-		if ((*tok)->args[i] != NULL)
-		{
-			free((*tok)->args[i]);
-			(*tok)->args[i] = NULL;
-		}
-		i++;
-	}
-	free((*tok)->args);
-	(*tok)->args = NULL;
-}
-
-static void ft_token_clean_keyval(t_tokens **tok)
-{
-	if ((*tok)->key != NULL)
-	{
-		free((*tok)->key);
-		(*tok)->key = NULL;
-	}
-	if ((*tok)->value != NULL)
-	{
-		free((*tok)->value);
-		(*tok)->value = NULL;
-	}
-}
-
-void	ft_token_clean(t_tokens **head)
-{
-	t_tokens	*tmp;
-
-	if (!head || !(*head))
-		return ;
-	while (*head)
-	{
-		tmp = (*head)->next;
-		if ((*head)->container != NULL)
-		{
-			if ((*head)->args != NULL)
-			{
-				if ((*head)->container != (*head)->args[0])
-					free((*head)->container);
-			}
-			else
-				free((*head)->container);
-		}
-		ft_token_clean_args(head);
-		ft_token_clean_keyval(head);
-		free(*head);
-		*head = tmp;
-	}
-}
-
 t_tokens	*ft_find_last_token(t_tokens *head)
 {
 	if (head == NULL)
@@ -140,4 +75,18 @@ int	ft_token_former(t_all *mass, t_utils *u)
 	}
 	u->n_st = u->n_end + 1;
 	return (1);
+}
+
+void	ft_token_simple_clean(t_tokens **head)
+{
+	t_tokens	*tmp;
+
+	if (!head || !(*head))
+		return ;
+	while (*head)
+	{
+		tmp = (*head)->next;
+		free(*head);
+		*head = tmp;
+	}
 }

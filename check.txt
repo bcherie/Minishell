@@ -1,3 +1,0 @@
-$"HOME"
-$HOME 
-HOME not set

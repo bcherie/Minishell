@@ -32,10 +32,10 @@ void	ft_lstadd_back(t_tokens **list, t_tokens *new)
 
 t_tokens	*ft_lstlast(t_tokens *lst)
 {
-	if (!lst)
+	if (lst == NULL)
 		return (NULL);
 	// Proverka
-	while (lst->next)
+	while (lst->next != NULL)
 		lst = lst->next;
 	return (lst);
 }

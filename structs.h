@@ -11,6 +11,8 @@ typedef struct		s_tokens
 	char	*container;
 	//		FOR FINAL TOKEN;
 	char	**args;
+	char	**in_redir;
+	char	**out_redir;
 	//		ENV
 	char	*key;
 	char	*value;
@@ -18,20 +20,10 @@ typedef struct		s_tokens
 	int		st;
 	int		end;
 	int		count;
+	int		inp_n;
+	int		out_n;
 }					t_tokens;
 
-typedef struct		s_ptr
-{
-	t_tokens		*head;
-	t_tokens		*start;
-	t_tokens		*end;
-	t_tokens		*tmp0;
-	t_tokens		*tmp1;
-	t_tokens		*command;
-	int				count;
-	char			**env_args;
-	t_tokens		*env;
-}					t_ptr;
 
 typedef struct	s_dbuf
 {

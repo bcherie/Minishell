@@ -10,7 +10,7 @@ void	ft_exit(t_all *mass, t_tokens *tok)
 		if (ft_ms_atoi_checksyms(tok->args[1]) == 0)
 		{
 			printf("exit\n");
-			ft_print_report(tok->container, tok->args[1], REPORT_NUMARG);
+			ft_print_report(tok->container, tok->args[1], REP_NUMARG);
 		}
 		else
 		{	
