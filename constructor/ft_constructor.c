@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-static t_tokens*	find_edge(t_tokens *start_point)
+static t_tokens	*find_edge(t_tokens *start_point)
 {
 	t_tokens	*end_point;
 
