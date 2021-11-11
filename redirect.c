@@ -10,7 +10,7 @@ void	ft_check_redirect(t_all *mass, t_tokens *tok)
 	int		j;
 	char	*str;
 	int		index[100];
-	char	*arg;
+	char	**arg = NULL;
 	size_t len;
 	// char	*tmp;
 	tok = NULL;
@@ -22,6 +22,7 @@ void	ft_check_redirect(t_all *mass, t_tokens *tok)
 	j = 0;
 	count = 0;
 	printf("buf: %s\n", mass->buf);
+	arg = (char **)malloc(sizeof(char *));
 	str = ft_strdup(mass->buf);
 	//прописать пропуск "> > >"
 	while (str[i])
@@ -40,12 +41,21 @@ void	ft_check_redirect(t_all *mass, t_tokens *tok)
 	// while (str[i] && )
 	// printf("j: %d\n", index[j]);
 	// printf("j + 1: %d\n", index[j] + 1);
+	j = 0;
+	i = 0;
 	ptr1 = &index[0];
-	ptr2 = ptr1++;
-	// printf("ptr1: %d\n", *ptr1);
-	// printf("ptr2: %d\n", *ptr2);
-	len = *ptr1 - *ptr2;
-	printf("len: %zu\n", len);
-	arg = ft_substr(str, index[0], len);
-	printf("arg: %s\n", arg);
+	while (index[j] != 0)
+	{
+		if (j > 0)
+			ptr1 = ptr2;
+		ptr2 = ptr1++;
+		// printf("ptr1: %d\n", *ptr1);
+		// printf("ptr2: %d\n", *ptr2);
+		len = *ptr1 - *ptr2;
+		printf("len: %zu\n", len);
+		arg[i] = ft_substr(str, index[0], len);
+		printf("arg: %s\n", arg[i]);
+		j++;
+		i++;
+	}
 }
