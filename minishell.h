@@ -103,6 +103,6 @@ void    run_current_p(t_tokens *tok, char *current_path);
 void    run_exec_folders(t_tokens *tok, char **exec_folders);
 
 //redirect
-void	ft_check_redirect(t_tokens *tok);
+void	ft_check_redirect(t_all *mass, t_tokens *tok);
 
 #endif

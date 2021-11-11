@@ -36,10 +36,20 @@ static void ft_run_ops(t_all *mass)
 			ft_check_buildin(mass, tmp);
 			// break ;
 		}
-		else if (tmp->type == 'r' && tmp->container != NULL)
-			ft_check_redirect(tmp);
+		// else if (tmp->type == 'r' && tmp->container != NULL)
+		ft_check_redirect(mass, tmp);
 		tmp = tmp->next;
 	}
+
+	// token - > args - command and arguments
+	// 		-> output_ redirect
+	// 		-> input_ redirect
+
+	// 		input;
+	// 		token->command
+	// 		output;
+	// token2 ->
+
 }
 
 int main (int argc, char **argv, char **env)
