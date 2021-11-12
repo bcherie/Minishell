@@ -2,32 +2,43 @@
 #include <fcntl.h>
 //кейсы: export gggg > testf создаст файлб но не запишет
 // echo 55 > > file.txt - doesn't work in our minishell
+// < new cat
+// < new echo
 //args -> command, text
 //out_r -> '>', file
 void	ft_check_redirect(t_tokens *tok)
 {
 	int	i;
 	int	j;
-	int	count;
 	int	fd;
 	int	old_fd;
 	char **tmp;
-	// char *buf;
+	int	flag_r;
 
 	i = 0;
 	j = 0;
-	count = 0;
-	// buf = "hello";
+	flag_r = 0;
 	tmp = (char **)malloc(sizeof(char *));
-	if (tok->out_redir[i])
+	// printf("out: %d\n", tok->out_n);
+	// printf("inp: %d\n", tok->inp_n);
+	// printf("count: %d\n", tok->count);
+
+	//write in file
+	if (tok->out_n != 0)
 	{
 		while (tok->out_redir[i] != NULL)
 		{
-			if (*tok->out_redir[i] != 'r')
+			if (*tok->out_redir[i] != 'r' && *tok->out_redir[i] != 'R')
 			{
 				tmp[j] = tok->out_redir[i];
-				count++;
 				j++;
+			}
+			else
+			{
+				if (*tok->out_redir[i] == 'r')
+					flag_r = 1;
+				else if (*tok->out_redir[i] == 'R')
+					flag_r = 2;
 			}
 			i++;
 		}
@@ -35,37 +46,28 @@ void	ft_check_redirect(t_tokens *tok)
 	// printf("buf: %s\n", tmp[0]);
 	// printf("buf: %s\n", tmp[1]);
 	// printf("count: %d\n", count);
+	//O_APPEND - параметр опен для дозаписи в файл данных
 	j = 0;
 	i = 0;
-	while (j != count)
+	printf("len_arg: %lu\n", strlen(tok->args[i]));
+	while (j != tok->out_n)
 	{
-		fd = open(tmp[j], O_WRONLY | O_CREAT, 0644);
+		if (flag_r == 1)
+			fd = open(tmp[j], O_WRONLY | O_CREAT, 0644);
+		else if (flag_r == 2)
+			fd = open(tmp[j], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
 			printf ("error\n");
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 1);
 		close(fd);
-		if (j == count - 1)
+		if (j == tok->out_n - 1)
 		{
-			write(old_fd, tok->args[i + 1], strlen(tok->args[i]));
-			// close(old_fd);
-			// break ;
+			write(old_fd, tok->args[i + 1], strlen(tok->args[i + 1]));
 			exit(0);
-			// ft_exit(mass, tok);
 		}
 		// printf("Current INDEX - (%d)\n", i);
 		j++;
 	}
-	// printf("\nXsdfsdfsdfX\n");
-	// while (tok->out_redir[i] != NULL)
-	// {
-	// 	printf("out_r: %s\n", tok->out_redir[i]);
-	// 	i++;
-	// }
-	// while (tok->args[j] != NULL)
-	// {
-	// 	printf("args: %s\n", tok->args[j]);
-	// 	j++;
-	// }
 
 }
