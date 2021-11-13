@@ -10,11 +10,11 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_echo(tok);
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
-	else if(ft_strncmp(tok->container, "export", 7) == 0)
+	else if (ft_strncmp(tok->container, "export", 7) == 0)
 		ft_export(mass, tok);
-	else if(ft_strncmp(tok->container, "exit", 5) == 0)
+	else if (ft_strncmp(tok->container, "exit", 5) == 0)
 		ft_exit(mass, tok);
-	else if(ft_strncmp(tok->container, "unset", 6) == 0)
+	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
 	else if(tok->container != NULL)
 		ft_execve(mass, tok);
@@ -42,7 +42,7 @@ static void ft_run_ops(t_all *mass)
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
-	
+
 	(void)argv;
 	(void)argc;
 	mass = (t_all*)malloc(sizeof(t_all));

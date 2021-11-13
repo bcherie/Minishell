@@ -118,4 +118,9 @@ int			init_t_alls(t_all *mass);
 void		tmp_int_cleaner(t_all *mass, int mode);
 void		global_cleaner(t_all *mass, int mode);
 void		ft_print_container(t_all *mass);
+//exec
+void    ft_find_exec(t_all *mass, t_tokens *tok);
+void    run_current_p(t_tokens *tok, char *current_path);
+void    run_exec_folders(t_tokens *tok, char **exec_folders);
+
 #endif

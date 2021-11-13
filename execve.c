@@ -16,7 +16,7 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 		tmp = ft_strjoin(current_f, tok->container);
 		if (stat(tmp, &buf) == 0)
 		{
-            printf("\n%s\n---\n", tmp);
+            // printf("\n%s\n---\n", tmp);
             //printf("\n%s\n---\n", tok->args[0]);
 			execve(tmp, tok->args, NULL);
 			tok->container = NULL;
