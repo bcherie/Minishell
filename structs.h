@@ -64,6 +64,7 @@ typedef struct	s_all
 	t_utils		u_mass;
 	int			a_count;
 	int			flag_error;
+	pid_t		pid;
 	char		**args;
 }				t_all;
 
