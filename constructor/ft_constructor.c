@@ -26,7 +26,7 @@ void	ft_constructor(t_all *mass)
 	t_tokens	*start;
 	t_tokens	*end;
 
-	if (mass->tokens == NULL)
+	if (mass->tokens == NULL || mass->flag_error == FLAG_ERROR)
 		return ;
 	head = mass->tokens;
 	start = mass->tokens;

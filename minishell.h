@@ -14,6 +14,7 @@
 # define REP_SYNTAX_R -1 // command not found
 # define REP_SYNTAX_L -2 // command not found
 # define REP_SYNTAX_P -3 // command not found
+# define REP_SYNTAX_HEREDOC -4 // command not found
 # define FLAG_ERROR -123
 # define FLAG_GOOD 0
 
@@ -103,6 +104,7 @@ void		ft_build_rout(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_constructor(t_all *mass);
 void		ft_token_simple_clean(t_tokens **head);
+int			ft_validate_token_syms(t_all *mass);
 
 // Tokens
 void		ft_token_name(t_tokens *tmp_token, t_utils *u);

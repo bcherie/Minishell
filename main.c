@@ -26,6 +26,8 @@ static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
 
+	if (mass->flag_error == FLAG_ERROR)
+		return ;
 	tmp = mass->tokens;
 	// Fork commands!!!
 

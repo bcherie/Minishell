@@ -95,4 +95,9 @@ void	ft_parser(t_all *mass)
 		exit(-1);
 	ft_build_subindex(mass);
 	mass->flag_error = ft_token_decompose(mass);
+	mass->flag_error = ft_validate_token_syms(mass);
+	free(mass->sub_indx);
+	free(mass->sub_quotes);
+	mass->sub_indx = NULL;
+	mass->sub_quotes = NULL;
 }

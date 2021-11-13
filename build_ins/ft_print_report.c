@@ -18,6 +18,8 @@ void	ft_print_report(char *command, char *val, int type)
 		printf("minishell: syntax error near unexpected token  \'<\'\n");
 	else if (type == REP_SYNTAX_P)
 		printf("minishell: syntax error near unexpected token  \'|\'\n");
+	else if (type == REP_SYNTAX_HEREDOC)
+		printf("minishell: syntax error near unexpected token  \'newline\'\n");
 	else
 		return ;
 }

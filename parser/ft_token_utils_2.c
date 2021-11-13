@@ -48,3 +48,16 @@ int	ft_spacekill_left(char *buf, int start, int end)
 		new_end--;
 	return (new_end);
 }
+
+int	ft_pretoken_check(char *string, int start, int end)
+{
+	if (start < 0 || end < 0 || string == NULL || end - start < 0)
+		return (-1);
+	if (&string[start] == NULL || &string[end] == NULL)
+		return (-2);
+	if (string[start] == '\0' || string[end] == '\0')
+		return (0);
+	if (string[start] == 34 || string[start] == 39)
+		return (1);
+	return (2);
+}

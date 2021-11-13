@@ -1,16 +1,31 @@
 #include "../minishell.h"
 
-int	ft_pretoken_check(char *string, int start, int end)
+static int	decompose_nquotes_assist(t_all *mass, t_tokens *tm, t_utils *u)
 {
-	if (start < 0 || end < 0 || string == NULL || end - start < 0)
-		return (-1);
-	if (&string[start] == NULL || &string[end] == NULL)
-		return (-2);
-	if (string[start] == '\0' || string[end] == '\0')
-		return (0);
-	if (string[start] == 34 || string[start] == 39)
-		return (1);
-	return (2);
+	if (u->i_count <= 0)
+	{
+		if (mass->buf[u->n_st] == '>')
+			ft_print_report(NULL, NULL, REP_SYNTAX_R);
+		if (mass->buf[u->n_st] == '<')
+			ft_print_report(NULL, NULL, REP_SYNTAX_L);
+		if (mass->buf[u->n_st] == '|')
+			ft_print_report(NULL, NULL, REP_SYNTAX_P);
+		return (FLAG_ERROR);
+	}
+	else
+	{
+		tm = ft_token_add(mass);
+		ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
+		if (mass->buf[u->n_st] == '|')
+		{
+			u->flag_find_command = 1;
+			u->flag_find_file = 0;
+		}	
+		else
+			u->flag_find_file = 1;
+		u->n_st = u->i_keyshift;
+		return (FLAG_GOOD);
+	}
 }
 
 int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
@@ -18,29 +33,7 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 	if (fpf_strchr("<>|", mass->buf[u->n_st]))
 	{
 		ft_checkkeysym(mass->buf, u);
-		if (u->i_count <= 0)
-		{
-			if (mass->buf[u->n_st] == '>')
-				ft_print_report(NULL, NULL, REP_SYNTAX_R);
-			if (mass->buf[u->n_st] == '<')
-				ft_print_report(NULL, NULL, REP_SYNTAX_L);
-			if (mass->buf[u->n_st] == '|')
-				ft_print_report(NULL, NULL, REP_SYNTAX_P);
-			return (FLAG_ERROR);
-		}
-		else
-		{
-			tm = ft_token_add(mass);
-			ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
-			if (mass->buf[u->n_st] == '|')
-			{
-				u->flag_find_command = 1;
-				u->flag_find_file = 0;
-			}	
-			else
-				u->flag_find_file = 1;
-			u->n_st = u->i_keyshift;
-		}
+		return (decompose_nquotes_assist(mass, tm, u));
 	}
 	else
 	{
@@ -48,9 +41,9 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 		u->n_end = ft_findrange(mass->buf, u->n_st, u->end);
 		u->n_end = ft_findcommand(mass->buf, u->n_st, u->n_end);
 		if (ft_token_former(mass, u) == 0)
-			return (-1);
+			return (FLAG_ERROR);
 	}
-	return (1);
+	return (FLAG_GOOD);
 }
 
 int	ft_token_decompose_quotes(t_all *mass, t_utils *u)
@@ -112,6 +105,6 @@ int	ft_token_decompose(t_all *mass)
 		u.iter++;
 	}
 	if (ret == FLAG_ERROR)
-		return (-1);
+		return (FLAG_ERROR);
 	return (FLAG_GOOD);
 }
