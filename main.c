@@ -2,6 +2,10 @@
 
 static void ft_check_buildin(t_all *mass, t_tokens *tok)
 {
+	if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+	{
+		ft_check_redirect(mass->tokens);
+	}
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
@@ -20,26 +24,9 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_execve(mass, tok);
 	else
 		return ;
+	exit(0);
 }
 
-void ft_check_commands(t_all *mass)
-{
-	t_tokens	*tmp;
-	int			i;
-	// char		**comm;
-
-	i = 0;
-	// comm = "echo", "";
-	tmp = mass->tokens;
-	while (tmp != NULL)
-	{
-		if (ft_strncmp(tmp->container[i], "echo", 5) == 0)
-		{
-			ft_strncmp(tmp->container[i], "echo", 5);
-		}
-		tmp = tmp->next;
-	}
-}
 
 static void ft_run_ops(t_all *mass)
 {
@@ -50,10 +37,10 @@ static void ft_run_ops(t_all *mass)
 	tmp = mass->tokens;
 	// Fork commands!!!
 
-	if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	{
-		ft_check_redirect(mass->tokens);
-	}
+	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+	// {
+	// 	ft_check_redirect(mass->tokens);
+	// }
 	while (tmp != NULL)
 	{
 		if (tmp->container != NULL)

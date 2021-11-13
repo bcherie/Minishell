@@ -23,6 +23,9 @@ typedef struct		s_tokens
 	int		count;
 	int		inp_n;
 	int		out_n;
+	//redir flags:
+	int		flag_r;
+	int		flag_r;
 }					t_tokens;
 
 
@@ -51,12 +54,12 @@ typedef struct	s_utils
 typedef struct	s_all
 {
 	//PARSER
-	int			*sub_indx; // - производится 
-	int			*sub_quotes; // - 
+	int			*sub_indx; // - производится
+	int			*sub_quotes; // -
 	int			count_sym;
 	char		*buf;
 	//------------//
-	
+
 	char		**tmp;
 	t_tokens	*tokens;
 	t_tokens	*environment;

@@ -37,6 +37,8 @@ void	echo_n(t_tokens *tok, int *flag)
 			*flag = 1;
 		while (tok->args[i] != NULL)
 		{
+			if (tok->out_n != 0 && i != 1)
+				printf("\n");
 			write(1, tok->args[i], ft_strlen(tok->args[i]));
 			if (tok->args[i + 1] != NULL)
 				write(1, " ", 1);
