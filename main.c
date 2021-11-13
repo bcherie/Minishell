@@ -22,6 +22,25 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		return ;
 }
 
+void ft_check_commands(t_all *mass)
+{
+	t_tokens	*tmp;
+	int			i;
+	// char		**comm;
+
+	i = 0;
+	// comm = "echo", "";
+	tmp = mass->tokens;
+	while (tmp != NULL)
+	{
+		if (ft_strncmp(tmp->container[i], "echo", 5) == 0)
+		{
+			ft_strncmp(tmp->container[i], "echo", 5);
+		}
+		tmp = tmp->next;
+	}
+}
+
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
@@ -31,12 +50,32 @@ static void ft_run_ops(t_all *mass)
 	tmp = mass->tokens;
 	// Fork commands!!!
 
+	if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+	{
+		ft_check_redirect(mass->tokens);
+	}
 	while (tmp != NULL)
 	{
-		if (tmp->container != NULL) 
+		if (tmp->container != NULL)
 			ft_check_buildin(mass, tmp);
 		tmp = tmp->next;
 	}
+	// printf("out: %d\n", mass->tokens->out_n);
+	// printf("inp: %d\n", mass->tokens->inp_n);
+	// printf("count: %d\n", mass->tokens->count);
+	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+	// {
+	// 	ft_check_redirect(mass->tokens);
+	// }
+	// token - > args - command and arguments
+	// 		-> output_ redirect
+	// 		-> input_ redirect
+
+	// 		input;
+	// 		token->command
+	// 		output;
+	// token2 ->
+
 }
 
 int main (int argc, char **argv, char **env)
@@ -55,6 +94,7 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
+			//ft_print_container(mass);
 			ft_constructor(mass);
 			ft_print_container(mass);
 			ft_run_ops(mass);

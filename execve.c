@@ -10,14 +10,13 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 	char    *sym = "/";
 	struct stat buf;
 	i = 0;
+	printf("args1: %s\n", tok->args[1]);
 	while (exec_folders[i])
 	{
 		current_f = ft_strjoin(exec_folders[i], sym);
 		tmp = ft_strjoin(current_f, tok->container);
 		if (stat(tmp, &buf) == 0)
 		{
-            // printf("\n%s\n---\n", tmp);
-            //printf("\n%s\n---\n", tok->args[0]);
 			execve(tmp, tok->args, NULL);
 			tok->container = NULL;
 		}
@@ -55,7 +54,7 @@ void    ft_execve(t_all *mass, t_tokens *tok)
     // int     i;
 
 
-    // pid_t pid;
+    pid_t pid;
 
     // t_tokens *env;
 
@@ -89,17 +88,23 @@ void    ft_execve(t_all *mass, t_tokens *tok)
     current_path = ft_envops_getval(mass, "PWD");
     // else
     //     printf("PWD doesn't exist\n");
-    // pid = fork();
-    if (path)
-    {
-		run_exec_folders(tok, exec_folders);
-	}
-	else if (current_path)
+    pid = fork();
+	if (pid == 0)
 	{
-		run_current_p(tok, current_path);
+		printf("Child process PID[%d] start running, my parent PID is [%d] \n", getpid(), getppid());
+		if (path)
+		{
+			run_exec_folders(tok, exec_folders);
+		}
+		else if (current_path)
+		{
+			run_current_p(tok, current_path);
+		}
+		else
+		{
+			printf("Command hasn't found\n");
+		}
 	}
-	else
-	{
-		printf("Command hasn't found\n");
-	}
+	if (pid != 0)
+		wait(NULL);
 }
