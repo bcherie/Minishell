@@ -22,24 +22,24 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		return ;
 }
 
-void ft_check_commands(t_all *mass)
-{
-	t_tokens	*tmp;
-	int			i;
-	// char		**comm;
+// void ft_check_commands(t_all *mass)
+// {
+// 	t_tokens	*tmp;
+// 	int			i;
+// 	// char		**comm;
 
-	i = 0;
-	// comm = "echo", "";
-	tmp = mass->tokens;
-	while (tmp != NULL)
-	{
-		if (ft_strncmp(tmp->container[i], "echo", 5) == 0)
-		{
-			ft_strncmp(tmp->container[i], "echo", 5);
-		}
-		tmp = tmp->next;
-	}
-}
+// 	i = 0;
+// 	// comm = "echo", "";
+// 	tmp = mass->tokens;
+// 	while (tmp != NULL)
+// 	{
+// 		if (ft_strncmp(tmp->container[i], "echo", 5) == 0)
+// 		{
+// 			ft_strncmp(tmp->container[i], "echo", 5);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 static void ft_run_ops(t_all *mass)
 {

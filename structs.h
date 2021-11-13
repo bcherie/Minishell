@@ -13,6 +13,7 @@ typedef struct		s_tokens
 	char	**args;
 	char	**in_redir;
 	char	**out_redir;
+	char	**heredoc;
 	//		ENV
 	char	*key;
 	char	*value;
@@ -23,6 +24,7 @@ typedef struct		s_tokens
 	int		count;
 	int		inp_n;
 	int		out_n;
+	int		heredoc_n;
 }					t_tokens;
 
 

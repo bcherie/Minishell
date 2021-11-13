@@ -75,7 +75,7 @@ void	ft_check_redirect(t_tokens *tok)
 	// printf("count: %d\n", count);
 	//O_APPEND - параметр опен для дозаписи в файл данных
 	j = 0;
-	i = 0;
+	i = 1;
 	// printf("len_arg: %lu\n", strlen(tok->args[i]));
 	while (j != tok->out_n)
 	{
@@ -89,25 +89,29 @@ void	ft_check_redirect(t_tokens *tok)
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 1);
 		close(fd);
-		if (tok->out_n == 1)
-		{
-			write(old_fd, tok->args[i + 1], strlen(tok->args[i + 1]));
-			if (flag_r == 2)
-				write(old_fd, "\n", 1);
-			exit(0);
-		}
-		else if (tok->out_n > 1)
-		{
-			if (j == tok->out_n - 1)
-			{
-				write(old_fd, tok->args[i + 1], strlen(tok->args[i + 1]));
-				if (flag_r == 2)
-					write(old_fd, "\n", 1);
-				exit(0);
-			}
-		}
+		// if (tok->out_n == 1)
+		// {
+		// 	while ()
+		// 	{
+		// 		write(old_fd, tok->args[i], strlen(tok->args[i]));
+		// 	}
+		// 	if (flag_r == 2)
+		// 		write(old_fd, "\n", 1);
+		// 	exit(0);
+		// }
+		// else if (tok->out_n > 1)
+		// {
+		// 	if (j == tok->out_n - 1)
+		// 	{ 
+		// 		write(old_fd, tok->args[i], strlen(tok->args[i]));
+		// 		if (flag_r == 2)
+		// 			write(old_fd, "\n", 1);
+		// 		exit(0);
+		// 	}
+		// }
 		// printf("Current INDEX - (%d)\n", i);
 		j++;
+		i++;
 	}
 	i = 0;
 	j = 0;

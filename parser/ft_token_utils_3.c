@@ -107,6 +107,7 @@ void	ft_token_clean(t_tokens **head)
 		}
 		ft_token_clean_args(head);
 		ft_token_clean_keyval(head);
+		ft_token_clean_heredoc(head);
 		ft_token_clean_rout(head);
 		ft_token_clean_rinp(head);
 		free(*head);
