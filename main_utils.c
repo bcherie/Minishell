@@ -58,5 +58,6 @@ int	init_t_alls(t_all *mass)
 	mass->tmp[0] = NULL;
 	mass->tmp[1] = NULL;
 	mass->tmp[2] = NULL;
+	mass->pid = 0;
 	return (1);
 }
