@@ -35,7 +35,7 @@ static void ft_run_ops(t_all *mass)
 			ft_check_buildin(mass, tmp);
 		tmp = tmp->next;
 	}
-	printf("out: %d\n", mass->tokens->out_n);
+	// printf("out: %d\n", mass->tokens->out_n);
 	// printf("inp: %d\n", mass->tokens->inp_n);
 	// printf("count: %d\n", mass->tokens->count);
 	if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)

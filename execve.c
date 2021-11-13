@@ -10,6 +10,7 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 	char    *sym = "/";
 	struct stat buf;
 	i = 0;
+	printf("args1: %s\n", tok->args[1]);
 	while (exec_folders[i])
 	{
 		current_f = ft_strjoin(exec_folders[i], sym);
