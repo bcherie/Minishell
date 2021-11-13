@@ -26,6 +26,8 @@ static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
 
+	if (mass->flag_error == FLAG_ERROR)
+		return ;
 	tmp = mass->tokens;
 	// Fork commands!!!
 
@@ -57,7 +59,6 @@ int main (int argc, char **argv, char **env)
 			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
-		printf("X\n");
 		global_cleaner(mass, 0);
 	}
 	return (0);

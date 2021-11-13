@@ -12,6 +12,14 @@ void	ft_print_report(char *command, char *val, int type)
 		printf("minishell: %s: command not found\n", command);
 	else if (type == REP_UNSET_PARAM)
 		printf("minishell: %s: HOME not set\n", command);
+	else if (type == REP_SYNTAX_R)
+		printf("minishell: syntax error near unexpected token \'>\'\n");
+	else if (type == REP_SYNTAX_L)
+		printf("minishell: syntax error near unexpected token  \'<\'\n");
+	else if (type == REP_SYNTAX_P)
+		printf("minishell: syntax error near unexpected token  \'|\'\n");
+	else if (type == REP_SYNTAX_HEREDOC)
+		printf("minishell: syntax error near unexpected token  \'newline\'\n");
 	else
 		return ;
 }

@@ -50,6 +50,7 @@ int	init_t_alls(t_all *mass)
 	mass->number_of_pretokens = 0;
 	ft_bzero(&(mass->u_mass), sizeof(t_utils));
 	mass->a_count = 0;
+	mass->flag_error = FLAG_GOOD;
 	mass->args = NULL;
 	mass->tmp = (char **)malloc(sizeof(char *) * 3);
 	if (mass->tmp == NULL)

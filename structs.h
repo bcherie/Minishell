@@ -19,6 +19,7 @@ typedef struct		s_tokens
 	// char	**env_args;
 	int		st;
 	int		end;
+	// Счетчики аргументы, инпуты, аупуты
 	int		count;
 	int		inp_n;
 	int		out_n;
@@ -62,6 +63,7 @@ typedef struct	s_all
 	int			number_of_pretokens;
 	t_utils		u_mass;
 	int			a_count;
+	int			flag_error;
 	char		**args;
 }				t_all;
 

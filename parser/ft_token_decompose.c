@@ -1,16 +1,31 @@
 #include "../minishell.h"
 
-int	ft_pretoken_check(char *string, int start, int end)
+static int	decompose_nquotes_assist(t_all *mass, t_tokens *tm, t_utils *u)
 {
-	if (start < 0 || end < 0 || string == NULL || end - start < 0)
-		return (-1);
-	if (&string[start] == NULL || &string[end] == NULL)
-		return (-2);
-	if (string[start] == '\0' || string[end] == '\0')
-		return (0);
-	if (string[start] == 34 || string[start] == 39)
-		return (1);
-	return (2);
+	if (u->i_count <= 0)
+	{
+		if (mass->buf[u->n_st] == '>')
+			ft_print_report(NULL, NULL, REP_SYNTAX_R);
+		if (mass->buf[u->n_st] == '<')
+			ft_print_report(NULL, NULL, REP_SYNTAX_L);
+		if (mass->buf[u->n_st] == '|')
+			ft_print_report(NULL, NULL, REP_SYNTAX_P);
+		return (FLAG_ERROR);
+	}
+	else
+	{
+		tm = ft_token_add(mass);
+		ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
+		if (mass->buf[u->n_st] == '|')
+		{
+			u->flag_find_command = 1;
+			u->flag_find_file = 0;
+		}	
+		else
+			u->flag_find_file = 1;
+		u->n_st = u->i_keyshift;
+		return (FLAG_GOOD);
+	}
 }
 
 int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
@@ -18,18 +33,7 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 	if (fpf_strchr("<>|", mass->buf[u->n_st]))
 	{
 		ft_checkkeysym(mass->buf, u);
-		if (u->i_count <= 0)
-			return (-1);
-		else
-		{
-			tm = ft_token_add(mass);
-			ft_token_keys(mass->buf[u->n_st], u->i_count, tm);
-			if (mass->buf[u->n_st] == '|')
-				u->flag_find_command = 1;
-			else
-				u->flag_find_file = 1;
-			u->n_st = u->i_keyshift;
-		}
+		return (decompose_nquotes_assist(mass, tm, u));
 	}
 	else
 	{
@@ -37,9 +41,9 @@ int	ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u)
 		u->n_end = ft_findrange(mass->buf, u->n_st, u->end);
 		u->n_end = ft_findcommand(mass->buf, u->n_st, u->n_end);
 		if (ft_token_former(mass, u) == 0)
-			return (-1);
+			return (FLAG_ERROR);
 	}
-	return (1);
+	return (FLAG_GOOD);
 }
 
 int	ft_token_decompose_quotes(t_all *mass, t_utils *u)
@@ -58,18 +62,23 @@ int	ft_token_decompose_quotes(t_all *mass, t_utils *u)
 
 static void	mini_wheel(t_all *mass, t_tokens *tmp_token, t_utils *u, int *ret)
 {
-	while (u->n_st <= u->end)
+	int	sym_test;
+
+	sym_test = 1;
+	while (u->n_st <= u->end && sym_test != FLAG_ERROR)
 	{
 		if (mass->buf[u->n_st] == ' ')
 			u->n_st = ft_spacekill(mass->buf, u->n_st, u->end);
 		else
 		{
 			if (*ret == 2)
-				ft_token_decompose_nquotes(mass, tmp_token, u);
+				sym_test = ft_token_decompose_nquotes(mass, tmp_token, u);
 			else if (*ret == 1)
-				ft_token_decompose_quotes(mass, u);
+				sym_test = ft_token_decompose_quotes(mass, u);
 		}
 	}
+	if (sym_test == FLAG_ERROR)
+		*ret = FLAG_ERROR;
 }
 
 int	ft_token_decompose(t_all *mass)
@@ -95,5 +104,7 @@ int	ft_token_decompose(t_all *mass)
 		i = i + 2;
 		u.iter++;
 	}
-	return (0);
+	if (ret == FLAG_ERROR)
+		return (FLAG_ERROR);
+	return (FLAG_GOOD);
 }
