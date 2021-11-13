@@ -25,6 +25,7 @@ typedef struct		s_tokens
 	int		inp_n;
 	int		out_n;
 	int		heredoc_n;
+	
 }					t_tokens;
 
 

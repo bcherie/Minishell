@@ -27,6 +27,7 @@
 #include "structs.h"
 # include <string.h>
 # include <fcntl.h>
+# include <errno.h>
 
 
 size_t		words_count(char const *s, char sp);
