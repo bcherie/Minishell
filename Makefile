@@ -3,7 +3,7 @@ D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, print_container parser parser_
 D_BUILD_INS = $(addprefix build_ins/ft_, $(addsuffix .c, cd export export_utils echo pwd env env_utils unset exit atolonglong validations print_report))
 D_ENVOPS = $(addprefix env_ops/ft_, $(addsuffix .c, getters))
 D_CONSTRUCT = $(addprefix constructor/ft_, $(addsuffix .c, build_command_tokens build_redirect_tokens constructor))
-SRCS =	main.c main_utils.c buildin_utils.c execve.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT)
+SRCS =	main.c main_utils.c buildin_utils.c execve.c redirect.c get_next_line.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT)
 
 OBJS = $(SRCS:.c=.o)
 

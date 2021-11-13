@@ -25,7 +25,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "structs.h"
- 
+# include <string.h>
+# include <fcntl.h>
+
 
 size_t		words_count(char const *s, char sp);
 void		ft_lstadd_back(t_tokens **list, t_tokens *new);
@@ -122,5 +124,14 @@ void		ft_print_container(t_all *mass);
 void    ft_find_exec(t_all *mass, t_tokens *tok);
 void    run_current_p(t_tokens *tok, char *current_path);
 void    run_exec_folders(t_tokens *tok, char **exec_folders);
+
+//redirect
+void	ft_check_redirect(t_tokens *tok);
+int		get_next_line(int fd, char **line);
+char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_strlen(const char *str);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(char *src);
+char	*ft_strcpy(char *dest, char *src);
 
 #endif
