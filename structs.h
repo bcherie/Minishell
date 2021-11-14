@@ -25,7 +25,6 @@ typedef struct		s_tokens
 	int		inp_n;
 	int		out_n;
 	int		heredoc_n;
-	
 }					t_tokens;
 
 
@@ -53,13 +52,12 @@ typedef struct	s_utils
 
 typedef struct	s_all
 {
-	//PARSER
-	int			*sub_indx; // - производится 
-	int			*sub_quotes; // - 
+
+	int			*sub_indx;
+	int			*sub_quotes;
 	int			count_sym;
 	char		*buf;
-	//------------//
-	
+
 	char		**tmp;
 	t_tokens	*tokens;
 	t_tokens	*environment;

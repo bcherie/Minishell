@@ -6,7 +6,7 @@ static int	validation_tool(t_tokens *tok)
 	{
 		if (tok->next == NULL || tok->next->type == 'p')
 		{
-			printf("UPPER VALIDATION\n");
+			//printf("UPPER VALIDATION\n");
 			ft_print_report(NULL, NULL, REP_SYNTAX_P);
 			return (FLAG_ERROR);
 		}
@@ -15,7 +15,7 @@ static int	validation_tool(t_tokens *tok)
 	{
 		if (tok->next == NULL || tok->next->type != 'f')
 		{
-			printf("UPPER VALIDATION\n");
+			//printf("UPPER VALIDATION\n");
 			if (tok->type == 'R' || tok->type == 'r')
 				ft_print_report(NULL, NULL, REP_SYNTAX_R);
 			if (tok->type == 'l')
