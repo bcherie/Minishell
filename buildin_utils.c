@@ -12,6 +12,7 @@ t_tokens	*ft_lstnew(char *key, char *value)
 	new->value = value;
 	new->type = '0';
 	new->index = -1;
+	new->next = NULL;
 	return (new);
 }
 
