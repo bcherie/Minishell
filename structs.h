@@ -23,9 +23,11 @@ typedef struct		s_tokens
 	int		count;
 	int		inp_n;
 	int		out_n;
-	//redir flags:
-	int		flag_r;
-	int		flag_r;
+	//redir flag, masiiv args
+	int	flag_r;
+	int	flag_l;
+	char **tmp_out;
+	char **tmp_in;
 }					t_tokens;
 
 

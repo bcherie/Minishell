@@ -2,10 +2,17 @@
 
 static void ft_check_buildin(t_all *mass, t_tokens *tok)
 {
-	if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	{
-		ft_check_redirect(mass->tokens);
-	}
+	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+	// {
+	// 	redir_flag(tok);
+	// 	if (mass->tokens->flag_l == 2)
+	// 	{
+	// 		heredok(tok);
+	// 		// if(*tok->in_redir[i] != 'L')
+
+	// 	}
+	// 	ft_check_redirect(mass->tokens);
+	// }
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
@@ -43,6 +50,16 @@ static void ft_run_ops(t_all *mass)
 	// }
 	while (tmp != NULL)
 	{
+		//перенести редиректы и херокд сюда
+		if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+		{
+			redir_flag(mass->tokens);
+			if (mass->tokens->flag_l == 2)
+			{
+				heredok(mass->tokens);
+			}
+			ft_check_redirect(mass->tokens);
+		}
 		if (tmp->container != NULL)
 			ft_check_buildin(mass, tmp);
 		tmp = tmp->next;

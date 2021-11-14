@@ -12,7 +12,8 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 	int		res;
 	i = 0;
 	res = 0;
-	// printf("args1: %s\n", tok->args[1]);
+	printf("args0: %s\n", tok->args[0]);
+	printf("args1: %s\n", tok->args[1]);
 	while (exec_folders[i] != NULL)
 	{
 		current_f = ft_strjoin(exec_folders[i], sym);

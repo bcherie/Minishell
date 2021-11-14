@@ -133,5 +133,7 @@ int		ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
+void	redir_flag(t_tokens *tok);
+void	heredok(t_tokens *tok);
 
 #endif
