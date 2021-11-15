@@ -44,7 +44,7 @@ static void	counter_rinp(t_tokens *start, t_tokens *end, t_tokens **new)
 	(*new)->inp_n = 0;
 	while (start != end)
 	{
-		if (start->type == 'l')
+		if (start->type == 'l' || start->type == 'L')
 			((*new)->inp_n)++;
 		start = start->next;
 	}
@@ -66,7 +66,7 @@ void	ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new)
 	ft_bzero((*new)->in_redir, 2 * (*new)->inp_n + 1);
 	while (start != NULL && start != end)
 	{
-		if (start->type == 'l')
+		if (start->type == 'l' || start->type == 'L')
 		{
 			(*new)->in_redir[i] = ft_strdup(&start->type);
 			if (start->next != NULL && start->next->type == 'f')

@@ -8,8 +8,23 @@ static void receiver(int sig_id, siginfo_t *sig, void *context)
 	(void)context;
 	(void)sig;
 	(void)sig_id;
-}
+	if (sig_id == SIGINT)
+	{
 
+	}
+	if (sig_id == SIGQUIT)
+	{
+
+	}
+	if (sig_id == SIGUSR1)
+	{
+
+	}
+	if (sig_id == SIGUSR2)
+	{
+
+	}
+}
 
 
 void	ft_signals_main(pid_t pid)
