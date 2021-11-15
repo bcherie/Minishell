@@ -1,1 +1,7 @@
 fff
+key 28
+key TMPDIR
+mass0^ TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n0001qgw000dvz/T/
+Child process PID[4309] start running, my parent PID is [85412] 
+args0: tt
+args1: (null)
