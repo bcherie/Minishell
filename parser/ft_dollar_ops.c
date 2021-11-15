@@ -44,20 +44,24 @@ static void	ft_dol_a_case(char *line, t_all *mass, t_utils *t, t_dbuf *head)
 static void	ft_sym_case(char *line, t_utils *t, t_dbuf *head)
 {
 	char	*subline;
+	char	*orig;
 
 	(t->iter)++;
 	subline = NULL;
+	
 	if (line[t->iter] == '#' || line[t->iter] == '?')
-		ft_dfbuf_addchar(head, '0');
+		subline = ft_itoa(errno);
 	else
+		subline = ft_strdup("minishell");
+	orig = subline;
+	while (*subline != '\0')
 	{
-		subline = "minishell";
-		while (*subline != '\0')
-		{
-			ft_dfbuf_addchar(head, *subline);
-			subline++;
-		}
+		ft_dfbuf_addchar(head, *subline);
+		subline++;
 	}
+	free(orig);
+	subline = NULL;
+	orig = NULL;
 }
 
 static void	wheel(char *line, t_all *mass, t_utils *t, t_dbuf *head)

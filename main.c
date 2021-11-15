@@ -99,7 +99,7 @@ int main (int argc, char **argv, char **env)
 
 	(void)argv;
 	(void)argc;
-	// errno = 1;
+	errno = 0;
 	mass = (t_all*)malloc(sizeof(t_all));
 	// printf("EXIT PREVIOUS: %s\n", strerror(errno));
 	ft_add_environment(mass, env);
@@ -113,7 +113,6 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			//ft_print_container(mass);
 			ft_constructor(mass);
 			ft_print_container(mass);
 			ft_run_ops(mass);
