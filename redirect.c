@@ -118,11 +118,12 @@ void	ft_check_redirect(t_tokens *tok)
 		else if (tok->flag_r == 2)
 			fd = open(tok->tmp_out[j], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
-			printf ("error\n");
+			perror ("open() ");
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 1);
 		close(fd);
 		j++;
+		i++;
 	}
 	i = 0;
 	j = 0;
@@ -133,7 +134,7 @@ void	ft_check_redirect(t_tokens *tok)
 		else if (tok->flag_l == 2)
 			fd = open(tok->tmp_in[j], O_RDONLY | O_CREAT, 0644);
 		if (fd < 0)
-			printf ("error\n");
+			perror ("open() ");
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 0);
 		close(fd);

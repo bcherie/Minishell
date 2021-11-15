@@ -18,7 +18,7 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
-		ft_echo(tok);
+			ft_echo(tok);
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
 	else if (ft_strncmp(tok->container, "export", 7) == 0)
@@ -27,43 +27,57 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if(tok->container != NULL)
+	else if (tok->container != NULL)
 		ft_execve(mass, tok);
 	else
 		return ;
-	exit(0);
 }
 
 
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
+	pid_t		pid = 0;
 
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
-	// Fork commands!!!
-
-	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	// {
-	// 	ft_check_redirect(mass->tokens);
-	// }
+	// printf ("args_tok %s\n", mass->tokens->args[]);
 	while (tmp != NULL)
 	{
+		// if (!tmp->next)
+		// {
+			// pid = fork();
 		//перенести редиректы и херокд сюда
-		if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-		{
-			redir_flag(mass->tokens);
-			if (mass->tokens->flag_l == 2)
+		// printf("container %s\n", tmp->container);
+			if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
 			{
-				heredok(mass->tokens);
+				// redir_flag(mass->tokens);
+				// if (mass->tokens->flag_l == 2)
+				// {
+				// 	heredok(mass->tokens);
+				// }
+				pid = fork();
+				if (pid == 0)
+				{
+					redir_flag(mass->tokens);
+					if (mass->tokens->flag_l == 2)
+					{
+						heredok(mass->tokens);
+					}
+					ft_check_redirect(mass->tokens);
+					ft_check_buildin(mass, tmp);
+					exit(EXIT_SUCCESS);
+				}
 			}
-			ft_check_redirect(mass->tokens);
-		}
-		if (tmp->container != NULL)
-			ft_check_buildin(mass, tmp);
+			if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
+				ft_check_buildin(mass, tmp);
+		// }
 		tmp = tmp->next;
 	}
+	if (pid != 0)
+		wait(NULL);
+
 	// printf("out: %d\n", mass->tokens->out_n);
 	// printf("inp: %d\n", mass->tokens->inp_n);
 	// printf("count: %d\n", mass->tokens->count);

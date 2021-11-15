@@ -1,0 +1,31 @@
+key 28
+key TMPDIR
+mass0^ TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n0001q58000ds_/T/
+Child process PID[36116] start running, my parent PID is [79727] 
+args0: cat
+args1: (null)
+sdfsdf
+sdfsfsdf
+heredoc
+key 28
+key TMPDIR
+mass0^ TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n0001q58000ds_/T/
+Child process PID[36698] start running, my parent PID is [79727] 
+args0: cat
+args1: (null)
+cat sdfsdfsfsf
+sdfsdf sdfsdf
+key 28
+key TMPDIR
+mass0^ TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n0001q58000ds_/T/
+Child process PID[36986] start running, my parent PID is [79727] 
+args0: cat
+args1: (null)
+<< uwerwe
+uwerwe
+key 28
+key TMPDIR
+mass0^ TMPDIR=/var/folders/zz/zyxvpxvq6csfxvn_n0001q58000ds_/T/
+Child process PID[37280] start running, my parent PID is [79727] 
+args0: cat
+args1: (null)
