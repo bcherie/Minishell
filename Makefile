@@ -3,7 +3,8 @@ D_PARSE = $(addprefix parser/ft_, $(addsuffix .c, print_container parser parser_
 D_BUILD_INS = $(addprefix build_ins/ft_, $(addsuffix .c, cd export export_utils echo pwd env env_utils unset exit atolonglong validations print_report))
 D_ENVOPS = $(addprefix env_ops/ft_, $(addsuffix .c, getters))
 D_CONSTRUCT = $(addprefix constructor/ft_, $(addsuffix .c, build_command_tokens build_redirect_tokens constructor))
-SRCS =	main.c main_utils.c buildin_utils.c execve.c redirect.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT)
+D_SIGNALS = $(addprefix signal_handler/ft_, $(addsuffix .c, signals))
+SRCS =	main.c main_utils.c buildin_utils.c execve.c redirect.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT) $(D_SIGNALS)
 
 OBJS = $(SRCS:.c=.o)
 
@@ -19,7 +20,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@make -C libft
-			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -L/Users/droro/.brew/Cellar/readline/8.1/lib/ -I/Users/droro/.brew/Cellar/readline/8.1/include -lreadline
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -lreadline -L /Users/droro/.brew/opt/readline/lib/ -I /Users/droro/.brew/opt/readline/include
 
 run:		$(NAME)
 			@./$(NAME)
@@ -40,3 +41,9 @@ git:
 			git push
 
 .PHONY: 	all run clean fclean re
+
+
+# @$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -L/Users/jkeitha/.brew/Cellar/readline/8.1/lib/ -I/Users/jkeitha/.brew/Cellar/readline/8.1/include -lreadline
+
+
+#//

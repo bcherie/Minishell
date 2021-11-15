@@ -28,6 +28,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <signal.h>
 
 
 size_t		words_count(char const *s, char sp);
@@ -138,5 +139,6 @@ char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
 void	redir_flag(t_tokens *tok);
 void	heredok(t_tokens *tok);
-
+void    rl_replace_line(const char *buffer, int val);
+void	ft_signals_main(pid_t pid);
 #endif

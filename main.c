@@ -82,18 +82,33 @@ static void ft_run_ops(t_all *mass)
 
 }
 
+
+void	ft_check_EOF(t_all *mass)
+{
+	if (mass->buf == NULL)
+	{	
+		write(1, "exit\n", 5);
+		global_cleaner(mass, 1);
+		exit(0);
+	}
+}
+
 int main (int argc, char **argv, char **env)
 {
 	t_all	*mass;
 
 	(void)argv;
 	(void)argc;
+	// errno = 1;
 	mass = (t_all*)malloc(sizeof(t_all));
+	// printf("EXIT PREVIOUS: %s\n", strerror(errno));
 	ft_add_environment(mass, env);
+	ft_signals_main(0);
 	while (1)
 	{
 		init_t_alls(mass);
 		mass->buf = readline("minishell: ");
+		ft_check_EOF(mass);
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);

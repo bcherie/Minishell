@@ -1,8 +1,10 @@
 #include "../minishell.h"
 
+
 void	ft_exit(t_all *mass, t_tokens *tok)
 {
 	long long	exit_number;
+	errno_t		ex;
 
 	exit_number = 0;
 	if (tok->count > 0)
@@ -21,5 +23,7 @@ void	ft_exit(t_all *mass, t_tokens *tok)
 	else
 		printf("exit\n");
 	global_cleaner(mass, 1);
-	exit(exit_number);
+	ex = 2;
+	errno = ex;
+	exit(errno);
 }
