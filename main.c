@@ -114,7 +114,7 @@ int main (int argc, char **argv, char **env)
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_constructor(mass);
-			ft_print_container(mass);
+			//ft_print_container(mass);
 			ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);

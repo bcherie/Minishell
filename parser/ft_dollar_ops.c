@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_dollar_ops.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:53:09 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:54:54 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	simple_check(char *line)
@@ -48,7 +60,6 @@ static void	ft_sym_case(char *line, t_utils *t, t_dbuf *head)
 
 	(t->iter)++;
 	subline = NULL;
-	
 	if (line[t->iter] == '#' || line[t->iter] == '?')
 		subline = ft_itoa(errno);
 	else

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parser_ops.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:53:54 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:55:07 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	validation_tool(t_tokens *tok)
@@ -6,7 +18,6 @@ static int	validation_tool(t_tokens *tok)
 	{
 		if (tok->next == NULL || tok->next->type == 'p')
 		{
-			//printf("UPPER VALIDATION\n");
 			ft_print_report(NULL, NULL, REP_SYNTAX_P);
 			return (FLAG_ERROR);
 		}
@@ -15,7 +26,6 @@ static int	validation_tool(t_tokens *tok)
 	{
 		if (tok->next == NULL || tok->next->type != 'f')
 		{
-			//printf("UPPER VALIDATION\n");
 			if (tok->type == 'R' || tok->type == 'r')
 				ft_print_report(NULL, NULL, REP_SYNTAX_R);
 			if (tok->type == 'l')
