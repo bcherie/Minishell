@@ -11,13 +11,13 @@ static void	assister_print_container(t_tokens *tmp)
 		while (++i < tmp->count + 1)
 			printf("-- ARG[%d] is %s\n", i, tmp->args[i]);
 	}
-	if (tmp->heredoc != NULL)
-	{
-		printf("-------\n");
-		i = -1;
-		while (++i < tmp->heredoc_n * 2)
-			printf("-- HEREDOCS[%d] is %s\n", i, tmp->heredoc[i]);
-	}
+	// if (tmp->heredoc != NULL)
+	// {
+	// 	printf("-------\n");
+	// 	i = -1;
+	// 	while (++i < tmp->heredoc_n * 2)
+	// 		printf("-- HEREDOCS[%d] is %s\n", i, tmp->heredoc[i]);
+	// }
 	if (tmp->in_redir != NULL)
 	{
 		printf("-------\n");

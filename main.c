@@ -2,23 +2,17 @@
 
 static void ft_check_buildin(t_all *mass, t_tokens *tok)
 {
-	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	// {
-	// 	redir_flag(tok);
-	// 	if (mass->tokens->flag_l == 2)
-	// 	{
-	// 		heredok(tok);
-	// 		// if(*tok->in_redir[i] != 'L')
-
-	// 	}
-	// 	ft_check_redirect(mass->tokens);
-	// }
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
+	{
+		if ((tok->pipe && tok->out_n) || !tok->pipe)
 			ft_echo(tok);
+		else
+			return ;
+	}
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
 	else if (ft_strncmp(tok->container, "export", 7) == 0)
@@ -28,7 +22,10 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
 	else if (tok->container != NULL)
-		ft_execve(mass, tok);
+	{
+		if ((tok->pipe && mass->u_mass.ct == tok->l_pipe) || !tok->pipe)
+			ft_execve(mass, tok);
+	}
 	else
 		return ;
 }
@@ -38,41 +35,46 @@ static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
 	pid_t		pid = 0;
+	int			i = 0;
 
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
-	// printf ("args_tok %s\n", mass->tokens->args[]);
+	while (mass->buf[i])
+	{
+		if (mass->buf[i] == '|')
+			tmp->pipe++;
+		i++;
+	}
+	// printf ("pipe %d\n", tmp->pipe);
+	mass->u_mass.ct = 0;
+	tmp->l_pipe = tmp->pipe;
 	while (tmp != NULL)
 	{
-		// if (!tmp->next)
-		// {
-			// pid = fork();
-		//перенести редиректы и херокд сюда
-		// printf("container %s\n", tmp->container);
-			if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+		if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+		{
+			// redir_flag(mass->tokens);
+			// if (mass->tokens->flag_l == 2)
+			// {
+			// 	heredok(mass->tokens);
+			// }
+			pid = fork();
+			if (pid == 0)
 			{
-				// redir_flag(mass->tokens);
-				// if (mass->tokens->flag_l == 2)
-				// {
-				// 	heredok(mass->tokens);
-				// }
-				pid = fork();
-				if (pid == 0)
+				redir_flag(mass->tokens);
+				if (mass->tokens->flag_l == 2)
 				{
-					redir_flag(mass->tokens);
-					if (mass->tokens->flag_l == 2)
-					{
-						heredok(mass->tokens);
-					}
-					ft_check_redirect(mass->tokens);
-					ft_check_buildin(mass, tmp);
-					exit(EXIT_SUCCESS);
+					heredok(mass->tokens);
 				}
-			}
-			if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
+				ft_check_redirect(mass->tokens);
 				ft_check_buildin(mass, tmp);
+				exit(EXIT_SUCCESS);
+			}
+		}
+		if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
+			ft_check_buildin(mass, tmp);
 		// }
+		mass->u_mass.ct++;
 		tmp = tmp->next;
 	}
 	if (pid != 0)

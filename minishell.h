@@ -107,7 +107,7 @@ int			simple_startend_check(int start, int end);
 void		ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_build_rout(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new);
-void		ft_build_heredoc(t_tokens *start, t_tokens *end, t_tokens **new);
+// void		ft_build_heredoc(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_constructor(t_all *mass);
 void		ft_token_simple_clean(t_tokens **head);
 int			ft_validate_token_syms(t_all *mass);
