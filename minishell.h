@@ -29,6 +29,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <signal.h>
 
 
 size_t		words_count(char const *s, char sp);
@@ -48,7 +49,6 @@ void		ft_token_clean_args(t_tokens **tok);
 void		ft_token_clean_keyval(t_tokens **tok);
 void		ft_token_clean_rout(t_tokens **tok);
 void		ft_token_clean_rinp(t_tokens **tok);
-void		ft_token_clean_heredoc(t_tokens **tok);
 int			ft_pretoken_check(char *string, int start, int end);
 int			ft_token_decompose_nquotes(t_all *mass, t_tokens *tm, t_utils *u);
 int			ft_token_decompose_quotes(t_all *mass, t_utils *u);
@@ -107,7 +107,6 @@ int			simple_startend_check(int start, int end);
 void		ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_build_rout(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_build_rinp(t_tokens *start, t_tokens *end, t_tokens **new);
-// void		ft_build_heredoc(t_tokens *start, t_tokens *end, t_tokens **new);
 void		ft_constructor(t_all *mass);
 void		ft_token_simple_clean(t_tokens **head);
 int			ft_validate_token_syms(t_all *mass);
@@ -139,5 +138,6 @@ char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
 void	redir_flag(t_tokens *tok);
 void	heredok(t_tokens *tok);
-
+void    rl_replace_line(const char *buffer, int val);
+void	ft_signals_main(pid_t pid);
 #endif

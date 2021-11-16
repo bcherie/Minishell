@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_token_utils_3.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:54:22 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:55:21 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_token_clean_args(t_tokens **tok)
@@ -107,7 +119,6 @@ void	ft_token_clean(t_tokens **head)
 		}
 		ft_token_clean_args(head);
 		ft_token_clean_keyval(head);
-		//ft_token_clean_heredoc(head);
 		ft_token_clean_rout(head);
 		ft_token_clean_rinp(head);
 		free(*head);

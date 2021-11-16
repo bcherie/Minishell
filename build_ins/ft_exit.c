@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:56:02 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:56:02 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_exit(t_all *mass, t_tokens *tok)
 {
 	long long	exit_number;
+	errno_t		ex;
 
 	exit_number = 0;
 	if (tok->count > 0)
@@ -21,5 +34,7 @@ void	ft_exit(t_all *mass, t_tokens *tok)
 	else
 		printf("exit\n");
 	global_cleaner(mass, 1);
-	exit(exit_number);
+	ex = 2;
+	errno = ex;
+	exit(errno);
 }

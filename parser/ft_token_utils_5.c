@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_token_utils_5.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:54:34 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:54:34 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_pretoken_count(t_all *mass)
@@ -72,25 +84,3 @@ void	ft_token_name(t_tokens *tmp_token, t_utils *u)
 	else
 		tmp_token->type = 'a';
 }
-
-// void	ft_token_clean_heredoc(t_tokens **tok)
-// {
-// 	int	i;
-// 	int	num;
-
-// 	i = -1;
-// 	num = 0;
-// 	if ((*tok)->heredoc == NULL)
-// 		return ;
-// 	num = 2 * (*tok)->heredoc_n + 1;
-// 	while (++i < num)
-// 	{
-// 		if ((*tok)->heredoc[i] != NULL)
-// 		{
-// 			free((*tok)->heredoc[i]);
-// 			(*tok)->heredoc[i] = NULL;
-// 		}
-// 	}
-// 	free((*tok)->heredoc);
-// 	(*tok)->heredoc = NULL;
-// }

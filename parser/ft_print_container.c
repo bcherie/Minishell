@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_container.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:54:06 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:54:06 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static void	assister_print_container(t_tokens *tmp)
@@ -11,13 +23,6 @@ static void	assister_print_container(t_tokens *tmp)
 		while (++i < tmp->count + 1)
 			printf("-- ARG[%d] is %s\n", i, tmp->args[i]);
 	}
-	// if (tmp->heredoc != NULL)
-	// {
-	// 	printf("-------\n");
-	// 	i = -1;
-	// 	while (++i < tmp->heredoc_n * 2)
-	// 		printf("-- HEREDOCS[%d] is %s\n", i, tmp->heredoc[i]);
-	// }
 	if (tmp->in_redir != NULL)
 	{
 		printf("-------\n");

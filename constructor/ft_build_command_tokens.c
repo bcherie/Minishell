@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_build_command_tokens.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:51:01 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:51:02 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static void	counter_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
@@ -37,42 +49,3 @@ void	ft_build_comarg(t_tokens *start, t_tokens *end, t_tokens **new)
 	}
 	(*new)->args[i] = NULL;
 }
-
-// static void	counter_heredoc(t_tokens *start, t_tokens *end, t_tokens **new)
-// {
-// 	(*new)->heredoc_n = 0;
-// 	while (start != end)
-// 	{
-// 		if (start->type == 'l')
-// 			((*new)->heredoc_n)++;
-// 		start = start->next;
-// 	}
-// }
-
-// void	ft_build_heredoc(t_tokens *start, t_tokens *end, t_tokens **new)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	(*new)->type = 't';
-// 	if (start == NULL)
-// 		return ;
-// 	counter_heredoc(start, end, new);
-// 	if ((*new)->heredoc_n < 1)
-// 		return ;
-// 	(*new)->heredoc = \
-// 	(char **)malloc(sizeof(char *) * (2 * (*new)->heredoc_n + 1));
-// 	ft_bzero((*new)->heredoc, 2 * (*new)->heredoc_n + 1);
-// 	while (start != NULL && start != end)
-// 	{
-// 		if (start->type == 'L')
-// 		{
-// 			(*new)->heredoc[i] = ft_strdup(&start->type);
-// 			if (start->next != NULL && start->next->type == 'f')
-// 				(*new)->heredoc[i + 1] = start->next->container;
-// 			i += 2;
-// 		}
-// 		start = start->next;
-// 	}
-// 	(*new)->heredoc[i] = NULL;
-// }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:55:45 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 23:15:28 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	n_test(char *str)
@@ -56,8 +68,6 @@ void	ft_echo(t_tokens *tok)
 	{
 		if (ft_strlen(tok->container) == 4)
 			printf("\n");
-		else
-			printf("command not found\n");
 	}
 	if (tok->count >= 1)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_dollar_ops.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:53:09 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 22:54:54 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static int	simple_check(char *line)
@@ -44,20 +56,23 @@ static void	ft_dol_a_case(char *line, t_all *mass, t_utils *t, t_dbuf *head)
 static void	ft_sym_case(char *line, t_utils *t, t_dbuf *head)
 {
 	char	*subline;
+	char	*orig;
 
 	(t->iter)++;
 	subline = NULL;
 	if (line[t->iter] == '#' || line[t->iter] == '?')
-		ft_dfbuf_addchar(head, '0');
+		subline = ft_itoa(errno);
 	else
+		subline = ft_strdup("minishell");
+	orig = subline;
+	while (*subline != '\0')
 	{
-		subline = "minishell";
-		while (*subline != '\0')
-		{
-			ft_dfbuf_addchar(head, *subline);
-			subline++;
-		}
+		ft_dfbuf_addchar(head, *subline);
+		subline++;
 	}
+	free(orig);
+	subline = NULL;
+	orig = NULL;
 }
 
 static void	wheel(char *line, t_all *mass, t_utils *t, t_dbuf *head)

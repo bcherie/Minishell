@@ -13,7 +13,7 @@ void heredok(t_tokens *tok)
 	int i;
 	char *keyword;
 	char *line;
-	// pid_t pid;
+	// pid_t pid = 0;
 
 	i = 0;
 	line = (char *)malloc(sizeof(char *));
@@ -21,7 +21,7 @@ void heredok(t_tokens *tok)
 	printf ("keyword: %s\n", keyword);
 	if (tok->flag_l == 2)
 	{
-		// pid = fork = ();
+		// pid = fork();
 		while (1)
 		{
 			line = readline("> ");
@@ -36,7 +36,6 @@ void heredok(t_tokens *tok)
 			}
 		}
 	}
-
 }
 
 void	redir_flag(t_tokens *tok)

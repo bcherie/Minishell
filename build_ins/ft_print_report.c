@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print_report.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 22:56:15 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 23:10:29 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_print_report(char *command, char *val, int type)
@@ -21,7 +33,7 @@ void	ft_print_report(char *command, char *val, int type)
 	// else if (type == REP_SYNTAX_HEREDOC)
 	// 	printf("minishell: syntax error near unexpected token  \'newline\'\n");
 	else
-		return ;
+		perror("minishell: ");
 }
 
 void	ft_print_env_token(t_tokens *tok, char mode)
