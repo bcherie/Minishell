@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 23:06:00 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 23:06:18 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	tmp_int_cleaner(t_all *mass, int mode)
@@ -23,7 +35,7 @@ void	tmp_int_cleaner(t_all *mass, int mode)
 	}
 }
 
-void global_cleaner(t_all *mass, int mode)
+void	global_cleaner(t_all *mass, int mode)
 {
 	tmp_int_cleaner(mass, 1);
 	ft_token_clean(&(mass->tokens));

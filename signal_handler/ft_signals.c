@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_signals.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/16 23:03:28 by droro             #+#    #+#             */
+/*   Updated: 2021/11/16 23:04:45 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 #include <termios.h>
 
-static void receiver(int sig_id, siginfo_t *sig, void *context)
+static void	receiver(int sig_id, siginfo_t *sig, void *context)
 {
+	struct termios	term;
+
 	(void)context;
 	(void)sig;
-	struct termios term;
-
 	tcgetattr(0, &term);
 	term.c_lflag &= ~(ECHO);
 	term.c_lflag &= ~(ICANON);
@@ -17,17 +29,16 @@ static void receiver(int sig_id, siginfo_t *sig, void *context)
 	if (sig_id == SIGINT)
 	{
 		rl_replace_line("", 0);
-		printf("\n");	
+		printf("\n");
 		rl_on_new_line();
-    	rl_redisplay();
+		rl_redisplay();
 	}
 	if (sig_id == SIGQUIT)
 	{
 		rl_on_new_line();
-    	rl_redisplay();
+		rl_redisplay();
 	}
 }
-
 
 void	ft_signals_main(pid_t pid)
 {
@@ -39,4 +50,3 @@ void	ft_signals_main(pid_t pid)
 	sigaction(SIGINT, &box, NULL);
 	sigaction(SIGQUIT, &box, NULL);
 }
-
