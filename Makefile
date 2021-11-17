@@ -20,7 +20,7 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			@make -C libft
-			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -lreadline -L /Users/droro/.brew/opt/readline/lib/ -I /Users/droro/.brew/opt/readline/include
+			@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a -ltermcap -lreadline -L /Users/droro/.brew/opt/readline/lib/ -I /Users/droro.brew/opt/readline/include
 
 run:		$(NAME)
 			@./$(NAME)

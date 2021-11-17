@@ -6,7 +6,7 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 22:56:15 by droro             #+#    #+#             */
-/*   Updated: 2021/11/16 23:10:29 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/17 02:50:03 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void	ft_print_report(char *command, char *val, int type)
 		printf("minishell: syntax error near unexpected token  \'<\'\n");
 	else if (type == REP_SYNTAX_P)
 		printf("minishell: syntax error near unexpected token  \'|\'\n");
-	else if (type == REP_SYNTAX_HEREDOC)
-		printf("minishell: syntax error near unexpected token  \'newline\'\n");
+	// else if (type == REP_SYNTAX_HEREDOC)
+	// 	printf("minishell: syntax error near unexpected token  \'newline\'\n");
 	else
-		perror("minishell: ");
+		//perror("minishell: ");
+		return ;
 }
 
 void	ft_print_env_token(t_tokens *tok, char mode)

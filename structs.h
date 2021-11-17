@@ -28,6 +28,9 @@ typedef struct		s_tokens
 	int	flag_l;
 	char **tmp_out;
 	char **tmp_in;
+	//pipe
+	int	pipe;
+	int	l_pipe;
 }					t_tokens;
 
 
@@ -51,6 +54,7 @@ typedef struct	s_utils
 	int			i_keyshift;
 	int			i_count;
 	int			iter;
+	int			ct;
 }				t_utils;
 
 typedef struct	s_all

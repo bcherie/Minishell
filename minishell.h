@@ -17,6 +17,7 @@
 # define REP_SYNTAX_HEREDOC -4 // command not found
 # define FLAG_ERROR -123
 # define FLAG_GOOD 0
+# define Errno 0
 
 #include "libft/libft.h"
 #include <stdio.h>
