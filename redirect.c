@@ -19,6 +19,7 @@ void	heredok(t_tokens *tok)
 	char	*line;
 
 	i = 0;
+	line = NULL;
 	keyword = tok->tmp_in[0];
 	if (tok->flag_l == 2)
 	{
