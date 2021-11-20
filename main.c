@@ -16,7 +16,7 @@ int	ft_check_buildin(t_all *mass, t_tokens *tok)
 {
 	int	ret;
 
-	ret	= 1;
+	ret = 1;
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
@@ -25,8 +25,6 @@ int	ft_check_buildin(t_all *mass, t_tokens *tok)
 	{
 		if ((mass->u_mass.pipe && tok->out_n) || !mass->u_mass.pipe)
 			ft_echo(tok);
-		// else
-		// 	return ;
 	}
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
@@ -41,86 +39,58 @@ int	ft_check_buildin(t_all *mass, t_tokens *tok)
 	return (ret);
 }
 
-static void ft_run_ops(t_all *mass)
+void	redirects(t_all *mass, t_tokens *tmp, int *status)
+{
+	int	pid3;
+
+	redir_flag_1(tmp);
+	ft_check_redirect(tmp);
+	if (mass->tokens->flag_l == 2)
+	{
+		pid3 = fork();
+		if (pid3 == 0)
+			heredok(mass->tokens);
+		else
+			waitpid(pid3, status, 0);
+	}
+}
+
+static void	ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
-	pid_t		pid;
 	pid_t		pid2;
 	int			status;
-	int			i;
 
-	i = 0;
-	mass->u_mass.ct = 0;
-	if (mass->flag_error == FLAG_ERROR)
-		return ;
 	tmp = mass->tokens;
-	while (mass->buf[i])
-	{
-		if (mass->buf[i] == '|')
-			mass->u_mass.pipe++;
-		i++;
-	}
-	mass->u_mass.l_pipe = mass->u_mass.pipe;
-
 	while (tmp != NULL)
 	{
 		if (tmp->inp_n != 0 || tmp->out_n != 0)
-		{
-			redir_flag_1(tmp);
-			ft_check_redirect(tmp);
-			if (mass->tokens->flag_l == 2)
-			{
-				heredok(mass->tokens);
-			}
-		}
+			redirects(mass, tmp, &status);
 		if (tmp != mass->tokens)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				if (ft_check_buildin(mass, tmp) == 0)
-				{
-					pid = fork();
-					if (pid == 0)
-						ft_execve(mass, tmp);
-					else
-						wait(NULL);
-				}
-				exit(0);
-			}
-			else
-			{
-				waitpid(pid, &status, 0);
-			}
-		}
+			pipes(mass, tmp, &status);
 		else
 		{
 			if (ft_check_buildin(mass, tmp) == 0)
 			{
 				pid2 = fork();
 				if (pid2 == 0)
-				{
 					ft_execve(mass, tmp);
-				}
 				else
-				{
 					waitpid(pid2, &status, 0);
-				}
 			}
 		}
 		tmp = tmp->next;
-		mass->u_mass.ct++;
 	}
 }
 
-int main (int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	t_all	*mass;
 
 	(void)argv;
 	(void)argc;
 	errno = 0;
-	mass = (t_all*)malloc(sizeof(t_all));
+	mass = (t_all *)malloc(sizeof(t_all));
 	mass->environment = NULL;
 	ft_add_environment(mass, env);
 	ft_signals_main(mass);
@@ -134,7 +104,8 @@ int main (int argc, char **argv, char **env)
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_constructor(mass);
-			ft_run_ops(mass);
+			if (mass->flag_error != FLAG_ERROR)
+				ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);
 	}

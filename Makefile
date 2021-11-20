@@ -4,7 +4,7 @@ D_BUILD_INS = $(addprefix build_ins/ft_, $(addsuffix .c, cd export export_utils 
 D_ENVOPS = $(addprefix env_ops/ft_, $(addsuffix .c, getters))
 D_CONSTRUCT = $(addprefix constructor/ft_, $(addsuffix .c, build_command_tokens build_redirect_tokens constructor))
 D_SIGNALS = $(addprefix signal_handler/ft_, $(addsuffix .c, signals))
-SRCS =	main.c main_utils.c buildin_utils.c execve.c redirect.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT) $(D_SIGNALS)
+SRCS =	main.c main_utils.c buildin_utils.c execve.c redirect.c pipes.c $(D_PARSE) $(D_BUILD_INS) $(D_ENVOPS) $(D_CONSTRUCT) $(D_SIGNALS)
 
 OBJS = $(SRCS:.c=.o)
 

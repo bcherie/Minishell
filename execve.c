@@ -41,7 +41,6 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 			i++;
 		}
 	}
-
 }
 
 void	run_current_p(t_tokens *tok, char *current_path)
