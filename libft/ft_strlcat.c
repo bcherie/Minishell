@@ -3,30 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/05 17:19:35 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/21 17:47:14 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/14 19:42:55 by droro             #+#    #+#             */
+/*   Updated: 2020/11/20 06:48:29 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dest, const char *src, size_t destsize)
+static int	util(size_t dstsize, size_t dstlen)
 {
-	size_t i;
-	size_t j;
+	if (dstsize > 0)
+	{
+		if (dstsize - 1 < dstlen)
+			return (dstsize);
+		else
+			return (dstlen);
+	}
+	return (0);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+	size_t	dstlen;
+	size_t	srclen;
+	size_t	begin;
+	int		maxadd;
 
 	i = 0;
-	j = 0;
-	while (dest[i] != '\0' && i < destsize)
-		i++;
-	while (src[j] && (j + i) + 1 < destsize)
+	dstlen = ft_strlen(dst);
+	srclen = ft_strlen(src);
+	begin = util(dstsize, dstlen);
+	maxadd = dstsize - dstlen - 1;
+	if (maxadd > 0)
 	{
-		dest[i + j] = src[j];
-		j++;
+		while (i < srclen && i < (size_t)maxadd)
+		{
+			dst[begin + i] = src[i];
+			i++;
+		}
+		dst[begin + i] = '\0';
 	}
-	if (i + j < destsize)
-		dest[j + i] = '\0';
-	return (i + ft_strlen(src));
+	return (begin + srclen);
 }

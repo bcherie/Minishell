@@ -16,9 +16,10 @@ void heredok(t_tokens *tok)
 	// pid_t pid = 0;
 
 	i = 0;
-	line = (char *)malloc(sizeof(char *));
+	// line = (char *)malloc(sizeof(char *));
 	keyword = tok->tmp_in[0];
-	printf ("keyword: %s\n", keyword);
+	line = NULL;
+	// printf ("keyword: %s\n", keyword);
 	if (tok->flag_l == 2)
 	{
 		// pid = fork();

@@ -6,7 +6,7 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 23:03:28 by droro             #+#    #+#             */
-/*   Updated: 2021/11/16 23:04:45 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/21 01:07:54 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ static void	receiver(int sig_id, siginfo_t *sig, void *context)
 	}
 }
 
-void	ft_signals_main(pid_t pid)
+void	ft_signals_main(t_all *mass)
 {
-	struct sigaction	box;
-
-	box.sa_flags = SA_SIGINFO;
-	(void)pid;
-	box.__sigaction_u.__sa_sigaction = receiver;
-	sigaction(SIGINT, &box, NULL);
-	sigaction(SIGQUIT, &box, NULL);
+	mass->siga.sa_flags = SA_SIGINFO;
+	mass->siga.__sigaction_u.__sa_sigaction = receiver;
+	sigaction(SIGINT, &mass->siga, NULL);
+	sigaction(SIGQUIT, &mass->siga, NULL);
 }

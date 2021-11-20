@@ -85,7 +85,8 @@ void    ft_execve(t_all *mass, t_tokens *tok)
 	}
 	env = head;
 	// printf ("key %d\n",  i);
-    mass_env = (char **) malloc(sizeof(char *) * 30);
+    mass_env = (char **) malloc(sizeof(char *) * (i + 1));
+	mass_env[i] = NULL;
     // printf ("key %s\n",  env->key);
     while (env != NULL)
     {
@@ -96,7 +97,7 @@ void    ft_execve(t_all *mass, t_tokens *tok)
 			v2 = ft_strjoin(v1, env->value);
 			// hran2 = v2;
 			mass_env[j] = v2;
-			// free(v1);
+			free(v1);
 			// free(v2);
 			j++;
 		}
@@ -112,6 +113,7 @@ void    ft_execve(t_all *mass, t_tokens *tok)
     pid = fork();
 	if (pid == 0)
 	{
+		sleep(500);
 		if (current_path)
 		{
 			run_current_p(tok, current_path);

@@ -1,18 +1,16 @@
 #include "minishell.h"
 
-static void ft_check_buildin(t_all *mass, t_tokens *tok)
+static int ft_check_buildin(t_all *mass, t_tokens *tok)
 {
+	int	ret;
+
+	ret = 1;
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
-	{
-		if ((tok->pipe && tok->out_n) || !tok->pipe)
 			ft_echo(tok);
-		else
-			return ;
-	}
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
 	else if (ft_strncmp(tok->container, "export", 7) == 0)
@@ -22,12 +20,10 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
 	else if (tok->container != NULL)
-	{
-		if ((tok->pipe && mass->u_mass.ct == tok->l_pipe) || !tok->pipe)
-			ft_execve(mass, tok);
-	}
+		ft_execve(mass, tok);
 	else
-		return ;
+		ret = 0;
+	return (ret);
 }
 
 
@@ -36,7 +32,9 @@ static void ft_run_ops(t_all *mass)
 	t_tokens	*tmp;
 	pid_t		pid = 0;
 	int			i = 0;
+	int			status;
 
+	status = 0;
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
@@ -55,6 +53,7 @@ static void ft_run_ops(t_all *mass)
 			pid = fork();
 			if (pid == 0)
 			{
+
 				redir_flag(mass->tokens);
 				if (mass->tokens->flag_l == 2)
 				{
@@ -65,14 +64,15 @@ static void ft_run_ops(t_all *mass)
 				exit(EXIT_SUCCESS);
 			}
 			else
-				wait(NULL);
+			{
+				waitpid(pid, &status, 0);
+			}
 		}
 		if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
 			ft_check_buildin(mass, tmp);
 		mass->u_mass.ct++;
 		tmp = tmp->next;	
 	}
-
 }
 
 
@@ -94,9 +94,9 @@ int main (int argc, char **argv, char **env)
 	(void)argc;
 	errno = 0;
 	mass = (t_all*)malloc(sizeof(t_all));
-	// printf("EXIT PREVIOUS: %s\n", strerror(errno));
+	mass->environment = NULL;
 	ft_add_environment(mass, env);
-	ft_signals_main(0);
+	ft_signals_main(mass);
 	while (1)
 	{
 		init_t_alls(mass);
@@ -106,10 +106,7 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			ft_print_container(mass);
-			printf("\n----\n");
 			ft_constructor(mass);
-			ft_print_container(mass);
 			ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);

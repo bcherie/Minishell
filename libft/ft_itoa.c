@@ -3,58 +3,74 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/16 17:51:02 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/23 12:59:48 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/19 04:44:15 by droro             #+#    #+#             */
+/*   Updated: 2020/11/19 07:57:21 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_count(int n)
+static int	counter(int n)
 {
-	int res;
+	int		i;
 
-	res = 0;
-	if (n < 0)
+	i = 1;
+	n = (n / 10);
+	while (n != 0)
 	{
-		n *= -1;
-		res++;
+		i++;
+		n = (n / 10);
 	}
-	if (n == 0)
-		return (1);
-	while (n)
-	{
-		n /= 10;
-		res++;
-	}
-	return (res);
+	return (i);
 }
 
-char			*ft_itoa(int n)
+static char	discover(int n)
 {
-	char			*s;
-	unsigned int	len;
+	int		nbr;
 
-	len = ft_count(n);
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	s[len] = '\0';
-	if (n == 0)
-		s[0] = '0';
+	nbr = n / 10;
+	while (nbr != 0)
+	{
+		n = n % 10;
+		nbr = n / 10;
+	}
+	if (n < 0)
+		return (n * (-1));
+	return (n);
+}
+
+static void	fill(char *string, int n, int num)
+{
+	int		j;
+
+	j = 0;
 	if (n < 0)
 	{
-		n = -n;
-		s[0] = '-';
+		string[0] = '-';
+		j = 1;
 	}
-	while (n)
+	while (num >= j)
 	{
-		s[len - 1] = (n % 10) + '0';
-		len--;
-		n /= 10;
+		string[num] = discover(n) + '0';
+		n = n / 10;
+		num--;
 	}
-	return (s);
+}
+
+char	*ft_itoa(int n)
+{
+	int		len;
+	char	*str;
+
+	len = counter(n);
+	if (n < 0)
+		++len;
+	str = (char *)malloc(len + 1);
+	if (str == NULL)
+		return (NULL);
+	str[len] = '\0';
+	fill(str, n, len - 1);
+	return (str);
 }

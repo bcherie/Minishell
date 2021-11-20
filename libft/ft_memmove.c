@@ -3,39 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/03 00:49:52 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/21 17:43:34 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/03 04:33:43 by droro             #+#    #+#             */
+/*   Updated: 2020/11/14 14:49:31 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t num)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t				i;
-	unsigned char		*s1;
-	unsigned const char	*s2;
+	unsigned char		*dst_p;
+	unsigned const char	*src_p;
+	int					diff;
 
-	s1 = (unsigned char *)dest;
-	s2 = (unsigned const char *)src;
-	i = 0;
-	if (!s2 && !s1)
-		return (s1);
-	if (s1 < s2)
-		while (i != num)
-		{
-			s1[i] = s2[i];
-			i++;
-		}
-	else
+	dst_p = (unsigned char *)dst;
+	src_p = (unsigned char *)src;
+	if (!dst && !src)
+		return (NULL);
+	diff = dst_p - src_p;
+	if (diff > 0 && len > (size_t)diff)
 	{
-		while (num)
+		while (len != 0)
 		{
-			s1[num - 1] = s2[num - 1];
-			num--;
+			*(dst_p + len - 1) = *(src_p + len - 1);
+			len--;
 		}
 	}
-	return (s1);
+	else
+		ft_memcpy(dst, src, len);
+	return (dst_p);
 }

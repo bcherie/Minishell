@@ -132,12 +132,12 @@ void    run_exec_folders(t_tokens *tok, char **exec_folders);
 void	ft_check_redirect(t_tokens *tok);
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
 void	redir_flag(t_tokens *tok);
 void	heredok(t_tokens *tok);
 void    rl_replace_line(const char *buffer, int val);
-void	ft_signals_main(pid_t pid);
+void	ft_signals_main(t_all *mass);
+void	ft_signals_forked(t_all *mass);
+
 #endif
