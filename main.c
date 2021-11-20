@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 01:32:54 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:35:20 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	ft_check_buildin(t_all *mass, t_tokens *tok)
@@ -107,12 +119,16 @@ int main (int argc, char **argv, char **env)
 
 	(void)argv;
 	(void)argc;
+	errno = 0;
 	mass = (t_all*)malloc(sizeof(t_all));
+	mass->environment = NULL;
 	ft_add_environment(mass, env);
+	ft_signals_main(mass);
 	while (1)
 	{
 		init_t_alls(mass);
 		mass->buf = readline("minishell: ");
+		ft_check_EOF(mass);
 		if (ft_strlen(mass->buf) > 0)
 		{
 			add_history(mass->buf);

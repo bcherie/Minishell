@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execve.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 01:33:17 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:33:17 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -29,6 +41,7 @@ void	run_exec_folders(t_tokens *tok, char **exec_folders)
 			i++;
 		}
 	}
+
 }
 
 void	run_current_p(t_tokens *tok, char *current_path)

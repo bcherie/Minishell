@@ -3,80 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/22 15:31:27 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/23 13:25:25 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/19 04:02:35 by droro             #+#    #+#             */
+/*   Updated: 2020/11/21 10:49:04 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	words(char const *s, char c)
+static int	likvidator(char **p, int c)
 {
-	size_t	i;
-	size_t	words;
+	int		i;
 
 	i = 0;
-	words = 0;
-	while (s[i])
+	while (i < c)
 	{
-		if (s[i] != c && (s[i + 1] == c || !s[i + 1]))
-			words++;
+		free(p[i]);
 		i++;
 	}
-	return (words);
+	free(p);
+	return (0);
 }
 
-size_t	ft_wordlen(char const *str, char c)
+static int	counter(const char *str, char c)
 {
-	size_t i;
+	int			count;
+	int			diff;
+	const char	*p1;
+	const char	*p2;
 
+	p1 = str;
+	p2 = str;
+	count = 0;
+	if (c == '\0')
+		return (1);
+	while (p2 && *p1)
+	{
+		p2 = ft_strchr(p1, c);
+		diff = p2 - p1;
+		p1 = p2 + 1;
+		if (diff > 0 || !p2)
+			count++;
+	}
+	return (count);
+}
+
+static int	fill(char **ar, const char *p1, int count, char c)
+{
+	int			diff;
+	int			i;
+	int			range;
+	const char	*p2;
+
+	p2 = p1;
 	i = 0;
-	while (str[i] && str[i] != c)
-		i++;
-	return (i);
-}
-
-char	**free_res(char **res, size_t col_nw)
-{
-	size_t j;
-
-	j = 0;
-	while (j < col_nw)
+	while (p2 && *p1 && i < count)
 	{
-		free((char *)res[j]);
-		j++;
+		p2 = ft_strchr(p1, c);
+		diff = p2 - p1;
+		if (diff > 0 || !p2)
+		{
+			range = diff;
+			if (!p2)
+				range = ft_strlen(p1);
+			ar[i] = (char *)malloc(range + 1);
+			if (!ar[i])
+				return (likvidator(ar, i));
+			ft_strlcpy(ar[i], p1, range + 1);
+			i++;
+		}
+		p1 = p2 + 1;
 	}
-	free(res);
-	res = NULL;
-	return (NULL);
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char		**res;
-	size_t		i;
-	size_t		j;
+	const char	*p1;
+	char		**array;
+	int			size;
 
-	j = 0;
-	i = 0;
 	if (!s)
 		return (NULL);
-	if (!(res = (char **)malloc(sizeof(char *) * (words(s, c) + 1))))
+	size = counter(s, c);
+	array = (char **)malloc((size + 1) * sizeof(char *));
+	if (!array)
 		return (NULL);
-	while (j < words(s, c))
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		if (!(res[j] = ft_substr(s, i, ft_wordlen(&(s[i]), c))))
-		{
-			free_res(res, j);
-			return (NULL);
-		}
-		i += ft_wordlen(&(s[i]), c);
-		j++;
-	}
-	res[j] = NULL;
-	return (res);
+	array[size] = 0;
+	p1 = s;
+	if (fill(array, p1, size, c) == 0)
+		return (NULL);
+	return (array);
 }

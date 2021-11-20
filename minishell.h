@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 01:33:04 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:33:05 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -17,6 +29,7 @@
 # define REP_SYNTAX_HEREDOC -4 // command not found
 # define FLAG_ERROR -123
 # define FLAG_GOOD 0
+# define Errno 0
 
 #include "libft/libft.h"
 #include <stdio.h>
@@ -25,11 +38,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "structs.h"
-# include <string.h>
-# include <fcntl.h>
+#include <string.h>
+#include <fcntl.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-#include <fcntl.h>
+#include <errno.h>
+#include <signal.h>
 
 size_t		words_count(char const *s, char sp);
 void		ft_lstadd_back(t_tokens **list, t_tokens *new);
@@ -131,13 +145,14 @@ void    run_exec_folders(t_tokens *tok, char **exec_folders);
 void	ft_check_redirect(t_tokens *tok);
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
 void	redir_flag_1(t_tokens *tok);
 void	redir_flag_2(t_tokens *tok);
 void	ft_check_redirect_2(t_tokens *tok, int fd, int old_fd);
 void	heredok(t_tokens *tok);
+void    rl_replace_line(const char *buffer, int val);
+void	ft_signals_main(t_all *mass);
+void	ft_signals_forked(t_all *mass);
 
 #endif

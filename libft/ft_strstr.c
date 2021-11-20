@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_dollar_ops_2.c                                  :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 22:53:48 by droro             #+#    #+#             */
-/*   Updated: 2021/11/16 22:53:49 by droro            ###   ########.fr       */
+/*   Created: 2021/11/21 01:06:37 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:06:39 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
-void	ft_dfbuf_collect(t_dbuf *head, char *newline, int len)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	int	i;
-	int	j;
+	size_t	n;
+	size_t	num_n;
+	size_t	num_h;
 
-	i = 0;
-	j = 0;
-	while (i < len && head != NULL)
+	num_n = ft_strlen(needle);
+	num_h = ft_strlen(haystack);
+	n = 0;
+	if (haystack && num_h >= num_n)
 	{
-		newline[i] = head->buf[j];
-		i++;
-		j++;
-		if (j == 200)
+		if (num_n == 0)
+			return ((char *)haystack);
+		while ((num_h - n) >= num_n)
 		{
-			head = head->next;
-			j = 0;
+			if (ft_strncmp(haystack + n, needle, num_n) == 0)
+				return ((char *)(haystack + n));
+			n++;
 		}
 	}
+	return (NULL);
 }

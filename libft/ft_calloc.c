@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 19:01:34 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/23 13:30:42 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/15 15:22:02 by droro             #+#    #+#             */
+/*   Updated: 2021/01/15 00:37:40 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	void *s;
+	void	*mem_call;
+	size_t	index;
 
-	s = malloc(count * size);
-	if (s == 0)
+	index = count * size;
+	mem_call = malloc(index);
+	if (mem_call == NULL)
 		return (NULL);
-	ft_memset(s, 0, count * size);
-	return (s);
+	ft_bzero(mem_call, index);
+	return (mem_call);
 }

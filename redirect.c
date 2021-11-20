@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 01:33:33 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:33:34 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	heredok(t_tokens *tok)
@@ -7,7 +19,7 @@ void	heredok(t_tokens *tok)
 	char	*line;
 
 	i = 0;
-	line = (char *)malloc(sizeof(char *));
+	// line = (char *)malloc(sizeof(char *));
 	keyword = tok->tmp_in[0];
 	if (tok->flag_l == 2)
 	{

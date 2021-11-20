@@ -3,37 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bcherie <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: droro <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/13 12:13:04 by bcherie           #+#    #+#             */
-/*   Updated: 2020/11/23 14:51:27 by bcherie          ###   ########.fr       */
+/*   Created: 2020/11/15 18:19:39 by droro             #+#    #+#             */
+/*   Updated: 2020/11/19 23:45:40 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static void	util(unsigned int start, size_t len, size_t	s_len, size_t *subs_len)
+{
+	if (start >= s_len + 1)
+		*subs_len = 0;
+	else
+	{
+		if (s_len < len)
+			*subs_len = s_len - start;
+		else
+			*subs_len = len;
+	}
+}
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned int	i;
-	char			*dest;
-	unsigned int	len_s;
-	char			*s1;
+	size_t	s_len;
+	size_t	i;
+	size_t	subs_len;
+	char	*substr;
 
-	s1 = (char *)s;
-	if (!s)
-		return (0);
-	len_s = ft_strlen(s);
 	i = 0;
-	dest = malloc(len + 1);
-	if (dest == NULL)
+	if (!s)
 		return (NULL);
-	if (!s1)
+	s_len = ft_strlen(s);
+	util(start, len, s_len, &subs_len);
+	substr = (char *)malloc(subs_len + 1);
+	if (!substr)
 		return (NULL);
-	while (start < len_s && i < (unsigned int)len && *s1)
+	while (start + i < s_len && subs_len--)
 	{
-		dest[i] = s1[start + i];
+		substr[i] = s[start + i];
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	substr[i] = '\0';
+	return (substr);
 }
