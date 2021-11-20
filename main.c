@@ -29,27 +29,6 @@ int	ft_check_buildin(t_all *mass, t_tokens *tok)
 	return (ret);
 }
 
-
-
-// static void ft_check_open(t_all *mass)
-// {
-// 	t_tokens	*tmp;
-
-// 	if (mass->flag_error == FLAG_ERROR)
-// 		return ;
-// 	tmp = mass->tokens;
-// 	while (tmp != NULL)
-// 	{
-// 		redir_flag(tmp);
-// 		if (ft_check_redirect(tmp) == 0)
-// 		{
-// 			mass->flag_error == FLAG_ERROR;
-// 			break ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
-
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
@@ -75,17 +54,16 @@ static void ft_run_ops(t_all *mass)
 	{
 		if (tmp->inp_n != 0 || tmp->out_n != 0)
 		{
-			redir_flag(tmp);
+			redir_flag_1(tmp);
+			ft_check_redirect(tmp);
 			if (mass->tokens->flag_l == 2)
 			{
 				heredok(mass->tokens);
 			}
-			ft_check_redirect(tmp);
 		}
 		if (tmp != mass->tokens)
 		{
 			pid = fork();
-
 			if (pid == 0)
 			{
 				if (ft_check_buildin(mass, tmp) == 0)
@@ -140,7 +118,6 @@ int main (int argc, char **argv, char **env)
 			add_history(mass->buf);
 			ft_parser(mass);
 			ft_constructor(mass);
-			// ft_check_open(mass);
 			ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);

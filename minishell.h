@@ -29,7 +29,7 @@
 # include <fcntl.h>
 #include <sys/wait.h>
 #include <sys/types.h>
-
+#include <fcntl.h>
 
 size_t		words_count(char const *s, char sp);
 void		ft_lstadd_back(t_tokens **list, t_tokens *new);
@@ -135,7 +135,9 @@ int		ft_strlen(const char *str);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(char *src);
 char	*ft_strcpy(char *dest, char *src);
-void	redir_flag(t_tokens *tok);
+void	redir_flag_1(t_tokens *tok);
+void	redir_flag_2(t_tokens *tok);
+void	ft_check_redirect_2(t_tokens *tok, int fd, int old_fd);
 void	heredok(t_tokens *tok);
 
 #endif

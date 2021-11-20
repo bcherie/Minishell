@@ -28,8 +28,8 @@ typedef struct		s_tokens
 	int	flag_l;
 	char **tmp_out;
 	char **tmp_in;
-	//files
-	// int	fd[2];
+	int	i;
+	int	j;
 }					t_tokens;
 
 
