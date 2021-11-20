@@ -6,23 +6,26 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:32:54 by droro             #+#    #+#             */
-/*   Updated: 2021/11/21 01:35:20 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/21 02:41:16 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int ft_check_buildin(t_all *mass, t_tokens *tok)
+int	ft_check_buildin(t_all *mass, t_tokens *tok)
 {
 	int	ret;
 
-	ret = 1;
+	ret	= 1;
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
+	{
+		if ((mass->u_mass.pipe && tok->out_n) || !mass->u_mass.pipe)
 			ft_echo(tok);
+	}
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
 	else if (ft_strncmp(tok->container, "export", 7) == 0)
@@ -31,62 +34,91 @@ static int ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if (tok->container != NULL)
-		ft_execve(mass, tok);
 	else
 		ret = 0;
 	return (ret);
 }
 
-
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
-	// pid_t		pid;
-	int			i;
+	pid_t		pid;
+	pid_t		pid2;
 	int			status;
+	int			i;
 
-	status = 0;
 	i = 0;
+	mass->u_mass.ct = 0;
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
 	while (mass->buf[i])
 	{
 		if (mass->buf[i] == '|')
-			tmp->pipe++;
+			mass->u_mass.pipe++;
 		i++;
 	}
-	mass->u_mass.ct = 0;
-	tmp->l_pipe = tmp->pipe;
+	mass->u_mass.l_pipe = mass->u_mass.pipe;
 
-				redir_flag(mass->tokens);
-				if (mass->tokens->flag_l == 2)
-					heredok(mass->tokens);
-				ft_check_redirect(mass->tokens);
-				ft_check_buildin(mass, tmp);
-				exit(EXIT_SUCCESS);
-}
-
-
-void	ft_check_EOF(t_all *mass)
-{
-	if (mass->buf == NULL)
-	{	
-		write(1, "exit\n", 5);
-		global_cleaner(mass, 1);
-		exit(0);
+	while (tmp != NULL)
+	{
+		if (tmp->inp_n != 0 || tmp->out_n != 0)
+		{
+			redir_flag_1(tmp);
+			ft_check_redirect(tmp);
+			if (mass->tokens->flag_l == 2)
+			{
+				heredok(mass->tokens);
+			}
+		}
+		if (tmp != mass->tokens)
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				if (ft_check_buildin(mass, tmp) == 0)
+				{
+					pid = fork();
+					if (pid == 0)
+						ft_execve(mass, tmp);
+					else
+						wait(NULL);
+				}
+				exit(0);
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+			}
+		}
+		else
+		{
+			if (ft_check_buildin(mass, tmp) == 0)
+			{
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+					ft_execve(mass, tmp);
+				}
+				else
+				{
+					waitpid(pid2, &status, 0);
+				}
+			}
+		}
+		tmp = tmp->next;
+		mass->u_mass.ct++;
 	}
 }
 
-int main (int argc, char **argv, char **env)
+int main(int argc, char **argv, char **env)
 {
 	t_all	*mass;
 
 	(void)argv;
 	(void)argc;
 	errno = 0;
-	mass = (t_all*)malloc(sizeof(t_all));
+	mass = (t_all *)malloc(sizeof(t_all));
 	mass->environment = NULL;
 	ft_add_environment(mass, env);
 	ft_signals_main(mass);

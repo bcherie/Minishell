@@ -6,7 +6,7 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:11:27 by droro             #+#    #+#             */
-/*   Updated: 2021/11/21 01:16:42 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/21 02:37:40 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_tokens
 	char				**tmp_in;
 	int					pipe;
 	int					l_pipe;
+	int					i;
+	int					j;
 }					t_tokens;
 
 typedef struct s_dbuf
@@ -60,6 +62,8 @@ typedef struct s_utils
 	int			i_count;
 	int			iter;
 	int			ct;
+	int			pipe;
+	int			l_pipe;
 }				t_utils;
 
 typedef struct s_all
@@ -78,6 +82,7 @@ typedef struct s_all
 	pid_t				pid;
 	struct sigaction	siga;
 	char				**args;
+	char				**mass_env;
 }				t_all;
 
 #endif
