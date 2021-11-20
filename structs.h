@@ -28,6 +28,8 @@ typedef struct		s_tokens
 	int	flag_l;
 	char **tmp_out;
 	char **tmp_in;
+	//files
+	// int	fd[2];
 }					t_tokens;
 
 
@@ -51,6 +53,9 @@ typedef struct	s_utils
 	int			i_keyshift;
 	int			i_count;
 	int			iter;
+	int			ct;
+	int			pipe;
+	int			l_pipe;
 }				t_utils;
 
 typedef struct	s_all
@@ -71,6 +76,8 @@ typedef struct	s_all
 	int			flag_error;
 	pid_t		pid;
 	char		**args;
+	// env for execve
+	char	**mass_env;
 }				t_all;
 
 

@@ -97,43 +97,42 @@ void	redir_flag(t_tokens *tok)
 
 void	ft_check_redirect(t_tokens *tok)
 {
-	int	i;
 	int	j;
 	int	fd;
 	int	old_fd;
-	// int	flag_r;
-	// int	flag_l;
-	// char	*line = NULL;
-	// int	num = 0;
 
 	//O_APPEND - параметр опен для дозаписи в файл данных
 	j = 0;
-	i = 1;
-	// printf("len_arg: %lu\n", strlen(tok->args[i]));
 	while (j != tok->out_n)
 	{
-		// printf("out: %d\n", tok->out_n);
 		if (tok->flag_r == 1)
 			fd = open(tok->tmp_out[j], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (tok->flag_r == 2)
 			fd = open(tok->tmp_out[j], O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd < 0)
+		{
 			printf ("error\n");
+			j = -1;
+			break ;
+		}
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 1);
 		close(fd);
 		j++;
 	}
-	i = 0;
+	if (j == -1)
+		return ;
 	j = 0;
 	while (j != tok->inp_n)
 	{
 		if (tok->flag_l == 1)
-			fd = open(tok->tmp_in[j], O_RDONLY | O_CREAT, 0644);
+			fd = open(tok->tmp_in[j], O_RDONLY, 0644);
 		else if (tok->flag_l == 2)
-			fd = open(tok->tmp_in[j], O_RDONLY | O_CREAT, 0644);
+			fd = open(tok->tmp_in[j], O_RDONLY, 0644);
 		if (fd < 0)
+		{
 			printf ("error\n");
+		}
 		old_fd = dup(fd); // save fd
 		dup2(old_fd, 0);
 		close(fd);

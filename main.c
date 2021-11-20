@@ -1,24 +1,21 @@
 #include "minishell.h"
 
-static void ft_check_buildin(t_all *mass, t_tokens *tok)
+int	ft_check_buildin(t_all *mass, t_tokens *tok)
 {
-	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	// {
-	// 	redir_flag(tok);
-	// 	if (mass->tokens->flag_l == 2)
-	// 	{
-	// 		heredok(tok);
-	// 		// if(*tok->in_redir[i] != 'L')
+	int	ret;
 
-	// 	}
-	// 	ft_check_redirect(mass->tokens);
-	// }
+	ret	= 1;
 	if (ft_strncmp(tok->container, "pwd", 4) == 0)
 		ft_pwd(1);
 	else if (ft_strncmp(tok->container, "cd", 3) == 0)
 		ft_cd(mass, tok);
 	else if (ft_strncmp(tok->container, "echo", 5) == 0)
-		ft_echo(tok);
+	{
+		if ((mass->u_mass.pipe && tok->out_n) || !mass->u_mass.pipe)
+			ft_echo(tok);
+		// else
+		// 	return ;
+	}
 	else if (ft_strncmp(tok->container, "env", 4) == 0)
 		ft_env(mass, tok);
 	else if (ft_strncmp(tok->container, "export", 7) == 0)
@@ -27,59 +24,103 @@ static void ft_check_buildin(t_all *mass, t_tokens *tok)
 		ft_exit(mass, tok);
 	else if (ft_strncmp(tok->container, "unset", 6) == 0)
 		ft_unset(mass, tok);
-	else if(tok->container != NULL)
-		ft_execve(mass, tok);
 	else
-		return ;
-	exit(0);
+		ret = 0;
+	return (ret);
 }
 
+
+
+// static void ft_check_open(t_all *mass)
+// {
+// 	t_tokens	*tmp;
+
+// 	if (mass->flag_error == FLAG_ERROR)
+// 		return ;
+// 	tmp = mass->tokens;
+// 	while (tmp != NULL)
+// 	{
+// 		redir_flag(tmp);
+// 		if (ft_check_redirect(tmp) == 0)
+// 		{
+// 			mass->flag_error == FLAG_ERROR;
+// 			break ;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
 
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
+	pid_t		pid;
+	pid_t		pid2;
+	int			status;
+	int			i;
 
+	i = 0;
+	mass->u_mass.ct = 0;
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
-	// Fork commands!!!
+	while (mass->buf[i])
+	{
+		if (mass->buf[i] == '|')
+			mass->u_mass.pipe++;
+		i++;
+	}
+	mass->u_mass.l_pipe = mass->u_mass.pipe;
 
-	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	// {
-	// 	ft_check_redirect(mass->tokens);
-	// }
 	while (tmp != NULL)
 	{
-		//перенести редиректы и херокд сюда
-		if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
+		if (tmp->inp_n != 0 || tmp->out_n != 0)
 		{
-			redir_flag(mass->tokens);
+			redir_flag(tmp);
 			if (mass->tokens->flag_l == 2)
 			{
 				heredok(mass->tokens);
 			}
-			ft_check_redirect(mass->tokens);
+			ft_check_redirect(tmp);
 		}
-		if (tmp->container != NULL)
-			ft_check_buildin(mass, tmp);
+		if (tmp != mass->tokens)
+		{
+			pid = fork();
+
+			if (pid == 0)
+			{
+				if (ft_check_buildin(mass, tmp) == 0)
+				{
+					pid = fork();
+					if (pid == 0)
+						ft_execve(mass, tmp);
+					else
+						wait(NULL);
+				}
+				exit(0);
+			}
+			else
+			{
+				waitpid(pid, &status, 0);
+			}
+		}
+		else
+		{
+			if (ft_check_buildin(mass, tmp) == 0)
+			{
+				pid2 = fork();
+				if (pid2 == 0)
+				{
+					ft_execve(mass, tmp);
+				}
+				else
+				{
+					waitpid(pid2, &status, 0);
+				}
+			}
+		}
 		tmp = tmp->next;
+		mass->u_mass.ct++;
 	}
-	// printf("out: %d\n", mass->tokens->out_n);
-	// printf("inp: %d\n", mass->tokens->inp_n);
-	// printf("count: %d\n", mass->tokens->count);
-	// if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-	// {
-	// 	ft_check_redirect(mass->tokens);
-	// }
-	// token - > args - command and arguments
-	// 		-> output_ redirect
-	// 		-> input_ redirect
-
-	// 		input;
-	// 		token->command
-	// 		output;
-	// token2 ->
-
 }
 
 int main (int argc, char **argv, char **env)
@@ -98,9 +139,8 @@ int main (int argc, char **argv, char **env)
 		{
 			add_history(mass->buf);
 			ft_parser(mass);
-			//ft_print_container(mass);
 			ft_constructor(mass);
-			ft_print_container(mass);
+			// ft_check_open(mass);
 			ft_run_ops(mass);
 		}
 		global_cleaner(mass, 0);
