@@ -6,7 +6,7 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:33:04 by droro             #+#    #+#             */
-/*   Updated: 2021/11/21 02:37:54 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/21 02:43:27 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,11 @@ char		*ft_strcpy(char *dest, char *src);
 void		redir_flag_1(t_tokens *tok);
 void		redir_flag_2(t_tokens *tok);
 void		ft_check_redirect_2(t_tokens *tok, int fd, int old_fd);
+void		redirects(t_all *mass, t_tokens *tmp, int *status);
 void		heredok(t_tokens *tok);
 void		rl_replace_line(const char *buffer, int val);
 void		ft_signals_main(t_all *mass);
-void		ft_signals_forked(t_all *mass);
+void		count_pipe(t_all *mass);
+void		pipes(t_all *mass, t_tokens	*tmp, int *status);
 
 #endif
