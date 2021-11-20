@@ -6,7 +6,7 @@
 /*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 01:32:54 by droro             #+#    #+#             */
-/*   Updated: 2021/11/21 01:32:55 by droro            ###   ########.fr       */
+/*   Updated: 2021/11/21 01:35:20 by droro            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int ft_check_buildin(t_all *mass, t_tokens *tok)
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
-	pid_t		pid;
+	// pid_t		pid;
 	int			i;
 	int			status;
 
@@ -59,28 +59,13 @@ static void ft_run_ops(t_all *mass)
 	}
 	mass->u_mass.ct = 0;
 	tmp->l_pipe = tmp->pipe;
-	while (tmp != NULL)
-	{
-		if (mass->tokens->out_n != 0 || mass->tokens->inp_n != 0)
-		{
-			pid = fork();
-			if (pid == 0)
-			{
+
 				redir_flag(mass->tokens);
 				if (mass->tokens->flag_l == 2)
 					heredok(mass->tokens);
 				ft_check_redirect(mass->tokens);
 				ft_check_buildin(mass, tmp);
 				exit(EXIT_SUCCESS);
-			}
-			else
-				waitpid(pid, &status, 0);
-		}
-		if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
-			ft_check_buildin(mass, tmp);
-		mass->u_mass.ct++;
-		tmp = tmp->next;
-	}
 }
 
 
