@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: droro <droro@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/11/21 01:32:54 by droro             #+#    #+#             */
+/*   Updated: 2021/11/21 01:32:55 by droro            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int ft_check_buildin(t_all *mass, t_tokens *tok)
@@ -30,11 +42,12 @@ static int ft_check_buildin(t_all *mass, t_tokens *tok)
 static void ft_run_ops(t_all *mass)
 {
 	t_tokens	*tmp;
-	pid_t		pid = 0;
-	int			i = 0;
+	pid_t		pid;
+	int			i;
 	int			status;
 
 	status = 0;
+	i = 0;
 	if (mass->flag_error == FLAG_ERROR)
 		return ;
 	tmp = mass->tokens;
@@ -53,25 +66,20 @@ static void ft_run_ops(t_all *mass)
 			pid = fork();
 			if (pid == 0)
 			{
-
 				redir_flag(mass->tokens);
 				if (mass->tokens->flag_l == 2)
-				{
 					heredok(mass->tokens);
-				}
 				ft_check_redirect(mass->tokens);
 				ft_check_buildin(mass, tmp);
 				exit(EXIT_SUCCESS);
 			}
 			else
-			{
 				waitpid(pid, &status, 0);
-			}
 		}
 		if (tmp->container != NULL && (!mass->tokens->out_n || mass->tokens->inp_n))
 			ft_check_buildin(mass, tmp);
 		mass->u_mass.ct++;
-		tmp = tmp->next;	
+		tmp = tmp->next;
 	}
 }
 
